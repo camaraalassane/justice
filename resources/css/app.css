@@ -1,0 +1,400 @@
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+@theme {
+    --color-gpj-50: #f0f5f1;
+    --color-gpj-100: #d4e5d8;
+    --color-gpj-200: #a9ccb1;
+    --color-gpj-300: #7eb38a;
+    --color-gpj-400: #5c9a6c;
+    --color-gpj-500: #2d5a3d;
+    --color-gpj-600: #244a32;
+    --color-gpj-700: #1c3a27;
+    --color-gpj-800: #142b1d;
+    --color-gpj-900: #0d1c13;
+    --color-gpj-950: #060e09;
+}
+
+/* ==================== BASE ==================== */
+body {
+    background-color: var(--color-gpj-50);
+    color: var(--color-gpj-900);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ==================== DARK MODE ==================== */
+.gpj-dark {
+    --color-gpj-50: #060e09;
+    --color-gpj-100: #0d1c13;
+    --color-gpj-200: #1c3a27;
+    --color-gpj-300: #4a7a5a;
+    --color-gpj-400: #6ba07a;
+    --color-gpj-500: #4ade80;
+    --color-gpj-600: #6aee9a;
+    --color-gpj-700: #b8e6c8;
+    --color-gpj-800: #d4f0de;
+    --color-gpj-900: #e8f7ee;
+    --color-gpj-950: #f0faf4;
+    background-color: #060e09;
+    color: #d4e5d8;
+}
+
+/* ==================== DARK MODE - ÉLÉMENTS GÉNÉRAUX ==================== */
+.gpj-dark body {
+    background-color: #060e09;
+    color: #d4e5d8;
+}
+
+/* Inputs, selects, textareas */
+.gpj-dark input,
+.gpj-dark select,
+.gpj-dark textarea {
+    background-color: #0d1c13;
+    border-color: #1c3a27;
+    color: #d4e5d8;
+}
+
+.gpj-dark input:focus,
+.gpj-dark select:focus,
+.gpj-dark textarea:focus {
+    border-color: #4ade80;
+    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+.gpj-dark input::placeholder,
+.gpj-dark textarea::placeholder {
+    color: #4a7a5a;
+}
+
+/* Cartes blanches */
+.gpj-dark .bg-white {
+    background-color: #0d1c13 !important;
+}
+
+.gpj-dark .bg-white:not(.bg-gpj-800):not(.bg-gpj-500):not(.bg-gpj-600) {
+    background-color: #0d1c13 !important;
+}
+
+/* Bordures */
+.gpj-dark .border-gpj-200,
+.gpj-dark .border-gpj-100 {
+    border-color: #1c3a27;
+}
+
+.gpj-dark .border-t-gpj-100,
+.gpj-dark .border-b-gpj-100,
+.gpj-dark .border-t-gpj-200,
+.gpj-dark .border-b-gpj-200 {
+    border-color: #1c3a27;
+}
+
+.gpj-dark .divide-gpj-100 > * + * {
+    border-color: #1c3a27;
+}
+
+/* ==================== DARK MODE - TEXTES ==================== */
+/* Titres et textes principaux */
+.gpj-dark .text-gpj-800 {
+    color: #d4f0de !important;
+}
+
+.gpj-dark .text-gpj-700 {
+    color: #b8e6c8 !important;
+}
+
+.gpj-dark .text-gpj-600 {
+    color: #6ba07a !important;
+}
+
+.gpj-dark .text-gpj-500 {
+    color: #4ade80 !important;
+}
+
+.gpj-dark .text-gpj-400 {
+    color: #4a7a5a !important;
+}
+
+.gpj-dark .text-gpj-300 {
+    color: #4a7a5a !important;
+}
+
+/* Texte blanc dans les zones sombres (ne pas toucher) */
+.gpj-dark .bg-gpj-800 .text-white,
+.gpj-dark .bg-gpj-700 .text-white,
+.gpj-dark .bg-gpj-600 .text-white,
+.gpj-dark .bg-gpj-500 .text-white,
+.gpj-dark .bg-gpj-900 .text-white {
+    color: #ffffff !important;
+}
+
+/* Texte dans la sidebar */
+.gpj-dark .bg-gpj-800 .text-gpj-300,
+.gpj-dark .bg-gpj-800 .text-gpj-200 {
+    color: #7eb38a !important;
+}
+
+.gpj-dark .bg-gpj-800 .text-white {
+    color: #ffffff !important;
+}
+
+.gpj-dark .bg-gpj-800 .hover\:text-white:hover {
+    color: #ffffff !important;
+}
+
+/* ==================== DARK MODE - FONDS ==================== */
+.gpj-dark .bg-gpj-50 {
+    background-color: #060e09 !important;
+}
+
+.gpj-dark .bg-gpj-100 {
+    background-color: #0d1c13 !important;
+}
+
+.gpj-dark .bg-gpj-200 {
+    background-color: #142b1d !important;
+}
+
+.gpj-dark .hover\:bg-gpj-50:hover {
+    background-color: #0d1c13 !important;
+}
+
+.gpj-dark .hover\:bg-gpj-100:hover {
+    background-color: #142b1d !important;
+}
+
+.gpj-dark .hover\:bg-gpj-200:hover {
+    background-color: #1c3a27 !important;
+}
+
+/* ==================== DARK MODE - SIDEBAR ==================== */
+.gpj-dark .bg-gpj-800 {
+    background-color: #060e09 !important;
+}
+
+.gpj-dark .bg-gpj-700 {
+    background-color: #0d1c13 !important;
+}
+
+.gpj-dark .bg-gpj-600 {
+    background-color: #142b1d !important;
+}
+
+.gpj-dark .bg-gpj-500 {
+    background-color: #2d5a3d !important;
+}
+
+.gpj-dark .bg-gpj-500:hover {
+    background-color: #244a32 !important;
+}
+
+.gpj-dark .border-gpj-700 {
+    border-color: #142b1d !important;
+}
+
+/* Liens de navigation sidebar */
+.gpj-dark .text-gpj-200 {
+    color: #7eb38a !important;
+}
+
+.gpj-dark .hover\:bg-gpj-700:hover {
+    background-color: #142b1d !important;
+}
+
+/* ==================== DARK MODE - BADGES ==================== */
+.gpj-dark .bg-emerald-100 {
+    background-color: #0d2e1a !important;
+}
+
+.gpj-dark .text-emerald-700 {
+    color: #4ade80 !important;
+}
+
+.gpj-dark .bg-amber-100 {
+    background-color: #2e1f0a !important;
+}
+
+.gpj-dark .text-amber-700 {
+    color: #fbbf24 !important;
+}
+
+.gpj-dark .bg-red-100 {
+    background-color: #2e0d0d !important;
+}
+
+.gpj-dark .text-red-700 {
+    color: #f87171 !important;
+}
+
+.gpj-dark .bg-sky-100 {
+    background-color: #0a1e2e !important;
+}
+
+.gpj-dark .text-sky-700 {
+    color: #38bdf8 !important;
+}
+
+.gpj-dark .bg-gray-100 {
+    background-color: #142b1d !important;
+}
+
+.gpj-dark .text-gray-700 {
+    color: #7eb38a !important;
+}
+
+/* ==================== DARK MODE - TABLEAUX ==================== */
+.gpj-dark .bg-gpj-50 thead,
+.gpj-dark thead.bg-gpj-50,
+.gpj-dark thead[class*="bg-gpj-50"] {
+    background-color: #0d1c13 !important;
+}
+
+.gpj-dark thead .text-gpj-600,
+.gpj-dark thead .text-gpj-700 {
+    color: #7eb38a !important;
+}
+
+.gpj-dark tbody tr:hover {
+    background-color: #0d1c13 !important;
+}
+
+.gpj-dark tbody .text-gpj-800 {
+    color: #d4f0de !important;
+}
+
+.gpj-dark tbody .text-gpj-600 {
+    color: #6ba07a !important;
+}
+
+.gpj-dark tbody .text-gpj-400 {
+    color: #4a7a5a !important;
+}
+
+/* ==================== DARK MODE - HERO WELCOME ==================== */
+.gpj-dark .from-gpj-800 {
+    --tw-gradient-from: #060e09;
+}
+
+.gpj-dark .via-gpj-700 {
+    --tw-gradient-via: #0a0f0b;
+}
+
+.gpj-dark .to-gpj-600 {
+    --tw-gradient-to: #0d1c13;
+}
+
+.gpj-dark .text-gpj-200 {
+    color: #b8e6c8 !important;
+}
+
+.gpj-dark .text-gpj-300 {
+    color: #7eb38a !important;
+}
+
+/* ==================== DARK MODE - TOPBAR ==================== */
+.gpj-dark header.bg-white {
+    background-color: #0a0f0b !important;
+}
+
+.gpj-dark header .text-gpj-800 {
+    color: #d4f0de !important;
+}
+
+.gpj-dark header .text-gpj-600 {
+    color: #7eb38a !important;
+}
+
+.gpj-dark header .text-gpj-400 {
+    color: #4a7a5a !important;
+}
+
+/* ==================== DARK MODE - SCROLLBAR ==================== */
+.gpj-dark ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.gpj-dark ::-webkit-scrollbar-track {
+    background: #060e09;
+}
+
+.gpj-dark ::-webkit-scrollbar-thumb {
+    background: #1c3a27;
+    border-radius: 4px;
+}
+
+.gpj-dark ::-webkit-scrollbar-thumb:hover {
+    background: #244a32;
+}
+
+/* ==================== DARK MODE - SHADOWS ==================== */
+.gpj-dark .shadow-sm {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.gpj-dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.gpj-dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+}
+
+/* ==================== DARK MODE - ZONES ROUGES (SUPPRESSION COMPTE) ==================== */
+.gpj-dark .bg-red-50 {
+    background-color: #1a0a0a !important;
+}
+
+.gpj-dark .border-red-200 {
+    border-color: #3b1010 !important;
+}
+
+.gpj-dark .text-red-600 {
+    color: #f87171 !important;
+}
+
+.gpj-dark .text-red-700 {
+    color: #fca5a5 !important;
+}
+
+.gpj-dark .hover\:bg-red-50:hover {
+    background-color: #2e0d0d !important;
+}
+
+/* ==================== DARK MODE - SUCCESS ZONES ==================== */
+.gpj-dark .bg-emerald-50 {
+    background-color: #0a1a10 !important;
+}
+
+.gpj-dark .border-emerald-200 {
+    border-color: #0d2e1a !important;
+}
+
+.gpj-dark .text-emerald-600 {
+    color: #4ade80 !important;
+}
+
+.gpj-dark .text-emerald-700 {
+    color: #6aee9a !important;
+}
+/* ==================== GESTION DES LONGS TEXTES ==================== */
+.text-wrap {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+}
+
+.text-truncate-multiline {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-expandable {
+    cursor: pointer;
+}
+
+.text-expandable:hover {
+    color: var(--color-gpj-500);
+}
