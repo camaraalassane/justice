@@ -1,7 +1,23 @@
 <template>
-    <AuthenticatedLayout title="Nouveau Militaire" subtitle="Ajouter un militaire dans la base">
+    <AuthenticatedLayout title="Nouveau Personnel" subtitle="Ajouter un personnel dans la base">
         <Card class="max-w-2xl mx-auto">
             <form @submit.prevent="submit" class="space-y-5">
+                <!-- Type de personnel -->
+                <div class="border-b border-gpj-100 pb-4">
+                    <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-3">Type de personnel</h3>
+                    <div class="flex gap-4">
+                        <label v-for="option in typePersonnelOptions" :key="option.value" class="flex items-center gap-2 cursor-pointer">
+                            <input 
+                                type="radio" 
+                                :value="option.value"
+                                v-model="form.type_personnel"
+                                class="rounded-full border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                            />
+                            <span class="text-sm">{{ option.label }}</span>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Identité -->
                 <div class="border-b border-gpj-100 pb-4">
                     <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-3">Identité</h3>
@@ -19,8 +35,8 @@
                             <p v-if="form.errors.prenoms" class="mt-1 text-sm text-red-500">{{ form.errors.prenoms }}</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                        <div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div v-if="form.type_personnel === 'militaire'">
                             <label class="block text-sm font-medium text-gpj-700 mb-1">Matricule</label>
                             <input v-model="form.matricule" type="text" placeholder="MIL-2026-XXX (automatique si vide)"
                                 class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-gpj-500" />
@@ -33,7 +49,54 @@
                                 class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                             <p v-if="form.errors.date_naissance" class="mt-1 text-sm text-red-500">{{ form.errors.date_naissance }}</p>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">Lieu de naissance</label>
+                            <input v-model="form.lieu_naissance" type="text" placeholder="Ex: Bamako"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <p v-if="form.errors.lieu_naissance" class="mt-1 text-sm text-red-500">{{ form.errors.lieu_naissance }}</p>
+                        </div>
                     </div>
+                    
+                    <!-- Filiation -->
+                    <div class="mt-4 border-t border-gpj-100 pt-4">
+                        <h4 class="text-sm font-medium text-gpj-600 mb-3">Filiation</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Père -->
+                            <div class="border border-gpj-100 rounded-lg p-3">
+                                <p class="text-xs font-medium text-gpj-500 mb-2">Père</p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-xs text-gpj-600 mb-1">Nom</label>
+                                        <input v-model="form.nom_pere" type="text" placeholder="Nom du père"
+                                            class="w-full px-2 py-1.5 rounded border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gpj-600 mb-1">Prénoms</label>
+                                        <input v-model="form.prenoms_pere" type="text" placeholder="Prénoms du père"
+                                            class="w-full px-2 py-1.5 rounded border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mère -->
+                            <div class="border border-gpj-100 rounded-lg p-3">
+                                <p class="text-xs font-medium text-gpj-500 mb-2">Mère</p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-xs text-gpj-600 mb-1">Nom</label>
+                                        <input v-model="form.nom_mere" type="text" placeholder="Nom de la mère"
+                                            class="w-full px-2 py-1.5 rounded border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gpj-600 mb-1">Prénoms</label>
+                                        <input v-model="form.prenoms_mere" type="text" placeholder="Prénoms de la mère"
+                                            class="w-full px-2 py-1.5 rounded border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                         <div>
                             <label class="block text-sm font-medium text-gpj-700 mb-1">Genre</label>
@@ -45,20 +108,36 @@
                             </select>
                             <p v-if="form.errors.genre" class="mt-1 text-sm text-red-500">{{ form.errors.genre }}</p>
                         </div>
-                        <div>
+                        <div v-if="form.type_personnel === 'civil'">
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">Profession</label>
+                            <input v-model="form.profession" type="text" placeholder="Ex: Enseignant, Médecin..."
+                                class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <p v-if="form.errors.profession" class="mt-1 text-sm text-red-500">{{ form.errors.profession }}</p>
+                        </div>
+                        <div v-if="form.type_personnel === 'militaire'">
                             <label class="block text-sm font-medium text-gpj-700 mb-1">Armée/Service</label>
-                            <select v-model="form.armee"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
-                                <option value="">Sélectionner</option>
-                                <option v-for="a in armees" :key="a" :value="a">{{ a }}</option>
-                            </select>
-                            <p v-if="form.errors.armee" class="mt-1 text-sm text-red-500">{{ form.errors.armee }}</p>
+                            <div class="flex gap-2">
+                                <select v-model="form.armee_id"
+                                    class="flex-1 rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                                    <option value="">Sélectionner</option>
+                                    <option v-for="a in armees" :key="a.id" :value="a.id">{{ a.nom }}</option>
+                                    <option value="__nouveau__">➕ Ajouter une nouvelle...</option>
+                                </select>
+                            </div>
+                            <input 
+                                v-if="form.armee_id === '__nouveau__'"
+                                v-model="nouvelleArmee"
+                                type="text"
+                                placeholder="Nom de la nouvelle armée/service"
+                                class="mt-2 w-full px-3 py-2 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            />
+                            <p v-if="form.errors.armee_id" class="mt-1 text-sm text-red-500">{{ form.errors.armee_id }}</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Affectation (optionnelle) -->
-                <div class="border-b border-gpj-100 pb-4">
+                <!-- Affectation (optionnelle) - Uniquement pour les militaires -->
+                <div v-if="form.type_personnel === 'militaire'" class="border-b border-gpj-100 pb-4">
                     <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-3">Affectation <span class="text-xs font-normal text-gpj-400">(optionnel)</span></h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -87,13 +166,18 @@
                             class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                         <p v-if="form.errors.unite" class="mt-1 text-sm text-red-500">{{ form.errors.unite }}</p>
                     </div>
-                    <div class="mt-4">
+                </div>
+
+                <!-- Statut -->
+                <div class="border-b border-gpj-100 pb-4">
+                    <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-3">Statut</h3>
+                    <div>
                         <label class="block text-sm font-medium text-gpj-700 mb-1">Statut</label>
                         <select v-model="form.statut"
                             class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
-                            <option value="Actif">Actif</option>
-                            <option value="Suspendu">Suspendu</option>
-                            <option value="Déserteur">Déserteur</option>
+                            <option value="En activité">En activité</option>
+                            <option value="Non activite">Non activite</option>
+                            <option value="En retraite">En retraite</option>
                             <option value="Radié">Radié</option>
                         </select>
                     </div>
@@ -125,7 +209,7 @@
                     <button type="submit" :disabled="form.processing"
                         class="px-6 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer">
                         <i v-if="form.processing" class="pi pi-spin pi-spinner mr-2"></i>
-                        Créer le militaire
+                        Créer le personnel
                     </button>
                 </div>
             </form>
@@ -134,7 +218,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useForm, Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Card } from '@/Components/GPJ';
@@ -142,9 +226,12 @@ import { Card } from '@/Components/GPJ';
 const props = defineProps({
     categoriesGrades: Array,
     armees: Array,
+    grades: Array,
+    typePersonnelOptions: Array,
 });
 
 const selectedCategorie = ref('');
+const nouvelleArmee = ref('');
 
 const filteredGrades = computed(() => {
     if (!selectedCategorie.value) return [];
@@ -157,20 +244,51 @@ const onCategorieChange = () => {
 };
 
 const form = useForm({
+    type_personnel: 'militaire',
     nom: '',
     prenoms: '',
+    profession: '',
     matricule: '',
     date_naissance: '',
+    lieu_naissance: '',
+    nom_pere: '',
+    prenoms_pere: '',
+    nom_mere: '',
+    prenoms_mere: '',
     grade_id: '',
     unite: '',
     adresse: '',
     telephone: '',
-    statut: 'Actif',
+    statut: 'En activité',
     genre: '',
-    armee: '',
+    armee_id: '',
+});
+
+// Watcher pour gérer la nouvelle armée
+watch(nouvelleArmee, (val) => {
+    if (val && val.trim()) {
+        form.armee_id = val.trim();
+    }
+});
+
+// Watcher pour réinitialiser les champs quand le type change
+watch(() => form.type_personnel, (newVal) => {
+    if (newVal === 'civil') {
+        form.matricule = '';
+        form.grade_id = '';
+        form.armee_id = '';
+        form.unite = '';
+    }
 });
 
 const submit = () => {
+    if (form.armee_id === '__nouveau__') {
+        if (!nouvelleArmee.value || !nouvelleArmee.value.trim()) {
+            form.errors.armee_id = 'Veuillez saisir le nom de la nouvelle armée/service';
+            return;
+        }
+        form.armee_id = nouvelleArmee.value.trim();
+    }
     form.post(route('militaires.store'));
 };
 </script>

@@ -36,6 +36,12 @@ class UsersSeeder extends Seeder
                 'email' => 'ads@gpj.mil',
                 'role' => 'ADS',
             ],
+            // NOUVEAU RÔLE : DIRECTEUR (lecture seule)
+            [
+                'name' => 'Directeur',
+                'email' => 'directeur@gpj.mil',
+                'role' => 'DIR',
+            ],
         ];
 
         foreach ($users as $user) {

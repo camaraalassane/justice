@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\StatsExport;
+use App\Models\Procedure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExportController extends Controller
 {
@@ -211,5 +214,131 @@ class ExportController extends Controller
             new StatsExport($data, 'Fautes par Genre', ['Genre', 'Nombre', 'Pourcentage']),
             'fautes-par-genre.xlsx'
         );
+    }
+
+    // ==================== EXPORT LISTE PROCÉDURES ====================
+
+    /**
+     * Exporter la liste des procédures en Excel avec filtres
+     */
+    public function exportProceduresListe(Request $request)
+    {
+        $query = Procedure::with(['militaire', 'procedureMilitaires.militaire', 'parquet']);
+
+        // Filtres
+        if ($request->filled('phase')) {
+            $query->where('phase', $request->phase);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('numero_procedure', 'ILIKE', "%{$search}%")
+                  ->orWhereHas('militaire', function($milQ) use ($search) {
+                      $milQ->where('nom', 'ILIKE', "%{$search}%")
+                           ->orWhere('prenoms', 'ILIKE', "%{$search}%")
+                           ->orWhere('matricule', 'ILIKE', "%{$search}%")
+                           ->orWhere('profession', 'ILIKE', "%{$search}%");
+                  })
+                  ->orWhereHas('procedureMilitaires.militaire', function($milQ) use ($search) {
+                      $milQ->where('nom', 'ILIKE', "%{$search}%")
+                           ->orWhere('prenoms', 'ILIKE', "%{$search}%")
+                           ->orWhere('matricule', 'ILIKE', "%{$search}%")
+                           ->orWhere('profession', 'ILIKE', "%{$search}%");
+                  })
+                  ->orWhereHas('parquet', function($pq) use ($search) {
+                      $pq->where('nom', 'ILIKE', "%{$search}%");
+                  });
+            });
+        }
+
+        if ($request->filled('mois')) {
+            $query->whereMonth('date_ouverture', $request->mois);
+        }
+
+        if ($request->filled('annee')) {
+            $query->whereYear('date_ouverture', $request->annee);
+        }
+
+        if ($request->filled('jour')) {
+            $query->whereDate('date_ouverture', $request->jour);
+        }
+
+        if ($request->filled('type_personnel')) {
+            $query->whereHas('procedureMilitaires', function($q) use ($request) {
+                $q->where('type_personnel', $request->type_personnel);
+            });
+        }
+
+        $procedures = $query->orderBy('created_at', 'desc')->get();
+
+        // Créer le fichier Excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // En-têtes
+        $headers = [
+            'N° Procédure',
+            'Date ouverture',
+            'Phase',
+            'Type personnel',
+            'Nom complet',
+            'Matricule',
+            'Grade / Profession',
+            'Parquet',
+            'Lieu commission',
+            'Statut'
+        ];
+
+        foreach ($headers as $index => $header) {
+            $col = chr(65 + $index); // A, B, C, ...
+            $sheet->setCellValue($col . '1', $header);
+        }
+
+        // Style des en-têtes
+        $sheet->getStyle('A1:' . chr(65 + count($headers) - 1) . '1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:' . chr(65 + count($headers) - 1) . '1')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('2d5a3d');
+        $sheet->getStyle('A1:' . chr(65 + count($headers) - 1) . '1')->getFont()->getColor()->setARGB('ffffff');
+
+        // Données
+        $row = 2;
+        foreach ($procedures as $procedure) {
+            $firstPm = $procedure->procedureMilitaires->first();
+            $typePersonnel = $firstPm?->type_personnel ?? 'N/A';
+            $nomComplet = $firstPm?->nom_complet ?? '-';
+            $matricule = $firstPm?->militaire?->matricule ?? '-';
+            $gradeProfession = $firstPm?->militaire?->grade ?? $firstPm?->militaire?->profession ?? '-';
+            $statut = $firstPm?->militaire?->statut ?? '-';
+
+            $sheet->setCellValue('A' . $row, $procedure->numero_procedure ?? '-');
+            $sheet->setCellValue('B' . $row, $procedure->date_ouverture?->format('d/m/Y') ?? '-');
+            $sheet->setCellValue('C' . $row, $procedure->phase ?? '-');
+            $sheet->setCellValue('D' . $row, $typePersonnel === 'militaire' ? 'Militaire' : 'Civil');
+            $sheet->setCellValue('E' . $row, $nomComplet);
+            $sheet->setCellValue('F' . $row, $matricule);
+            $sheet->setCellValue('G' . $row, $gradeProfession);
+            $sheet->setCellValue('H' . $row, $procedure->parquet?->nom ?? '-');
+            $sheet->setCellValue('I' . $row, $procedure->lieu_commission ?? '-');
+            $sheet->setCellValue('J' . $row, $statut);
+            $row++;
+        }
+
+        // Auto-size columns
+        foreach (range('A', chr(65 + count($headers) - 1)) as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        // Générer le fichier
+        $filename = 'liste_procedures_' . date('Y-m-d_H-i') . '.xlsx';
+        
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+        exit;
     }
 }

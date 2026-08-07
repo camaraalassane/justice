@@ -9,6 +9,7 @@ use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhaseTypeController;
+use App\Http\Controllers\CategorieFauteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/militaires/search', [MilitaireController::class, 'search'])->name('api.militaires.search');
     Route::post('/api/infractions/quick-create', [InfractionController::class, 'quickCreate'])->name('api.infractions.quick-create');
     Route::get('/infractions-data', [InfractionController::class, 'allData'])->name('infractions.data');
+    Route::get('/api/grades', [ProcedureController::class, 'getGrades'])->name('api.grades');
+    Route::get('/api/parquets', [ProcedureController::class, 'getParquets'])->name('api.parquets');
+    Route::post('/api/parquets', [ProcedureController::class, 'createParquet'])->name('api.parquets.create');
+    Route::get('/api/armees', [MilitaireController::class, 'getArmees'])->name('api.armees');
+    Route::post('/api/armees', [MilitaireController::class, 'storeArmee'])->name('api.armees.store');
 
     // ==================== PROCÉDURES ====================
     Route::get('/procedures', [ProcedureController::class, 'index'])->name('procedures.index');
@@ -46,12 +52,28 @@ Route::middleware('auth')->group(function () {
     // Modifications rapides
     Route::patch('/procedures/{procedure}/update-parquet', [ProcedureController::class, 'updateParquet'])->name('procedures.update-parquet');
     Route::patch('/procedures/{procedure}/update-date-ouverture', [ProcedureController::class, 'updateDateOuverture'])->name('procedures.update-date-ouverture');
-    Route::patch('/procedures/{procedure}/update-infractions', [ProcedureController::class, 'updateInfractions'])->name('procedures.update-infractions');
-    Route::patch('/procedures/{procedure}/update-parties-civiles', [ProcedureController::class, 'updatePartiesCiviles'])->name('procedures.update-parties-civiles');
-    Route::patch('/procedures/{procedure}/update-fautes', [ProcedureController::class, 'updateFautes'])->name('procedures.update-fautes');
     
     // Export PDF
     Route::get('/procedures/{procedure}/export-pdf', [ProcedureController::class, 'exportPdf'])->name('procedures.export-pdf');
+
+    // ==================== PROCÉDURES - MILITAIRES ====================
+    Route::post('/procedures/{procedure}/militaire/ajouter', [ProcedureController::class, 'ajouterMilitaire'])
+        ->name('procedures.militaire.ajouter');
+    
+    Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/update', [ProcedureController::class, 'updateMilitaireInfo'])
+        ->name('procedure.militaire.update');
+    
+    Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/infractions', [ProcedureController::class, 'updateMilitaireInfractions'])
+        ->name('procedure.militaire.infractions.update');
+    
+    Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/fautes', [ProcedureController::class, 'updateMilitaireFautes'])
+        ->name('procedure.militaire.fautes.update');
+    
+    Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/parties-civiles', [ProcedureController::class, 'updateMilitairePartiesCiviles'])
+        ->name('procedure.militaire.parties-civiles.update');
+    
+    Route::delete('/procedures/{procedure}/militaire/{procedureMilitaire}/supprimer', [ProcedureController::class, 'supprimerMilitaire'])
+        ->name('procedure.militaire.supprimer');
 
     // ==================== MILITAIRES ====================
     Route::get('/militaires', [MilitaireController::class, 'index'])->name('militaires.index');
@@ -85,26 +107,39 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 
-    // ==================== PROCÉDURES - MILITAIRES ====================
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/update', [ProcedureController::class, 'updateMilitaireInfo'])
-    ->name('procedure.militaire.update');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/infractions', [ProcedureController::class, 'updateMilitaireInfractions'])
-    ->name('procedure.militaire.infractions.update');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/fautes', [ProcedureController::class, 'updateMilitaireFautes'])
+    // Casier judiciaire
+Route::get('/militaires/{militaire}/casier', [MilitaireController::class, 'casier'])->name('militaires.casier');
+Route::get('/militaires/{militaire}/casier/pdf', [MilitaireController::class, 'exportCasierPdf'])->name('militaires.casier.pdf');
+    // Routes pour la gestion des fautes dans une procédure
+Route::patch('/procedure/{procedure}/militaire/{procedureMilitaire}/fautes', [ProcedureController::class, 'updateMilitaireFautes'])
     ->name('procedure.militaire.fautes.update');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/parties-civiles', [ProcedureController::class, 'updateMilitairePartiesCiviles'])
-    ->name('procedure.militaire.parties-civiles.update');
-    // ==================== PROCÉDURES - MILITAIRES ====================
-Route::post('/procedures/{procedure}/militaire/ajouter', [ProcedureController::class, 'ajouterMilitaire'])
-    ->name('procedures.militaire.ajouter');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/update', [ProcedureController::class, 'updateMilitaireInfo'])
-    ->name('procedure.militaire.update');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/infractions', [ProcedureController::class, 'updateMilitaireInfractions'])
-    ->name('procedure.militaire.infractions.update');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/fautes', [ProcedureController::class, 'updateMilitaireFautes'])
-    ->name('procedure.militaire.fautes.update');
-Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/parties-civiles', [ProcedureController::class, 'updateMilitairePartiesCiviles'])
-    ->name('procedure.militaire.parties-civiles.update');
+    // ==================== FAUTES MILITAIRES (API uniquement) ====================
+    // Routes API pour les catégories et fautes (utilisées par le composant Vue)
+    Route::get('/api/categories-fautes', [CategorieFauteController::class, 'getCategories'])
+        ->name('api.categories-fautes');
+    Route::get('/api/categories-fautes/{categorie}/fautes', [CategorieFauteController::class, 'getFautesByCategorie'])
+        ->name('api.categories-fautes.fautes');
+    
+    // Routes CRUD pour les catégories
+    Route::post('/fautes/categories', [CategorieFauteController::class, 'storeCategorie'])
+        ->name('fautes.categories.store');
+    Route::patch('/fautes/categories/{categorie}', [CategorieFauteController::class, 'updateCategorie'])
+        ->name('fautes.categories.update');
+    Route::delete('/fautes/categories/{categorie}', [CategorieFauteController::class, 'destroyCategorie'])
+        ->name('fautes.categories.destroy');
+    
+    // Routes CRUD pour les fautes
+    Route::post('/fautes/fautes', [CategorieFauteController::class, 'storeFaute'])
+        ->name('fautes.fautes.store');
+    Route::patch('/fautes/fautes/{faute}', [CategorieFauteController::class, 'updateFaute'])
+        ->name('fautes.fautes.update');
+    Route::delete('/fautes/fautes/{faute}', [CategorieFauteController::class, 'destroyFaute'])
+        ->name('fautes.fautes.destroy');
+
+    // ==================== EXPORT LISTE PROCÉDURES ====================
+    Route::get('/exports/procedures-liste', [ExportController::class, 'exportProceduresListe'])
+        ->name('exports.procedures.liste');
+
     // ==================== EXPORTS EXCEL ====================
     Route::get('/exports/infractions/armee', [ExportController::class, 'infractionsParArmee'])->name('exports.infractions.armee');
     Route::get('/exports/infractions/categorie-grade', [ExportController::class, 'infractionsParCategorieGrade'])->name('exports.infractions.categorie-grade');

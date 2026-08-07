@@ -47,13 +47,14 @@
                     Procédures
                 </NavLink>
 
+                <!-- CHANGEMENT: "Militaires" → "Personnels" -->
                 <NavLink 
                     :href="route('militaires.index')" 
                     :active="route().current('militaires.*')" 
                     icon="pi pi-users" 
                     @click="closeSidebar"
                 >
-                    Militaires
+                    Personnels
                 </NavLink>
 
                 <NavLink 
@@ -196,6 +197,7 @@ const roles = {
     CDS: 'Chef de Section',
     CDB: 'Chef de Bureau',
     ADS: 'Agent de Saisie',
+    DIR: 'Directeur',  // AJOUT DU RÔLE DIRECTEUR
 };
 
 const roleLabel = computed(() => {
@@ -219,6 +221,8 @@ const roleColors = {
     CDS: { bg: 'bg-blue-100', text: 'text-blue-700', dot: 'bg-blue-500', avatar: 'bg-blue-600' },
     CDB: { bg: 'bg-purple-100', text: 'text-purple-700', dot: 'bg-purple-500', avatar: 'bg-purple-600' },
     ADS: { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', avatar: 'bg-gray-600' },
+    // AJOUT DU STYLE POUR LE RÔLE DIRECTEUR
+    DIR: { bg: 'bg-emerald-100', text: 'text-emerald-700', dot: 'bg-emerald-500', avatar: 'bg-emerald-600' },
 };
 
 const defaultColor = { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', avatar: 'bg-gray-600' };

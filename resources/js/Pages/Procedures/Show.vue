@@ -39,13 +39,45 @@
                 <template #header><div class="px-6 py-4 border-b border-gpj-200"><h3 class="text-lg font-semibold text-gpj-800">Ajouter une phase</h3></div></template>
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium text-gpj-700 mb-1">Type de phase <span class="text-red-500">*</span></label><select v-model="phaseForm.phase_type_id" required @change="onPhaseTypeChange" class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"><option value="">Choisir</option><option v-for="pt in phasesDisponibles" :key="pt.id" :value="pt.id">{{ pt.libelle }}</option><option value="autre">Autre (personnalisé)</option></select></div>
-                        <div v-if="phaseForm.phase_type_id === 'autre'"><label class="block text-sm font-medium text-gpj-700 mb-1">Nom <span class="text-red-500">*</span></label><input v-model="phaseForm.phase_personnalisee" type="text" required class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" /></div>
-                        <div><label class="block text-sm font-medium text-gpj-700 mb-1">Date <span class="text-red-500">*</span></label><input v-model="phaseForm.date_phase" type="date" required class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" /></div>
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">Type de phase <span class="text-red-500">*</span></label>
+                            <select v-model="phaseForm.phase_type_id" required @change="onPhaseTypeChange" class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                                <option value="">Choisir</option>
+                                <option v-for="pt in phasesDisponibles" :key="pt.id" :value="pt.id">{{ pt.libelle }}</option>
+                                <option value="autre">Autre (personnalisé)</option>
+                            </select>
+                        </div>
+                        <div v-if="phaseForm.phase_type_id === 'autre'">
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">Nom <span class="text-red-500">*</span></label>
+                            <input v-model="phaseForm.phase_personnalisee" type="text" required class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">Date <span class="text-red-500">*</span></label>
+                            <input v-model="phaseForm.date_phase" type="date" required class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        </div>
                     </div>
-                    <div><label class="block text-sm font-medium text-gpj-700 mb-1">Description</label><textarea v-model="phaseForm.description" rows="2" class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea></div>
-                    <PhaseFormFields :phaseTypeId="phaseForm.phase_type_id" :phaseTypes="phaseTypes" v-model:champs="phaseForm.champs" v-model:personnes="phaseForm.personnes" v-model:evenements="phaseForm.evenements" v-model:references="phaseForm.references" v-model:optionsCocher="phaseForm.options_cocher" v-model:piecesJointes="phaseForm.pieces_jointes" />
-                    <div class="flex items-center gap-3"><button type="button" @click="ajouterPhase" :disabled="formProcessing" class="px-6 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer"><i v-if="formProcessing" class="pi pi-spin pi-spinner mr-2"></i>Ajouter cette phase</button></div>
+                    <div>
+                        <label class="block text-sm font-medium text-gpj-700 mb-1">Description</label>
+                        <textarea v-model="phaseForm.description" rows="2" class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
+                    </div>
+                    <PhaseFormFields 
+                        :phaseTypeId="phaseForm.phase_type_id" 
+                        :phaseTypes="phaseTypes" 
+                        v-model:champs="phaseForm.champs" 
+                        v-model:personnes="phaseForm.personnes" 
+                        v-model:evenements="phaseForm.evenements" 
+                        v-model:references="phaseForm.references" 
+                        v-model:optionsCocher="phaseForm.options_cocher" 
+                        v-model:piecesJointes="phaseForm.pieces_jointes"
+                        v-model:estCondamne="phaseForm.est_condamne"
+                        v-model:peinePrincipale="phaseForm.peine_principale"
+                        v-model:peineDescription="phaseForm.peine_description"
+                    />
+                    <div class="flex items-center gap-3">
+                        <button type="button" @click="ajouterPhase" :disabled="formProcessing" class="px-6 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
+                            <i v-if="formProcessing" class="pi pi-spin pi-spinner mr-2"></i>Ajouter cette phase
+                        </button>
+                    </div>
                 </div>
             </Card>
 
@@ -64,25 +96,73 @@
                                     <span v-if="procedure.est_plurielle" class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">Pluriel</span>
                                 </div>
                             </div>
-                            <div><p class="text-gpj-400">Parquet</p><div v-if="editParquet" class="flex items-center gap-2"><select v-model="editForm.parquet_competent" class="rounded-lg border border-gpj-200 text-sm py-1.5 px-2"><option v-for="p in parquets" :key="p" :value="p">{{ p }}</option></select><button @click="saveParquet" class="text-emerald-500"><i class="pi pi-check text-sm"></i></button><button @click="editParquet = false" class="text-red-400"><i class="pi pi-times text-sm"></i></button></div><div v-else class="flex items-center gap-2"><Badge variant="info" size="sm">{{ procedure.parquet_competent || 'Non défini' }}</Badge><button v-if="peutValider" @click="editParquet = true; editForm.parquet_competent = procedure.parquet_competent" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button></div></div>
-                            <div><p class="text-gpj-400">Date ouverture</p><div v-if="editDateOuverture" class="flex items-center gap-2"><input v-model="editForm.date_ouverture" type="date" class="rounded-lg border border-gpj-200 text-sm py-1.5 px-2" /><button @click="saveDateOuverture" class="text-emerald-500"><i class="pi pi-check text-sm"></i></button><button @click="editDateOuverture = false" class="text-red-400"><i class="pi pi-times text-sm"></i></button></div><div v-else class="flex items-center gap-2"><p class="font-medium">{{ formatDate(procedure.date_ouverture) }}</p><button v-if="peutValider" @click="editDateOuverture = true; editForm.date_ouverture = formatDateForInput(procedure.date_ouverture)" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button></div></div>
+                            <div>
+                                <p class="text-gpj-400">Lieu de commission</p>
+                                <Badge variant="info" size="sm">{{ procedure.lieu_commission || 'Non défini' }}</Badge>
+                            </div>
+                            <div>
+                                <p class="text-gpj-400">Parquet</p>
+                                <div v-if="editParquet" class="flex items-center gap-2 flex-wrap">
+                                    <div class="w-full">
+                                        <ParquetSelector
+                                            v-model="editParquetForm"
+                                            :parquets="allParquets"
+                                            :error="editParquetError"
+                                            @change="onParquetChange"
+                                        />
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <button @click="saveParquet" class="text-emerald-500"><i class="pi pi-check text-sm"></i></button>
+                                        <button @click="editParquet = false" class="text-red-400"><i class="pi pi-times text-sm"></i></button>
+                                    </div>
+                                </div>
+                                <div v-else class="flex items-center gap-2 flex-wrap">
+                                    <Badge variant="info" size="sm">
+                                        {{ procedure.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }}
+                                        - {{ procedure.parquet?.nom || 'Non défini' }}
+                                    </Badge>
+                                    <button v-if="peutValider" @click="startEditParquet" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-gpj-400">Date ouverture</p>
+                                <div v-if="editDateOuverture" class="flex items-center gap-2">
+                                    <input v-model="editForm.date_ouverture" type="date" class="rounded-lg border border-gpj-200 text-sm py-1.5 px-2" />
+                                    <button @click="saveDateOuverture" class="text-emerald-500"><i class="pi pi-check text-sm"></i></button>
+                                    <button @click="editDateOuverture = false" class="text-red-400"><i class="pi pi-times text-sm"></i></button>
+                                </div>
+                                <div v-else class="flex items-center gap-2">
+                                    <p class="font-medium">{{ formatDate(procedure.date_ouverture) }}</p>
+                                    <button v-if="peutValider" @click="editDateOuverture = true; editForm.date_ouverture = formatDateForInput(procedure.date_ouverture)" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
+                                </div>
+                            </div>
                             <div><p class="text-gpj-400">Créé par</p><p class="font-medium">{{ procedure.createur?.name || '-' }}</p></div>
                             <div><p class="text-gpj-400">Validé par</p><p class="font-medium">{{ procedure.validateur?.name || '-' }}</p></div>
+                            <!-- Condamnation procédure -->
+                            <div>
+                                <p class="text-gpj-400">Condamnation</p>
+                                <Badge :variant="procedure.est_condamne ? 'danger' : 'neutral'" size="sm">
+                                    {{ procedure.est_condamne ? 'Condamné' : 'Non condamné' }}
+                                </Badge>
+                                <span v-if="procedure.est_condamne && procedure.peine_principale" class="text-xs text-gpj-500 ml-2">
+                                    Peine: {{ procedure.peine_principale }}
+                                </span>
+                            </div>
                         </div>
                     </Card>
 
-                    <!-- Militaires concernés -->
-                    <Card :title="procedure.est_plurielle ? 'Militaires concernés' : 'Militaire concerné'">
+                    <!-- Militaires / Personnels concernés -->
+                    <Card :title="procedure.est_plurielle ? 'Personnels concernés' : 'Personnel concerné'">
                         <div class="flex items-center justify-between mb-4">
                             <span class="text-sm text-gpj-400">
-                                {{ procedure.procedure_militaires?.length || 0 }} militaire(s) associé(s)
+                                {{ procedure.procedure_militaires?.length || 0 }} personnel(s) associé(s)
                             </span>
                             <button
                                 v-if="peutValider"
-                                @click="openAddMilitaireModal"
+                                @click="openAddPersonnelModal"
                                 class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
                             >
-                                <i class="pi pi-plus"></i> Ajouter un militaire
+                                <i class="pi pi-plus"></i> Ajouter un personnel
                             </button>
                         </div>
 
@@ -94,45 +174,284 @@
                                 :procedure-id="procedure.id"
                                 :est-principal="pm.militaire_id === procedure.militaire_id"
                                 :all-infractions="allInfractions"
+                                :all-fautes="allFautes"
                                 :peut-modifier="peutValider"
                                 :grades="grades"
                                 :armees="armees"
+                                :total-militaires="procedure.procedure_militaires?.length || 0"
+                                :est-plurielle="procedure.est_plurielle"
                                 @updated="rechargerProcedure"
+                                @deleted="rechargerProcedure"
+                                @infraction-created="onInfractionCreated"
                             />
                         </div>
-                        <p v-else class="text-sm text-gpj-400 py-4 text-center">Aucun militaire associé</p>
+                        <p v-else class="text-sm text-gpj-400 py-4 text-center">Aucun personnel associé</p>
                     </Card>
 
                     <!-- Historique des phases -->
                     <Card title="Historique des Phases">
                         <div v-if="procedure.procedure_phases?.length" class="space-y-4">
                             <div v-for="(phase, index) in procedure.procedure_phases" :key="phase.id" class="flex gap-3">
-                                <div class="flex flex-col items-center"><div :class="['w-3 h-3 rounded-full mt-1.5', phase.est_retour ? 'bg-amber-400' : 'bg-gpj-500']"></div><div v-if="index < procedure.procedure_phases.length - 1" class="w-0.5 flex-1 bg-gpj-200"></div></div>
+                                <div class="flex flex-col items-center">
+                                    <div :class="['w-3 h-3 rounded-full mt-1.5', phase.est_retour ? 'bg-amber-400' : 'bg-gpj-500']"></div>
+                                    <div v-if="index < procedure.procedure_phases.length - 1" class="w-0.5 flex-1 bg-gpj-200"></div>
+                                </div>
                                 <div class="flex-1 pb-4 min-w-0">
                                     <div class="flex items-center gap-2 flex-wrap">
-                                        <div class="flex-1 min-w-0"><div class="flex items-center gap-2"><span class="text-sm font-bold text-gpj-800">{{ phase.libelle || phase.phase_type?.libelle || 'Phase sans nom' }}</span><Badge v-if="index === 0" variant="info" size="sm">Actuelle</Badge><Badge v-if="index === procedure.procedure_phases.length - 1" variant="success" size="sm">Initiale</Badge></div><p class="text-xs text-gpj-400 mt-0.5">{{ formatDate(phase.date_phase) }} — par {{ phase.createur?.name || '-' }}</p></div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 flex-wrap">
+                                                <span class="text-sm font-bold text-gpj-800">{{ phase.libelle || phase.phase_type?.libelle || 'Phase sans nom' }}</span>
+                                                <Badge v-if="index === 0" variant="info" size="sm">Actuelle</Badge>
+                                                <Badge v-if="index === procedure.procedure_phases.length - 1" variant="success" size="sm">Initiale</Badge>
+                                                <!-- Badge condamnation -->
+                                                <Badge v-if="phase.est_condamne === true" variant="danger" size="sm">
+                                                    <i class="pi pi-gavel mr-1 text-xs"></i>Condamné
+                                                </Badge>
+                                            </div>
+                                            <p class="text-xs text-gpj-400 mt-0.5">{{ formatDate(phase.date_phase) }} — par {{ phase.createur?.name || '-' }}</p>
+                                        </div>
                                         <button v-if="peutValider && editingPhaseId !== phase.id" @click="startEditPhase(phase)" class="text-gpj-400 hover:text-gpj-600 shrink-0" title="Modifier"><i class="pi pi-pencil text-xs"></i></button>
                                         <button v-if="peutValider && index === 0 && procedure.procedure_phases.length > 1 && editingPhaseId !== phase.id" @click="confirmRetourPhase(phase)" class="text-amber-500 hover:text-amber-700 shrink-0" title="Revenir à la phase précédente"><i class="pi pi-undo text-xs"></i></button>
                                     </div>
+
+                                    <!-- Édition de la phase -->
                                     <div v-if="editingPhaseId === phase.id" class="mt-3 p-3 bg-gpj-50 rounded-lg border border-gpj-200 space-y-3">
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="block text-xs font-medium text-gpj-500 mb-1">Description</label><textarea v-model="editPhaseForm.description" rows="2" class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2"></textarea></div><div><label class="block text-xs font-medium text-gpj-500 mb-1">Date</label><input v-model="editPhaseForm.date_phase" type="date" class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2" /></div></div>
-                                        <div v-if="editPhaseForm.champs?.length" class="border-t border-gpj-100 pt-3"><p class="text-xs font-medium text-gpj-500 mb-2">Champs ({{ editPhaseForm.champs.length }})</p><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"><div v-for="(ch, i) in editPhaseForm.champs" :key="'ech-'+i"><div class="flex items-center justify-between mb-1"><label class="block text-xs text-gpj-400">{{ formatLabel(ch.cle) }}</label><button type="button" @click="editPhaseForm.champs.splice(i, 1)" class="text-red-400 hover:text-red-600 text-xs"><i class="pi pi-times"></i></button></div><input v-if="ch.type === 'text'" v-model="ch.valeur" type="text" class="w-full rounded border border-gpj-200 text-sm py-1 px-2" /><input v-else-if="ch.type === 'date'" v-model="ch.valeur" type="date" class="w-full rounded border border-gpj-200 text-sm py-1 px-2" /><div v-if="ch.type === 'date' && ch.valeur" class="text-xs text-gpj-400 mt-0.5">📅 {{ formatDate(ch.valeur) }}</div><textarea v-else-if="ch.type === 'textarea'" v-model="ch.valeur" rows="2" class="w-full rounded border border-gpj-200 text-sm py-1 px-2"></textarea></div></div></div>
-                                        <div v-if="editPhaseForm.personnes?.length" class="border-t border-gpj-100 pt-3"><div class="flex items-center justify-between mb-2"><p class="text-xs font-medium text-gpj-500">Personnes ({{ editPhaseForm.personnes.length }})</p><button type="button" @click="editPhaseForm.personnes.push({ nom: '', prenom: '', profession: '', autre: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button></div><div v-for="(p, i) in editPhaseForm.personnes" :key="'ep-'+i" class="grid grid-cols-2 gap-1 mb-2 p-2 bg-white rounded border border-gpj-100"><input v-model="p.nom" placeholder="Nom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" /><input v-model="p.prenom" placeholder="Prénom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" /><input v-model="p.profession" placeholder="Profession" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" /><input v-model="p.autre" placeholder="Autre" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" /></div></div>
-                                        <div v-if="editPhaseForm.evenements?.length" class="border-t border-gpj-100 pt-3"><div class="flex items-center justify-between mb-2"><p class="text-xs font-medium text-gpj-500">Événements ({{ editPhaseForm.evenements.length }})</p><button type="button" @click="editPhaseForm.evenements.push({ nom: '', date_evenement: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button></div><div v-for="(e, i) in editPhaseForm.evenements" :key="'ee-'+i" class="mb-2 p-2 bg-white rounded border border-gpj-100"><input v-model="e.nom" placeholder="Nom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" /><input v-model="e.date_evenement" type="date" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" /><div v-if="e.date_evenement" class="text-xs text-gpj-400 mb-1">📅 {{ formatDate(e.date_evenement) }}</div><textarea v-model="e.description" placeholder="Description" rows="1" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5"></textarea></div></div>
-                                        <div v-if="editPhaseForm.references?.length" class="border-t border-gpj-100 pt-3"><div class="flex items-center justify-between mb-2"><p class="text-xs font-medium text-gpj-500">Références ({{ editPhaseForm.references.length }})</p><button type="button" @click="editPhaseForm.references.push({ libelle: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button></div><div v-for="(r, i) in editPhaseForm.references" :key="'er-'+i" class="mb-2 p-2 bg-white rounded border border-gpj-100"><input v-model="r.libelle" placeholder="Libellé" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" /><textarea v-model="r.description" placeholder="Description" rows="1" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5"></textarea></div></div>
-                                        <div v-if="editPhaseForm.options_cocher?.length" class="border-t border-gpj-100 pt-3"><div class="flex items-center justify-between mb-2"><p class="text-xs font-medium text-gpj-500">Options ({{ editPhaseForm.options_cocher.length }})</p><button type="button" @click="editPhaseForm.options_cocher.push({ libelle: 'Nouvelle option', est_coche: false, _custom: true })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button></div><label v-for="(o, i) in editPhaseForm.options_cocher" :key="'eo-'+i" class="flex items-center gap-2 py-1 cursor-pointer"><input type="checkbox" v-model="o.est_coche" class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500 shrink-0" /><input v-if="o._custom" v-model="o.libelle" type="text" class="flex-1 text-xs border-b border-gpj-200 py-0.5" /><span v-else class="text-xs text-gpj-700 flex-1">{{ o.libelle }}</span><button type="button" @click="editPhaseForm.options_cocher.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button></label></div>
-                                        <div v-if="editPhaseForm.pieces_jointes?.length" class="border-t border-gpj-100 pt-3"><div class="flex items-center justify-between mb-2"><p class="text-xs font-medium text-gpj-500">Pièces jointes ({{ editPhaseForm.pieces_jointes.length }})</p><button type="button" @click="editPhaseForm.pieces_jointes.push({ nom: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button></div><div v-for="(pj, i) in editPhaseForm.pieces_jointes" :key="'epj-'+i" class="mb-2 p-2 bg-white rounded border border-gpj-100"><div class="flex justify-between mb-1"><span class="text-xs text-gpj-500">Pièce {{ i + 1 }}</span><button type="button" @click="editPhaseForm.pieces_jointes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button></div><input v-model="pj.nom" placeholder="Nom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" /><textarea v-model="pj.description" placeholder="Description" rows="1" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1"></textarea><div v-if="pj.chemin_fichier && !pj.fichier" class="text-xs text-gpj-500 mb-1 flex items-center gap-2"><i class="pi pi-file-pdf text-red-500"></i><a :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-gpj-500 hover:underline">Voir le PDF</a><button type="button" @click="pj.chemin_fichier = null; pj._supprimerFichier = true" class="text-red-400 hover:text-red-600"><i class="pi pi-trash text-xs"></i></button></div><input type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-gpj-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-gpj-100 file:text-gpj-600" /><div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1"><i class="pi pi-check mr-1"></i>{{ pj.fichier.name }}</div></div></div>
-                                        <div class="border-t border-gpj-100 pt-3"><button type="button" @click="showEditCustomField = !showEditCustomField" class="text-xs text-gpj-500 hover:text-gpj-700 font-medium flex items-center gap-1 cursor-pointer"><i class="pi pi-plus-circle"></i> Ajouter un champ personnalisé</button><div v-if="showEditCustomField" class="mt-2 p-3 bg-white rounded border border-gpj-100 space-y-2"><div class="grid grid-cols-2 gap-2"><input v-model="editCustomField.cle" type="text" placeholder="Nom du champ *" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" /><select v-model="editCustomField.type" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5"><option value="text">Texte</option><option value="date">Date</option><option value="textarea">Texte long</option></select></div><div class="flex items-center gap-2"><button type="button" @click="addCustomFieldToEdit" class="px-2 py-1 bg-gpj-500 text-white text-xs rounded hover:bg-gpj-600 cursor-pointer">Ajouter</button><button type="button" @click="showEditCustomField = false" class="text-xs text-gpj-400 hover:text-gpj-600 cursor-pointer">Annuler</button></div></div></div>
-                                        <div class="flex items-center gap-2 pt-2 border-t border-gpj-100"><button @click="savePhaseEdit(phase.id)" :disabled="editPhaseProcessing" class="px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer"><i v-if="editPhaseProcessing" class="pi pi-spin pi-spinner mr-1"></i>Enregistrer</button><button @click="cancelEditPhase" class="px-3 py-1.5 border border-gpj-200 text-gpj-600 text-xs rounded-lg hover:bg-gpj-50 cursor-pointer">Annuler</button></div>
+                                        <!-- Description et Date -->
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <div><label class="block text-xs font-medium text-gpj-500 mb-1">Description</label><textarea v-model="editPhaseForm.description" rows="2" class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2"></textarea></div>
+                                            <div><label class="block text-xs font-medium text-gpj-500 mb-1">Date</label><input v-model="editPhaseForm.date_phase" type="date" class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2" /></div>
+                                        </div>
+
+                                        <!-- CONDAMNATION - Modifiable -->
+                                        <div v-if="isOrdrePoursuitePhase(phase)" class="p-3 border border-gpj-200 dark:border-gpj-700 rounded-lg bg-gpj-50 dark:bg-gpj-800">
+                                            <div class="flex items-center gap-4 flex-wrap">
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input 
+                                                        type="checkbox" 
+                                                        v-model="editPhaseForm.est_condamne"
+                                                        @change="onEditCondamnationChange"
+                                                        class="w-4 h-4 rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                                                    />
+                                                    <span class="text-sm font-medium text-gpj-700 dark:text-gpj-300">
+                                                        <i class="pi pi-gavel mr-1"></i>
+                                                        Condamné
+                                                    </span>
+                                                </label>
+
+                                                <!-- Champ Peine - apparaît seulement si condamné -->
+                                                <div v-if="editPhaseForm.est_condamne" class="flex-1 min-w-50">
+                                                    <div class="flex items-center gap-3">
+                                                        <label class="text-sm font-medium text-gpj-700 dark:text-gpj-300 whitespace-nowrap">
+                                                            Peine :
+                                                        </label>
+                                                        <input 
+                                                            v-model="editPhaseForm.peine_principale"
+                                                            type="text"
+                                                            placeholder="Ex: 5 ans d'emprisonnement"
+                                                            class="flex-1 rounded-lg border border-gpj-200 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                                        />
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <textarea 
+                                                            v-model="editPhaseForm.peine_description"
+                                                            rows="2"
+                                                            placeholder="Description détaillée de la peine..."
+                                                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Affichage de la peine enregistrée -->
+                                            <div v-if="editPhaseForm.est_condamne && editPhaseForm.peine_principale" class="mt-2 text-xs text-emerald-600 dark:text-emerald-400">
+                                                <i class="pi pi-check-circle mr-1"></i>
+                                                Peine : <strong>{{ editPhaseForm.peine_principale }}</strong>
+                                            </div>
+                                        </div>
+
+                                        <!-- Champs -->
+                                        <div v-if="editPhaseForm.champs?.length" class="border-t border-gpj-100 pt-3">
+                                            <p class="text-xs font-medium text-gpj-500 mb-2">Champs ({{ editPhaseForm.champs.length }})</p>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                                                <div v-for="(ch, i) in editPhaseForm.champs" :key="'ech-'+i">
+                                                    <div class="flex items-center justify-between mb-1">
+                                                        <label class="block text-xs text-gpj-400">{{ formatLabel(ch.cle) }}</label>
+                                                        <button type="button" @click="editPhaseForm.champs.splice(i, 1)" class="text-red-400 hover:text-red-600 text-xs"><i class="pi pi-times"></i></button>
+                                                    </div>
+                                                    <input v-if="ch.type === 'text'" v-model="ch.valeur" type="text" class="w-full rounded border border-gpj-200 text-sm py-1 px-2" />
+                                                    <input v-else-if="ch.type === 'date'" v-model="ch.valeur" type="date" class="w-full rounded border border-gpj-200 text-sm py-1 px-2" />
+                                                    <div v-if="ch.type === 'date' && ch.valeur" class="text-xs text-gpj-400 mt-0.5">📅 {{ formatDate(ch.valeur) }}</div>
+                                                    <textarea v-else-if="ch.type === 'textarea'" v-model="ch.valeur" rows="2" class="w-full rounded border border-gpj-200 text-sm py-1 px-2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Personnes -->
+                                        <div v-if="editPhaseForm.personnes?.length" class="border-t border-gpj-100 pt-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <p class="text-xs font-medium text-gpj-500">Personnes ({{ editPhaseForm.personnes.length }})</p>
+                                                <button type="button" @click="editPhaseForm.personnes.push({ nom: '', prenom: '', profession: '', autre: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                            </div>
+                                            <div v-for="(p, i) in editPhaseForm.personnes" :key="'ep-'+i" class="grid grid-cols-2 gap-1 mb-2 p-2 bg-white rounded border border-gpj-100">
+                                                <input v-model="p.nom" placeholder="Nom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" />
+                                                <input v-model="p.prenom" placeholder="Prénom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" />
+                                                <input v-model="p.profession" placeholder="Profession" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" />
+                                                <input v-model="p.autre" placeholder="Autre" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Événements -->
+                                        <div v-if="editPhaseForm.evenements?.length" class="border-t border-gpj-100 pt-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <p class="text-xs font-medium text-gpj-500">Événements ({{ editPhaseForm.evenements.length }})</p>
+                                                <button type="button" @click="editPhaseForm.evenements.push({ nom: '', date_evenement: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                            </div>
+                                            <div v-for="(e, i) in editPhaseForm.evenements" :key="'ee-'+i" class="mb-2 p-2 bg-white rounded border border-gpj-100">
+                                                <input v-model="e.nom" placeholder="Nom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" />
+                                                <input v-model="e.date_evenement" type="date" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" />
+                                                <div v-if="e.date_evenement" class="text-xs text-gpj-400 mb-1">📅 {{ formatDate(e.date_evenement) }}</div>
+                                                <textarea v-model="e.description" placeholder="Description" rows="1" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Références -->
+                                        <div v-if="editPhaseForm.references?.length" class="border-t border-gpj-100 pt-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <p class="text-xs font-medium text-gpj-500">Références ({{ editPhaseForm.references.length }})</p>
+                                                <button type="button" @click="editPhaseForm.references.push({ libelle: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                            </div>
+                                            <div v-for="(r, i) in editPhaseForm.references" :key="'er-'+i" class="mb-2 p-2 bg-white rounded border border-gpj-100">
+                                                <input v-model="r.libelle" placeholder="Libellé" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" />
+                                                <textarea v-model="r.description" placeholder="Description" rows="1" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Options -->
+                                        <div v-if="editPhaseForm.options_cocher?.length" class="border-t border-gpj-100 pt-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <p class="text-xs font-medium text-gpj-500">Options ({{ editPhaseForm.options_cocher.length }})</p>
+                                                <button type="button" @click="editPhaseForm.options_cocher.push({ libelle: 'Nouvelle option', est_coche: false, _custom: true })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                            </div>
+                                            <label v-for="(o, i) in editPhaseForm.options_cocher" :key="'eo-'+i" class="flex items-center gap-2 py-1 cursor-pointer">
+                                                <input type="checkbox" v-model="o.est_coche" class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500 shrink-0" />
+                                                <input v-if="o._custom" v-model="o.libelle" type="text" class="flex-1 text-xs border-b border-gpj-200 py-0.5" />
+                                                <span v-else class="text-xs text-gpj-700 flex-1">{{ o.libelle }}</span>
+                                                <button type="button" @click="editPhaseForm.options_cocher.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
+                                            </label>
+                                        </div>
+
+                                        <!-- Pièces jointes -->
+                                        <div v-if="editPhaseForm.pieces_jointes?.length" class="border-t border-gpj-100 pt-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <p class="text-xs font-medium text-gpj-500">Pièces jointes ({{ editPhaseForm.pieces_jointes.length }})</p>
+                                                <button type="button" @click="editPhaseForm.pieces_jointes.push({ nom: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                            </div>
+                                            <div v-for="(pj, i) in editPhaseForm.pieces_jointes" :key="'epj-'+i" class="mb-2 p-2 bg-white rounded border border-gpj-100">
+                                                <div class="flex justify-between mb-1">
+                                                    <span class="text-xs text-gpj-500">Pièce {{ i + 1 }}</span>
+                                                    <button type="button" @click="editPhaseForm.pieces_jointes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
+                                                </div>
+                                                <input v-model="pj.nom" placeholder="Nom" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" />
+                                                <textarea v-model="pj.description" placeholder="Description" rows="1" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5 mb-1" />
+                                                <div v-if="pj.chemin_fichier && !pj.fichier" class="text-xs text-gpj-500 mb-1 flex items-center gap-2">
+                                                    <i class="pi pi-file-pdf text-red-500"></i>
+                                                    <a :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-gpj-500 hover:underline">Voir le PDF</a>
+                                                    <button type="button" @click="pj.chemin_fichier = null; pj._supprimerFichier = true" class="text-red-400 hover:text-red-600"><i class="pi pi-trash text-xs"></i></button>
+                                                </div>
+                                                <input type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-gpj-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-gpj-100 file:text-gpj-600" />
+                                                <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1"><i class="pi pi-check mr-1"></i>{{ pj.fichier.name }}</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Ajout champ personnalisé -->
+                                        <div class="border-t border-gpj-100 pt-3">
+                                            <button type="button" @click="showEditCustomField = !showEditCustomField" class="text-xs text-gpj-500 hover:text-gpj-700 font-medium flex items-center gap-1 cursor-pointer"><i class="pi pi-plus-circle"></i> Ajouter un champ personnalisé</button>
+                                            <div v-if="showEditCustomField" class="mt-2 p-3 bg-white rounded border border-gpj-100 space-y-2">
+                                                <div class="grid grid-cols-2 gap-2">
+                                                    <input v-model="editCustomField.cle" type="text" placeholder="Nom du champ *" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5" />
+                                                    <select v-model="editCustomField.type" class="w-full rounded border border-gpj-200 text-xs py-1 px-1.5">
+                                                        <option value="text">Texte</option>
+                                                        <option value="date">Date</option>
+                                                        <option value="textarea">Texte long</option>
+                                                    </select>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <button type="button" @click="addCustomFieldToEdit" class="px-2 py-1 bg-gpj-500 text-white text-xs rounded hover:bg-gpj-600 cursor-pointer">Ajouter</button>
+                                                    <button type="button" @click="showEditCustomField = false" class="text-xs text-gpj-400 hover:text-gpj-600 cursor-pointer">Annuler</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Boutons -->
+                                        <div class="flex items-center gap-2 pt-2 border-t border-gpj-100">
+                                            <button @click="savePhaseEdit(phase.id)" :disabled="editPhaseProcessing" class="px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer">
+                                                <i v-if="editPhaseProcessing" class="pi pi-spin pi-spinner mr-1"></i>Enregistrer
+                                            </button>
+                                            <button @click="cancelEditPhase" class="px-3 py-1.5 border border-gpj-200 text-gpj-600 text-xs rounded-lg hover:bg-gpj-50 cursor-pointer">Annuler</button>
+                                        </div>
                                     </div>
+
+                                    <!-- Affichage normal de la phase -->
                                     <div v-else>
                                         <p v-if="phase.description" class="text-xs text-gpj-500 mt-1">{{ phase.description }}</p>
-                                        <div v-if="phase.champs?.length" class="mt-2"><p class="text-xs font-medium text-gpj-500 mb-1">Champs ({{ phase.champs.length }})</p><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"><div v-for="ch in phase.champs" :key="ch.id" class="bg-white rounded border border-gpj-100 p-2"><span class="text-xs text-gpj-400">{{ formatLabel(ch.cle) }}:</span><span class="text-xs text-gpj-700 ml-1">{{ ch.type === 'date' ? formatDate(ch.valeur) : (ch.valeur || '-') }}</span></div></div></div>
-                                        <div v-if="phase.personnes?.length" class="mt-2"><p class="text-xs font-medium text-gpj-500">Personnes :</p><div v-for="p in phase.personnes" :key="p.id" class="text-xs text-gpj-600 ml-2">{{ p.nom }} {{ p.prenom }}{{ p.profession ? ' - ' + p.profession : '' }}</div></div>
-                                        <div v-if="phase.evenements?.length" class="mt-2"><p class="text-xs font-medium text-gpj-500">Événements :</p><div v-for="e in phase.evenements" :key="e.id" class="text-xs text-gpj-600 ml-2">{{ e.nom }}{{ e.date_evenement ? ' (' + formatDate(e.date_evenement) + ')' : '' }}</div></div>
-                                        <div v-if="phase.references?.length" class="mt-2"><p class="text-xs font-medium text-gpj-500">Références :</p><div v-for="r in phase.references" :key="r.id" class="text-xs text-gpj-600 ml-2">{{ r.libelle }}</div></div>
-                                        <div v-if="phase.options_cocher?.filter(o => o.est_coche).length" class="mt-2 flex flex-wrap gap-1"><Badge v-for="o in phase.options_cocher.filter(o => o.est_coche)" :key="o.id" variant="success" size="sm">{{ o.libelle }}</Badge></div>
-                                        <div v-if="phase.pieces_jointes?.length" class="mt-2"><p class="text-xs font-medium text-gpj-500">Pièces jointes :</p><div v-for="pj in phase.pieces_jointes" :key="pj.id" class="text-xs text-gpj-600 ml-2 flex items-center gap-2"><i class="pi pi-file-pdf text-red-500"></i><span>{{ pj.nom }}</span><a v-if="pj.chemin_fichier" :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-gpj-500 hover:underline"><i class="pi pi-external-link text-xs"></i> Voir</a></div></div>
+                                        
+                                        <!-- Affichage condamnation -->
+                                        <div v-if="phase.est_condamne === true" class="mt-2 p-2 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
+                                            <div class="flex items-center gap-2 text-red-700 dark:text-red-300">
+                                                <i class="pi pi-gavel text-sm"></i>
+                                                <span class="font-bold text-sm">Condamnation</span>
+                                            </div>
+                                            <div class="mt-1 text-sm text-red-600 dark:text-red-300">
+                                                <p><span class="font-medium">Peine :</span> {{ phase.peine_principale || 'Non spécifiée' }}</p>
+                                                <p v-if="phase.peine_description" class="mt-1 text-xs text-red-500 dark:text-red-400">
+                                                    {{ phase.peine_description }}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Champs -->
+                                        <div v-if="phase.champs?.length" class="mt-2">
+                                            <p class="text-xs font-medium text-gpj-500 mb-1">Champs ({{ phase.champs.length }})</p>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                                                <div v-for="ch in phase.champs" :key="ch.id" class="bg-white rounded border border-gpj-100 p-2">
+                                                    <span class="text-xs text-gpj-400">{{ formatLabel(ch.cle) }}:</span>
+                                                    <span class="text-xs text-gpj-700 ml-1">{{ ch.type === 'date' ? formatDate(ch.valeur) : (ch.valeur || '-') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Personnes -->
+                                        <div v-if="phase.personnes?.length" class="mt-2">
+                                            <p class="text-xs font-medium text-gpj-500">Personnes :</p>
+                                            <div v-for="p in phase.personnes" :key="p.id" class="text-xs text-gpj-600 ml-2">{{ p.nom }} {{ p.prenom }}{{ p.profession ? ' - ' + p.profession : '' }}</div>
+                                        </div>
+
+                                        <!-- Événements -->
+                                        <div v-if="phase.evenements?.length" class="mt-2">
+                                            <p class="text-xs font-medium text-gpj-500">Événements :</p>
+                                            <div v-for="e in phase.evenements" :key="e.id" class="text-xs text-gpj-600 ml-2">{{ e.nom }}{{ e.date_evenement ? ' (' + formatDate(e.date_evenement) + ')' : '' }}</div>
+                                        </div>
+
+                                        <!-- Références -->
+                                        <div v-if="phase.references?.length" class="mt-2">
+                                            <p class="text-xs font-medium text-gpj-500">Références :</p>
+                                            <div v-for="r in phase.references" :key="r.id" class="text-xs text-gpj-600 ml-2">{{ r.libelle }}</div>
+                                        </div>
+
+                                        <!-- Options cochées -->
+                                        <div v-if="phase.options_cocher?.filter(o => o.est_coche).length" class="mt-2 flex flex-wrap gap-1">
+                                            <Badge v-for="o in phase.options_cocher.filter(o => o.est_coche)" :key="o.id" variant="success" size="sm">{{ o.libelle }}</Badge>
+                                        </div>
+
+                                        <!-- Pièces jointes -->
+                                        <div v-if="phase.pieces_jointes?.length" class="mt-2">
+                                            <p class="text-xs font-medium text-gpj-500">Pièces jointes :</p>
+                                            <div v-for="pj in phase.pieces_jointes" :key="pj.id" class="text-xs text-gpj-600 ml-2 flex items-center gap-2">
+                                                <i class="pi pi-file-pdf text-red-500"></i>
+                                                <span>{{ pj.nom }}</span>
+                                                <a v-if="pj.chemin_fichier" :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-gpj-500 hover:underline"><i class="pi pi-external-link text-xs"></i> Voir</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -161,53 +480,78 @@
             </div>
         </div>
 
-        <!-- Modale Ajouter un militaire -->
-        <div v-if="showAddMilitaireModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <!-- Modale Ajouter un personnel -->
+        <div v-if="showAddPersonnelModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
             <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Ajouter un militaire à la procédure</h3>
+                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Ajouter un personnel à la procédure</h3>
                 
                 <div class="space-y-4">
-                    <!-- Recherche/sélection du militaire -->
+                    <!-- Type de personnel -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Rechercher un militaire existant</label>
+                        <label class="block text-sm font-medium text-gpj-700 mb-1">Type de personnel</label>
+                        <div class="flex gap-4">
+                            <label v-for="option in typePersonnelOptions" :key="option.value" class="flex items-center gap-2 cursor-pointer">
+                                <input 
+                                    type="radio" 
+                                    :value="option.value"
+                                    v-model="newPersonnel.type_personnel"
+                                    class="rounded-full border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                                />
+                                <span class="text-sm">{{ option.label }}</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Recherche/sélection du personnel -->
+                    <div>
+                        <label class="block text-sm font-medium text-gpj-700 mb-1">Rechercher un personnel existant</label>
                         <SearchSelect
-                            :options="optionsMilitaires"
-                            v-model="newMilitaire.militaire_id"
+                            :options="optionsPersonnels"
+                            v-model="newPersonnel.militaire_id"
                             placeholder="Rechercher par nom, matricule..."
-                            @search="rechercherMilitaires"
-                            @change="onMilitaireChange"
+                            @search="rechercherPersonnels"
+                            @change="onPersonnelChange"
                         />
                     </div>
 
                     <div class="border-t border-gpj-200 pt-4">
-                        <p class="text-sm font-medium text-gpj-700 mb-2">OU créer un nouveau militaire</p>
+                        <p class="text-sm font-medium text-gpj-700 mb-2">OU créer un nouveau personnel</p>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-medium text-gpj-600 mb-1">Nom *</label>
-                                <input v-model="newMilitaire.nom" type="text" placeholder="Nom" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="newPersonnel.nom" type="text" placeholder="Nom" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gpj-600 mb-1">Prénom *</label>
-                                <input v-model="newMilitaire.prenom" type="text" placeholder="Prénom" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="newPersonnel.prenom" type="text" placeholder="Prénom" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                             </div>
-                            <div>
+                            <div v-if="newPersonnel.type_personnel === 'militaire'">
                                 <label class="block text-xs font-medium text-gpj-600 mb-1">Grade</label>
-                                <input v-model="newMilitaire.grade" type="text" placeholder="Grade" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <select v-model="newPersonnel.grade_id" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                                    <option value="">Sélectionner</option>
+                                    <option v-for="grade in grades" :key="grade.id" :value="grade.id">
+                                        {{ grade.libelle }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div v-if="newPersonnel.type_personnel === 'civil'">
+                                <label class="block text-xs font-medium text-gpj-600 mb-1">Profession</label>
+                                <input v-model="newPersonnel.profession" type="text" placeholder="Profession" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gpj-600 mb-1">Matricule</label>
-                                <input v-model="newMilitaire.matricule" type="text" placeholder="Matricule" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="newPersonnel.matricule" type="text" placeholder="Matricule" class="w-full rounded border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2 mt-6 pt-4 border-t border-gpj-100">
-                    <button @click="ajouterMilitaire" :disabled="ajoutEnCours" class="px-4 py-2 bg-emerald-500 text-white text-sm font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer">
+                    <button @click="ajouterPersonnel" :disabled="ajoutEnCours" class="px-4 py-2 bg-emerald-500 text-white text-sm font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer">
                         <i v-if="ajoutEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                         Ajouter
                     </button>
-                    <button @click="closeAddMilitaireModal" class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer">
+                    <button @click="closeAddPersonnelModal" class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer">
                         Annuler
                     </button>
                 </div>
@@ -244,6 +588,7 @@ import { Card, Badge } from '@/Components/GPJ';
 import PhaseFormFields from '@/Components/Procedure/PhaseFormFields.vue';
 import MilitaireDetail from '@/Components/Procedure/MilitaireDetail.vue';
 import SearchSelect from '@/Components/GPJ/SearchSelect.vue';
+import ParquetSelector from '@/Components/Procedure/ParquetSelector.vue';
 
 const page = usePage();
 const props = defineProps({ 
@@ -252,15 +597,75 @@ const props = defineProps({
     parquets: { type: Array, default: () => ['BAMAKO','MOPTI','GAO','KAYES'] }, 
     infractions: { type: Array, default: () => [] },
     grades: { type: Array, default: () => [] },
-    armees: { type: Array, default: () => [] }
+    armees: { type: Array, default: () => [] },
+    allParquets: { type: Array, default: () => [] },
+    lieuCommissionOptions: { type: Array, default: () => [] },
+    typePersonnelOptions: { type: Array, default: () => [] }
 });
 
 // ====== INFRACTIONS ======
-// Utiliser les infractions passées en prop
 const allInfractions = ref(props.infractions || []);
+const infractionsData = ref({});
+const typePersonnelOptions = ref(props.typePersonnelOptions || [
+    { value: 'militaire', label: 'Militaire' },
+    { value: 'civil', label: 'Civil' }
+]);
 
-// Log pour déboguer
-console.log('📦 Infractions reçues dans Show:', allInfractions.value);
+// ====== FAUTES ======
+const allFautes = ref([]);
+
+// ====== CHARGEMENT DES INFRACTIONS ======
+const loadInfractions = async () => {
+    try {
+        const response = await fetch('/infractions-data');
+        const data = await response.json();
+        const map = {};
+        data.forEach(inf => {
+            map[inf.id] = inf.libelle;
+        });
+        infractionsData.value = map;
+        console.log('✅ Infractions chargées:', Object.keys(map).length);
+    } catch (e) {
+        console.error('Erreur chargement infractions:', e);
+    }
+};
+loadInfractions();
+
+// ====== CHARGEMENT DES FAUTES ======
+const loadFautes = async () => {
+    try {
+        console.log('📥 Chargement des fautes...');
+        const response = await fetch('/api/categories-fautes');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('📥 Données reçues:', data);
+        
+        const fautes = [];
+        data.forEach(cat => {
+            if (cat.fautes && cat.fautes.length > 0) {
+                cat.fautes.forEach(faute => {
+                    fautes.push({
+                        ...faute,
+                        categorie: { libelle: cat.libelle }
+                    });
+                });
+            }
+        });
+        
+        allFautes.value = fautes;
+        console.log('✅ Fautes chargées:', fautes.length);
+    } catch (e) {
+        console.error('❌ Erreur chargement fautes:', e);
+    }
+};
+
+// ====== VÉRIFICATION SI PHASE ORDRE DE POURSUITE ======
+const isOrdrePoursuitePhase = (phase) => {
+    if (!phase) return false;
+    return phase.phase_type?.slug === 'ordre_de_poursuite';
+};
 
 // ====== GESTION DES ERREURS FLASH ======
 const flashError = ref(null);
@@ -301,17 +706,22 @@ onMounted(() => {
         showFlash('error', page.props.flash.error);
         setTimeout(() => flashError.value = null, 8000);
     }
+    loadFautes();
 });
 
 // ====== PERMISSIONS ======
-const peutValider = computed(() => ['CDS','CDD','SD'].includes(page.props.auth.user.role));
+const peutValider = computed(() => ['CDS','CDD','SD'].includes(page.props.auth?.user?.role));
 
 // ====== FORMATAGE ======
 const formatDate = (d) => {
     if (!d) return 'Non défini';
     const date = new Date(d);
     if (isNaN(date.getTime())) return 'Non défini';
-    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    return date.toLocaleDateString('fr-FR', { 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+    });
 };
 
 const formatDateForInput = (d) => { 
@@ -336,69 +746,148 @@ const rechargerProcedure = () => {
     router.reload({ preserveState: true });
 };
 
-// ====== AJOUTER UN MILITAIRE ======
-const showAddMilitaireModal = ref(false);
+// ====== INFRACTION CRÉÉE ======
+const onInfractionCreated = (newInfraction) => {
+    allInfractions.value.push(newInfraction);
+    infractionsData.value[newInfraction.id] = newInfraction.libelle;
+    console.log('✅ Nouvelle infraction créée:', newInfraction);
+};
+
+// ====== PARQUET ======
+const editParquet = ref(false);
+const editParquetError = ref(null);
+const editParquetForm = ref({
+    type: props.procedure.parquet_type || 'militaire',
+    id: props.procedure.parquet_id || null,
+    nom: props.procedure.parquet?.nom || '',
+    localisation: props.procedure.parquet?.localisation || '',
+    code: props.procedure.parquet?.code || ''
+});
+
+const startEditParquet = () => {
+    editParquetForm.value = {
+        type: props.procedure.parquet_type || 'militaire',
+        id: props.procedure.parquet_id || null,
+        nom: props.procedure.parquet?.nom || '',
+        localisation: props.procedure.parquet?.localisation || '',
+        code: props.procedure.parquet?.code || ''
+    };
+    editParquetError.value = null;
+    editParquet.value = true;
+};
+
+const onParquetChange = (value) => {
+    console.log('Parquet modifié:', value);
+    editParquetError.value = null;
+};
+
+const saveParquet = () => {
+    router.patch(route('procedures.update-parquet', props.procedure.id), {
+        parquet_type: editParquetForm.value.type,
+        parquet_id: editParquetForm.value.id,
+        parquet_nom: editParquetForm.value.nom,
+        parquet_localisation: editParquetForm.value.localisation,
+        parquet_code: editParquetForm.value.code
+    }, {
+        onSuccess: () => {
+            editParquet.value = false;
+            flashSuccess.value = 'Parquet mis à jour avec succès';
+            setTimeout(() => flashSuccess.value = null, 5000);
+            rechargerProcedure();
+        },
+        onError: (errors) => {
+            editParquetError.value = errors.error || 'Erreur lors de la mise à jour du parquet';
+            flashError.value = 'Erreur lors de la mise à jour du parquet: ' + JSON.stringify(errors);
+            setTimeout(() => flashError.value = null, 8000);
+        },
+        preserveScroll: true
+    });
+};
+
+// ====== AJOUTER UN PERSONNEL ======
+const showAddPersonnelModal = ref(false);
 const ajoutEnCours = ref(false);
-const optionsMilitaires = ref([]);
-const newMilitaire = ref({
+const optionsPersonnels = ref([]);
+const newPersonnel = ref({
+    type_personnel: 'militaire',
     militaire_id: null,
     nom: '',
     prenom: '',
-    grade: '',
+    profession: '',
+    grade_id: '',
     matricule: ''
 });
 
-const openAddMilitaireModal = () => {
-    newMilitaire.value = { militaire_id: null, nom: '', prenom: '', grade: '', matricule: '' };
-    showAddMilitaireModal.value = true;
+const openAddPersonnelModal = () => {
+    newPersonnel.value = { 
+        type_personnel: 'militaire',
+        militaire_id: null, 
+        nom: '', 
+        prenom: '', 
+        profession: '',
+        grade_id: '', 
+        matricule: '' 
+    };
+    showAddPersonnelModal.value = true;
 };
 
-const closeAddMilitaireModal = () => {
-    showAddMilitaireModal.value = false;
-    newMilitaire.value = { militaire_id: null, nom: '', prenom: '', grade: '', matricule: '' };
+const closeAddPersonnelModal = () => {
+    showAddPersonnelModal.value = false;
+    newPersonnel.value = { 
+        type_personnel: 'militaire',
+        militaire_id: null, 
+        nom: '', 
+        prenom: '', 
+        profession: '',
+        grade_id: '', 
+        matricule: '' 
+    };
 };
 
-const rechercherMilitaires = async (query) => {
+const rechercherPersonnels = async (query) => {
     if (!query || query.length < 2) {
-        optionsMilitaires.value = [];
+        optionsPersonnels.value = [];
         return;
     }
     try {
         const response = await fetch(`/api/militaires/search?q=${encodeURIComponent(query)}`);
         const data = await response.json();
-        optionsMilitaires.value = data;
+        optionsPersonnels.value = data;
     } catch (e) {
         console.error('Erreur recherche:', e);
     }
 };
 
-const onMilitaireChange = () => {
-    const mil = newMilitaire.value;
-    if (mil.militaire_id) {
-        const selected = optionsMilitaires.value.find(m => m.value === mil.militaire_id);
+const onPersonnelChange = () => {
+    const pers = newPersonnel.value;
+    if (pers.militaire_id) {
+        const selected = optionsPersonnels.value.find(m => m.value === pers.militaire_id);
         if (selected) {
-            mil.nom = selected.label.split(' ')[0] || '';
-            mil.prenom = selected.label.split(' ').slice(1).join(' ') || '';
-            mil.matricule = selected.sublabel || '';
+            pers.nom = selected.label.split(' ')[0] || '';
+            pers.prenom = selected.label.split(' ').slice(1).join(' ') || '';
+            pers.matricule = selected.sublabel || '';
+            pers.type_personnel = selected.type || 'militaire';
         }
     }
 };
 
-const ajouterMilitaire = () => {
+const ajouterPersonnel = () => {
     ajoutEnCours.value = true;
     
     router.post(route('procedures.militaire.ajouter', props.procedure.id), {
-        militaire_id: newMilitaire.value.militaire_id,
-        nom: newMilitaire.value.nom,
-        prenom: newMilitaire.value.prenom,
-        grade: newMilitaire.value.grade,
-        matricule: newMilitaire.value.matricule
+        type_personnel: newPersonnel.value.type_personnel,
+        militaire_id: newPersonnel.value.militaire_id,
+        nom: newPersonnel.value.nom,
+        prenom: newPersonnel.value.prenom,
+        profession: newPersonnel.value.profession,
+        grade_id: newPersonnel.value.grade_id,
+        matricule: newPersonnel.value.matricule
     }, {
         onSuccess: () => {
             ajoutEnCours.value = false;
-            closeAddMilitaireModal();
+            closeAddPersonnelModal();
             rechargerProcedure();
-            flashSuccess.value = 'Militaire ajouté avec succès';
+            flashSuccess.value = 'Personnel ajouté avec succès';
             setTimeout(() => flashSuccess.value = null, 5000);
         },
         onError: (errors) => {
@@ -410,19 +899,8 @@ const ajouterMilitaire = () => {
 };
 
 // ====== FORMULAIRES D'ÉDITION ======
-const editParquet = ref(false); 
-const editForm = ref({ parquet_competent: '', date_ouverture: '' });
-
-const saveParquet = () => {
-    router.patch(route('procedures.update-parquet', props.procedure.id), { 
-        parquet_competent: editForm.value.parquet_competent 
-    }, { 
-        onSuccess: () => editParquet.value = false, 
-        preserveScroll: true 
-    });
-};
-
 const editDateOuverture = ref(false);
+const editForm = ref({ date_ouverture: '' });
 
 const saveDateOuverture = () => {
     router.patch(route('procedures.update-date-ouverture', props.procedure.id), { 
@@ -440,6 +918,9 @@ const phaseForm = ref({
     phase_personnalisee: '', 
     date_phase: '', 
     description: '', 
+    est_condamne: false,
+    peine_principale: '',
+    peine_description: '',
     champs: [], 
     personnes: [], 
     evenements: [], 
@@ -454,39 +935,30 @@ const onPhaseTypeChange = () => {
     phaseForm.value.evenements = []; 
     phaseForm.value.references = []; 
     phaseForm.value.options_cocher = []; 
-    phaseForm.value.pieces_jointes = [{ nom: '', description: '', contexte: '' }]; 
+    phaseForm.value.pieces_jointes = [{ nom: '', description: '', contexte: '' }];
+    phaseForm.value.est_condamne = false;
+    phaseForm.value.peine_principale = '';
+    phaseForm.value.peine_description = '';
     
     const tid = phaseForm.value.phase_type_id; 
     if (tid && tid !== 'autre') { 
         const pt = props.phaseTypes.find(p => p.id == tid); 
         if (pt) { 
-            if (pt.slug === 'communique') { 
-                phaseForm.value.personnes = [{ nom: '', prenom: '', profession: '', autre: '' }]; 
-                phaseForm.value.evenements = [{ nom: '', date_evenement: '', description: '' }]; 
+            if (pt.slug === 'ordre_de_poursuite') { 
                 phaseForm.value.champs = [
-                    { cle: 'origine', valeur: '', type: 'text' },
-                    { cle: 'numero', valeur: '', type: 'text' },
-                    { cle: 'date_communique', valeur: phaseForm.value.date_phase, type: 'date' }
+                    { cle: 'reglement', valeur: '', type: 'text' },
+                    { cle: 'ordonnance_juge_instruction', valeur: '', type: 'text' },
+                    { cle: 'jugement', valeur: '', type: 'text' },
+                    { cle: 'voix_de_recours', valeur: '', type: 'text' },
+                    { cle: 'arret_rendu', valeur: '', type: 'text' },
+                    { cle: 'voix_recours_arret', valeur: '', type: 'text' }
                 ]; 
-            } else if (pt.slug === 'mise_a_disposition') { 
-                phaseForm.value.references = [{ libelle: '', description: '' }]; 
-                phaseForm.value.champs = [{ cle: 'date_mad', valeur: phaseForm.value.date_phase, type: 'date' }]; 
-            } else if (pt.slug === 'ordre_de_poursuite') { 
                 phaseForm.value.options_cocher = [
                     { libelle: 'Détenu', est_coche: false },
                     { libelle: 'Non détenu', est_coche: false },
                     { libelle: 'Citation directe', est_coche: false },
                     { libelle: 'Information', est_coche: false },
                     { libelle: 'Autre', est_coche: false }
-                ]; 
-                phaseForm.value.champs = [
-                    { cle: 'reglement', valeur: '', type: 'text' },
-                    { cle: 'ordonnance_juge_instruction', valeur: '', type: 'text' },
-                    { cle: 'jugement', valeur: '', type: 'text' },
-                    { cle: 'peine', valeur: '', type: 'text' },
-                    { cle: 'voix_de_recours', valeur: '', type: 'text' },
-                    { cle: 'arret_rendu', valeur: '', type: 'text' },
-                    { cle: 'voix_recours_arret', valeur: '', type: 'text' }
                 ]; 
             } 
         } 
@@ -499,8 +971,22 @@ const ajouterPhase = () => {
         setTimeout(() => flashError.value = null, 5000);
         return;
     }
+    
+    // FORCER la valeur de est_condamne si peine_principale n'est pas vide
+    if (phaseForm.value.peine_principale && phaseForm.value.peine_principale.trim() !== '') {
+        phaseForm.value.est_condamne = true;
+    }
+    
+    console.log('📤 Données de condamnation envoyées:', {
+        est_condamne: phaseForm.value.est_condamne,
+        peine_principale: phaseForm.value.peine_principale,
+        peine_description: phaseForm.value.peine_description,
+    });
+    
     formProcessing.value = true; 
-    router.post(route('procedures.ajouter-phase', props.procedure.id), { ...phaseForm.value }, { 
+    router.post(route('procedures.ajouter-phase', props.procedure.id), { 
+        ...phaseForm.value 
+    }, { 
         onSuccess: () => { 
             formProcessing.value = false; 
             flashSuccess.value = 'Phase ajoutée avec succès';
@@ -510,6 +996,9 @@ const ajouterPhase = () => {
                 phase_personnalisee: '', 
                 date_phase: '', 
                 description: '', 
+                est_condamne: false,
+                peine_principale: '',
+                peine_description: '',
                 champs: [], 
                 personnes: [], 
                 evenements: [], 
@@ -532,7 +1021,10 @@ const editingPhaseId = ref(null);
 const editPhaseProcessing = ref(false);
 const editPhaseForm = ref({ 
     description: '', 
-    date_phase: '', 
+    date_phase: '',
+    est_condamne: false,
+    peine_principale: '',
+    peine_description: '',
     champs: [], 
     personnes: [], 
     evenements: [], 
@@ -554,7 +1046,10 @@ const startEditPhase = (phase) => {
     if (!pj.length) pj = [{ nom: '', description: '', chemin_fichier: null }]; 
     editPhaseForm.value = { 
         description: phase.description || '', 
-        date_phase: formatDateForInput(phase.date_phase), 
+        date_phase: formatDateForInput(phase.date_phase),
+        est_condamne: phase.est_condamne === true || phase.est_condamne === 1,
+        peine_principale: phase.peine_principale || '',
+        peine_description: phase.peine_description || '',
         champs: (phase.champs || []).map(c => ({ 
             id: c.id, 
             cle: c.cle, 
@@ -589,6 +1084,13 @@ const startEditPhase = (phase) => {
     }; 
     showEditCustomField.value = false; 
     editCustomField.value = { cle: '', type: 'text', valeur: '' }; 
+};
+
+const onEditCondamnationChange = () => {
+    if (!editPhaseForm.value.est_condamne) {
+        editPhaseForm.value.peine_principale = '';
+        editPhaseForm.value.peine_description = '';
+    }
 };
 
 const cancelEditPhase = () => { 
@@ -630,6 +1132,7 @@ const savePhaseEdit = (phaseId) => {
             showEditCustomField.value = false;
             flashSuccess.value = 'Phase mise à jour avec succès';
             setTimeout(() => flashSuccess.value = null, 5000);
+            rechargerProcedure();
         }, 
         onError: (errors) => {
             editPhaseProcessing.value = false;

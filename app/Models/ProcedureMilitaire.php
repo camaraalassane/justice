@@ -10,6 +10,7 @@ class ProcedureMilitaire extends Model
 
     protected $fillable = [
         'procedure_id',
+        'type_personnel',
         'militaire_id',
         'infractions',
         'fautes_militaires',
@@ -20,6 +21,7 @@ class ProcedureMilitaire extends Model
         'prenom_temp',
         'grade_temp',
         'matricule_temp',
+        'profession_temp',
     ];
 
     protected $casts = [
@@ -84,6 +86,19 @@ class ProcedureMilitaire extends Model
         return $this->matricule_temp;
     }
 
+    public function getProfessionAttribute()
+    {
+        if ($this->militaire) {
+            return $this->militaire->profession;
+        }
+        return $this->profession_temp;
+    }
+
+    public function getTypePersonnelLabelAttribute(): string
+    {
+        return $this->type_personnel === 'militaire' ? 'Militaire' : 'Civil';
+    }
+
     public function getUniteAttribute()
     {
         if ($this->militaire) {
@@ -140,19 +155,13 @@ class ProcedureMilitaire extends Model
         return null;
     }
 
-    /**
-     * Vérifier si le militaire existe en base
-     */
     public function getEstExistantAttribute(): bool
     {
         return !is_null($this->militaire_id);
     }
 
-    // ==================== MÉTHODES POUR LES INFRACTIONS ====================
+    // ==================== MÉTHODES ====================
 
-    /**
-     * Récupérer les infractions avec leurs libellés
-     */
     public function getInfractionsLibellesAttribute()
     {
         if (empty($this->infractions)) {
@@ -161,9 +170,6 @@ class ProcedureMilitaire extends Model
         return InfractionBase::whereIn('id', $this->infractions)->get();
     }
 
-    /**
-     * Récupérer les infractions avec leurs codes
-     */
     public function getInfractionsDetailsAttribute()
     {
         if (empty($this->infractions)) {
@@ -174,28 +180,39 @@ class ProcedureMilitaire extends Model
             ->get();
     }
 
-    /**
-     * Vérifier si le militaire a des infractions
-     */
     public function hasInfractions(): bool
     {
         return !empty($this->infractions) && count($this->infractions) > 0;
     }
 
     /**
-     * Récupérer les fautes militaires
+     * Récupérer les fautes militaires avec leurs libellés
      */
     public function getFautesLibellesAttribute()
     {
         if (empty($this->fautes_militaires)) {
             return collect();
         }
-        return collect($this->fautes_militaires);
+        return FauteMilitaire::whereIn('id', $this->fautes_militaires)
+            ->with('categorie')
+            ->get();
     }
 
     /**
-     * Récupérer les parties civiles
+     * Récupérer les fautes militaires groupées par catégorie
      */
+    public function getFautesParCategorieAttribute()
+    {
+        if (empty($this->fautes_militaires)) {
+            return collect();
+        }
+        $fautes = FauteMilitaire::whereIn('id', $this->fautes_militaires)
+            ->with('categorie')
+            ->get();
+        
+        return $fautes->groupBy('categorie.libelle');
+    }
+
     public function getPartiesCivilesDetailsAttribute()
     {
         if (empty($this->parties_civiles)) {
@@ -204,17 +221,11 @@ class ProcedureMilitaire extends Model
         return collect($this->parties_civiles);
     }
 
-    /**
-     * Vérifier si le militaire a des parties civiles
-     */
     public function hasPartiesCiviles(): bool
     {
         return !empty($this->parties_civiles) && count($this->parties_civiles) > 0;
     }
 
-    /**
-     * Vérifier si le militaire a des fautes
-     */
     public function hasFautes(): bool
     {
         return !empty($this->fautes_militaires) && count($this->fautes_militaires) > 0;

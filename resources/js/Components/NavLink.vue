@@ -8,7 +8,7 @@
                 : 'text-gpj-200 hover:bg-gpj-700 hover:text-white'
         ]"
     >
-        <i :class="icon" class="text-base w-5 text-center flex-shrink-0"></i>
+        <i :class="icon" class="text-base w-5 text-center shrink-0"></i>
         <span class="truncate"><slot /></span>
     </Link>
 </template>

@@ -155,6 +155,53 @@
             font-size: 9px;
             margin: 2px 2px 2px 0;
         }
+        .badge-statut {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        .badge-statut-actif {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .badge-statut-suspendu {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .badge-statut-retraite {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-statut-radie {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+        .peine-detail {
+            color: #dc2626;
+            font-weight: bold;
+        }
+        .condamnation-tag {
+            display: inline-block;
+            background-color: #dc2626;
+            color: white;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .statut-normalized {
+            font-weight: bold;
+        }
+        .statut-actif { color: #065f46; }
+        .statut-non-activite { color: #92400e; }
+        .statut-retraite { color: #1e40af; }
+        .statut-radie { color: #374151; }
     </style>
 </head>
 <body>
@@ -165,8 +212,8 @@
         <h1 style="margin-top: 15px;">Casier Judiciaire Militaire</h1>
     </div>
 
-    <!-- ÉTAT CIVIL -->
-    <div class="section-title">I - ÉTAT CIVIL DU MILITAIRE</div>
+    <!-- SECTION I : IDENTITÉ -->
+    <div class="section-title">I - IDENTITÉ DU MILITAIRE</div>
     <table class="info-grid">
         <tr>
             <td class="label">Matricule</td>
@@ -183,134 +230,92 @@
         <tr>
             <td class="label">Date de naissance</td>
             <td class="value">{{ $militaire->date_naissance ? \Carbon\Carbon::parse($militaire->date_naissance)->format('d/m/Y') : 'Non renseignée' }}</td>
+            <td class="label">Lieu de naissance</td>
+            <td class="value">{{ $militaire->lieu_naissance ?? 'Non renseigné' }}</td>
+        </tr>
+        <tr>
             <td class="label">Genre</td>
             <td class="value">{{ $militaire->genre ?? 'Non renseigné' }}</td>
+            <td class="label">Statut</td>
+            <td class="value">
+                @php
+                    $statutRaw = $militaire->statut ?? 'Non renseigné';
+                    $statutDisplay = $statutRaw;
+                    $statutClass = 'badge-statut';
+                    $statutColor = '';
+
+                    // Normaliser les statuts pour l'affichage
+                    if (in_array($statutRaw, ['Actif', 'En activite', 'En activité'])) {
+                        $statutDisplay = 'En activité';
+                        $statutClass .= ' badge-statut-actif';
+                        $statutColor = 'statut-actif';
+                    } elseif (in_array($statutRaw, ['Inactif', 'Non activite', 'Non activité', 'Suspendu'])) {
+                        $statutDisplay = 'Non activité';
+                        $statutClass .= ' badge-statut-suspendu';
+                        $statutColor = 'statut-non-activite';
+                    } elseif (in_array($statutRaw, ['Retraité', 'En retraite'])) {
+                        $statutDisplay = 'En retraite';
+                        $statutClass .= ' badge-statut-retraite';
+                        $statutColor = 'statut-retraite';
+                    } elseif ($statutRaw === 'Radié') {
+                        $statutDisplay = 'Radié';
+                        $statutClass .= ' badge-statut-radie';
+                        $statutColor = 'statut-radie';
+                    } else {
+                        $statutClass .= ' badge-statut-radie';
+                    }
+                @endphp
+                <span class="{{ $statutClass }}">{{ $statutDisplay }}</span>
+            </td>
         </tr>
         <tr>
+            <td class="label">Filiation Père</td>
+            <td class="value">
+                @if($militaire->prenoms_pere && $militaire->nom_pere)
+                    {{ $militaire->prenoms_pere }} {{ $militaire->nom_pere }}
+                @elseif($militaire->nom_pere)
+                    {{ $militaire->nom_pere }}
+                @else
+                    Non renseigné
+                @endif
+            </td>
+            <td class="label">Filiation Mère</td>
+            <td class="value">
+                @if($militaire->prenoms_mere && $militaire->nom_mere)
+                    {{ $militaire->prenoms_mere }} {{ $militaire->nom_mere }}
+                @elseif($militaire->nom_mere)
+                    {{ $militaire->nom_mere }}
+                @else
+                    Non renseigné
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td class="label">Armée/Service</td>
+            <td class="value">{{ $militaire->armee ?? ($militaire->armeeRelation->nom ?? 'Non renseigné') }}</td>
             <td class="label">Unité</td>
             <td class="value">{{ $militaire->unite ?? 'Non renseignée' }}</td>
-            <td class="label">Armée/Service</td>
-            <td class="value">{{ $militaire->armee ?? 'Non renseigné' }}</td>
         </tr>
         <tr>
-            <td class="label">Statut</td>
-            <td class="value">{{ $militaire->statut ?? 'Non renseigné' }}</td>
             <td class="label">Adresse</td>
-            <td class="value">{{ $militaire->adresse ?? 'Non renseignée' }}</td>
+            <td class="value" colspan="3">{{ $militaire->adresse ?? 'Non renseignée' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Téléphone</td>
+            <td class="value" colspan="3">{{ $militaire->telephone ?? 'Non renseigné' }}</td>
         </tr>
     </table>
 
-    <!-- CONDAMNATIONS -->
-    <div class="section-title">II - CONDAMNATIONS</div>
-
-    @php
-        $condamnations = collect();
-        if (isset($procedures) && $procedures->count() > 0) {
-            $condamnations = $procedures->filter(function($p) {
-                return $p->jugement && $p->jugement->verdict === 'Condamnation';
-            });
-        } elseif (isset($militaire->procedures) && $militaire->procedures->count() > 0) {
-            $condamnations = $militaire->procedures->filter(function($p) {
-                return $p->jugement && $p->jugement->verdict === 'Condamnation';
-            });
-        }
-    @endphp
-
-    @if($condamnations->count() > 0)
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>N° Jugement</th>
-                    <th>Date jugement</th>
-                    <th>Juridiction</th>
-                    <th>Infraction(s)</th>
-                    <th>Peine</th>
-                    <th>Autres accusés</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($condamnations as $procedure)
-                <tr>
-                    <td>{{ $procedure->jugement->numero_jugement ?? 'Non défini' }}</td>
-                    <td>{{ $procedure->jugement->date_jugement ? \Carbon\Carbon::parse($procedure->jugement->date_jugement)->format('d/m/Y') : 'Non définie' }}</td>
-                    <td>{{ $procedure->jugement->juridiction ?? 'Non définie' }}</td>
-                    <td>
-                        @php
-                            // Récupérer les infractions du militaire via le pivot
-                            $infractionsDuMilitaire = collect();
-                            if (isset($procedure->infractions_pivot) && !empty($procedure->infractions_pivot)) {
-                                $infractionsDuMilitaire = \App\Models\InfractionBase::whereIn('id', $procedure->infractions_pivot)->get();
-                            } elseif ($procedure->est_principal && $procedure->infractions) {
-                                $infractionsDuMilitaire = $procedure->infractions;
-                            } else {
-                                // Chercher dans les procédures du militaire
-                                $pivot = $procedure->procedureMilitaires->where('militaire_id', $militaire->id)->first();
-                                if ($pivot && $pivot->infractions) {
-                                    $infractionsDuMilitaire = \App\Models\InfractionBase::whereIn('id', $pivot->infractions)->get();
-                                }
-                            }
-                        @endphp
-                        @if($infractionsDuMilitaire && $infractionsDuMilitaire->count() > 0)
-                            @foreach($infractionsDuMilitaire as $inf)
-                                <span class="infraction-item">{{ $inf->libelle }}</span>
-                            @endforeach
-                        @elseif($procedure->infractions && $procedure->infractions->count() > 0)
-                            @foreach($procedure->infractions as $inf)
-                                <span class="infraction-item">{{ $inf->libelle }}</span>
-                            @endforeach
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>
-                        @if($procedure->jugement->peine_principale)
-                            {{ $procedure->jugement->peine_principale }}
-                            @if($procedure->jugement->peines_complementaires)
-                                <br><small style="color:#666;">+ {{ $procedure->jugement->peines_complementaires }}</small>
-                            @endif
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>
-                        @if($procedure->est_plurielle && $procedure->procedureMilitaires && $procedure->procedureMilitaires->count() > 1)
-                            <span class="badge-pluriel">Pluriel</span>
-                            <div class="co-accuse">
-                                @foreach($procedure->procedureMilitaires as $pm)
-                                    @if($pm->militaire_id != $militaire->id)
-                                        - {{ $pm->militaire->nom ?? $pm->nom_temp ?? 'Inconnu' }} 
-                                        {{ $pm->militaire->prenoms ?? $pm->prenom_temp ?? '' }}
-                                        @if($pm->est_principal && $pm->militaire_id == $procedure->militaire_id)
-                                            <span class="badge-principal">Principal</span>
-                                        @endif
-                                        <br>
-                                    @endif
-                                @endforeach
-                            </div>
-                        @else
-                            -
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <div class="neant">Aucune condamnation</div>
-    @endif
-
-    <!-- PROCÉDURES EN COURS -->
-    <div class="section-title">III - PROCÉDURES EN COURS</div>
+    <!-- SECTION II : PROCÉDURES EN COURS -->
+    <div class="section-title">II - PROCÉDURES EN COURS</div>
 
     @php
         $enCours = collect();
         if (isset($procedures) && $procedures->count() > 0) {
             $enCours = $procedures->filter(function($p) {
-                return ($p->phase !== 'Cloturee' && $p->phase !== 'Jugement') || (!$p->jugement || $p->jugement->verdict !== 'Condamnation');
-            });
-        } elseif (isset($militaire->procedures) && $militaire->procedures->count() > 0) {
-            $enCours = $militaire->procedures->filter(function($p) {
-                return ($p->phase !== 'Cloturee' && $p->phase !== 'Jugement') || (!$p->jugement || $p->jugement->verdict !== 'Condamnation');
+                $estCloturee = $p->phase === 'Cloturee';
+                $aJugement = $p->jugement !== null;
+                return !$estCloturee && !$aJugement;
             });
         }
     @endphp
@@ -333,21 +338,17 @@
                     <td>{{ $procedure->numero_procedure ?? 'Non défini' }}</td>
                     <td>{{ $procedure->date_ouverture ? \Carbon\Carbon::parse($procedure->date_ouverture)->format('d/m/Y') : ($procedure->created_at ? $procedure->created_at->format('d/m/Y') : 'Non définie') }}</td>
                     <td>{{ str_replace('_', ' ', $procedure->phase ?? 'En cours') }}</td>
-                    <td>{{ $procedure->parquet_competent ?? '-' }}</td>
+                    <td>
+                        @if($procedure->parquet)
+                            {{ $procedure->parquet->nom }}
+                            <small style="color:#888;">({{ $procedure->parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }})</small>
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>
                         @php
-                            // Récupérer les infractions du militaire via le pivot
-                            $infractionsDuMilitaire = collect();
-                            if (isset($procedure->infractions_pivot) && !empty($procedure->infractions_pivot)) {
-                                $infractionsDuMilitaire = \App\Models\InfractionBase::whereIn('id', $procedure->infractions_pivot)->get();
-                            } elseif ($procedure->est_principal && $procedure->infractions) {
-                                $infractionsDuMilitaire = $procedure->infractions;
-                            } else {
-                                $pivot = $procedure->procedureMilitaires->where('militaire_id', $militaire->id)->first();
-                                if ($pivot && $pivot->infractions) {
-                                    $infractionsDuMilitaire = \App\Models\InfractionBase::whereIn('id', $pivot->infractions)->get();
-                                }
-                            }
+                            $infractionsDuMilitaire = $procedure->infractions_pivot_models ?? collect();
                         @endphp
                         @if($infractionsDuMilitaire && $infractionsDuMilitaire->count() > 0)
                             @foreach($infractionsDuMilitaire as $inf)
@@ -387,6 +388,185 @@
     @else
         <div class="neant">Aucune procédure en cours</div>
     @endif
+
+    <!-- SECTION III : CONDAMNATIONS -->
+    <div class="section-title">III - CONDAMNATIONS</div>
+
+    @php
+        $condamnations = collect();
+        if (isset($procedures) && $procedures->count() > 0) {
+            $condamnations = $procedures->filter(function($p) {
+                if ($p->jugement && $p->jugement->verdict === 'Condamnation') {
+                    return true;
+                }
+                if ($p->est_condamne === true) {
+                    return true;
+                }
+                foreach ($p->procedurePhases as $phase) {
+                    if ($phase->phaseType && $phase->phaseType->slug === 'ordre_de_poursuite') {
+                        if ($phase->est_condamne || !empty($phase->peine_principale)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+        }
+    @endphp
+
+    @if($condamnations->count() > 0)
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>N° Procédure</th>
+                    <th>Date condamnation</th>
+                    <th>Juridiction</th>
+                    <th>Infraction(s)</th>
+                    <th>Peine</th>
+                    <th>Autres accusés</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($condamnations as $procedure)
+                @php
+                    $dateCondamnation = $procedure->date_condamnation ?? $procedure->jugement->date_jugement ?? $procedure->date_ouverture ?? null;
+                    $peine = $procedure->peine_principale ?? $procedure->jugement->peine_principale ?? null;
+                    $description = $procedure->peine_description ?? $procedure->jugement->peines_complementaires ?? null;
+                @endphp
+                <tr>
+                    <td>{{ $procedure->numero_procedure ?? 'Non défini' }}</td>
+                    <td>{{ $dateCondamnation ? \Carbon\Carbon::parse($dateCondamnation)->format('d/m/Y') : 'Non définie' }}</td>
+                    <td>
+                        @if($procedure->parquet)
+                            {{ $procedure->parquet->nom }}
+                            <small style="color:#888;">({{ $procedure->parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }})</small>
+                        @elseif($procedure->jugement && $procedure->jugement->juridiction)
+                            {{ $procedure->jugement->juridiction }}
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>
+                        @php
+                            $infractionsDuMilitaire = $procedure->infractions_pivot_models ?? collect();
+                        @endphp
+                        @if($infractionsDuMilitaire && $infractionsDuMilitaire->count() > 0)
+                            @foreach($infractionsDuMilitaire as $inf)
+                                <span class="infraction-item">{{ $inf->libelle }}</span>
+                            @endforeach
+                        @elseif($procedure->infractions && $procedure->infractions->count() > 0)
+                            @foreach($procedure->infractions as $inf)
+                                <span class="infraction-item">{{ $inf->libelle }}</span>
+                            @endforeach
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>
+                        @if($peine)
+                            <span class="peine-detail">{{ $peine }}</span>
+                            @if($description)
+                                <br><small style="color:#666;">{{ $description }}</small>
+                            @endif
+                            <br><span class="condamnation-tag">Condamné</span>
+                        @else
+                            <span class="condamnation-tag">Condamné</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($procedure->est_plurielle && $procedure->procedureMilitaires && $procedure->procedureMilitaires->count() > 1)
+                            <span class="badge-pluriel">Pluriel</span>
+                            <div class="co-accuse">
+                                @foreach($procedure->procedureMilitaires as $pm)
+                                    @if($pm->militaire_id != $militaire->id)
+                                        - {{ $pm->militaire->nom ?? $pm->nom_temp ?? 'Inconnu' }} 
+                                        {{ $pm->militaire->prenoms ?? $pm->prenom_temp ?? '' }}
+                                        @if($pm->est_principal && $pm->militaire_id == $procedure->militaire_id)
+                                            <span class="badge-principal">Principal</span>
+                                        @endif
+                                        <br>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @else
+                            -
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <div class="neant">Aucune condamnation</div>
+    @endif
+
+    <!-- SECTION IV : ACQUITTEMENTS -->
+    @php
+        $acquittements = collect();
+        if (isset($procedures) && $procedures->count() > 0) {
+            $acquittements = $procedures->filter(function($p) {
+                return $p->jugement && $p->jugement->verdict === 'Acquittement';
+            });
+        }
+    @endphp
+
+    @if($acquittements->count() > 0)
+        <div class="section-title">IV - ACQUITTEMENTS</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>N° Jugement</th>
+                    <th>Date jugement</th>
+                    <th>Juridiction</th>
+                    <th>Infraction(s)</th>
+                    <th>Motif</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($acquittements as $procedure)
+                <tr>
+                    <td>{{ $procedure->jugement->numero_jugement ?? 'Non défini' }}</td>
+                    <td>{{ $procedure->jugement->date_jugement ? \Carbon\Carbon::parse($procedure->jugement->date_jugement)->format('d/m/Y') : 'Non définie' }}</td>
+                    <td>{{ $procedure->jugement->juridiction ?? 'Non définie' }}</td>
+                    <td>
+                        @php
+                            $infractionsDuMilitaire = $procedure->infractions_pivot_models ?? collect();
+                        @endphp
+                        @if($infractionsDuMilitaire && $infractionsDuMilitaire->count() > 0)
+                            @foreach($infractionsDuMilitaire as $inf)
+                                <span class="infraction-item">{{ $inf->libelle }}</span>
+                            @endforeach
+                        @elseif($procedure->infractions && $procedure->infractions->count() > 0)
+                            @foreach($procedure->infractions as $inf)
+                                <span class="infraction-item">{{ $inf->libelle }}</span>
+                            @endforeach
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>{{ $procedure->jugement->motif_acquittement ?? 'Non précisé' }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+
+    <!-- SECTION V : RÉCAPITULATIF -->
+    <div class="section-title">V - RÉCAPITULATIF</div>
+    <table class="info-grid">
+        <tr>
+            <td class="label">Total procédures</td>
+            <td class="value">{{ isset($procedures) ? $procedures->count() : 0 }}</td>
+            <td class="label">Procédures en cours</td>
+            <td class="value">{{ $enCours->count() }}</td>
+        </tr>
+        <tr>
+            <td class="label">Condamnations</td>
+            <td class="value">{{ $condamnations->count() }}</td>
+            <td class="label">Acquittements</td>
+            <td class="value">{{ $acquittements->count() }}</td>
+        </tr>
+    </table>
 
     <div class="footer">
         <p>Document édité le {{ $date_edition ?? now()->format('d/m/Y à H:i') }}</p>

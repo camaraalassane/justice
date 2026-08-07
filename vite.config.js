@@ -19,4 +19,8 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    // ====== CONFIGURATION CHART.JS CORRIGÉE ======
+    optimizeDeps: {
+        include: ['chart.js'],
+    },
 });

@@ -29,17 +29,20 @@
 
         <Card class="max-w-5xl mx-auto">
             <form @submit.prevent="submit" class="space-y-6">
-                <!-- Militaires -->
+                <!-- Militaires / Personnels -->
                 <div class="border-b border-gpj-100 pb-6">
                     <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-4">
-                        <i class="pi pi-users mr-2"></i> Militaires concernés
+                        <i class="pi pi-users mr-2"></i> Personnels concernés
                     </h3>
                     <MilitairesMultiples
                         v-model="form.militaires"
                         v-model:estPlurielle="form.est_plurielle"
                         :infractions="allInfractions"
                         :militairesOptions="optionsMilitaires"
+                        :grades="grades"
+                        :typePersonnelOptions="typePersonnelOptions"
                         @change="onMilitairesChange"
+                        @infraction-created="onInfractionCreated"
                     />
                     <p v-if="form.errors.militaires" class="mt-2 text-sm text-red-500">{{ form.errors.militaires }}</p>
                 </div>
@@ -93,19 +96,48 @@
                             />
                             <p v-if="form.errors.date_phase" class="mt-1 text-sm text-red-500">{{ form.errors.date_phase }}</p>
                         </div>
+                        <!-- Lieu de commission -->
                         <div>
                             <label class="block text-sm font-medium text-gpj-700 mb-1">
-                                Parquet compétent <span class="text-red-500">*</span>
+                                Lieu de commission
                             </label>
                             <select
-                                v-model="form.parquet_competent"
-                                required
+                                v-model="form.lieu_commission"
                                 class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             >
-                                <option value="">Choisir</option>
-                                <option v-for="p in parquets" :key="p" :value="p">{{ p }}</option>
+                                <option value="">Non défini</option>
+                                <option value="Organique">Organique</option>
+                                <option value="Operation">Opération</option>
                             </select>
-                            <p v-if="form.errors.parquet_competent" class="mt-1 text-sm text-red-500">{{ form.errors.parquet_competent }}</p>
+                            <p v-if="form.errors.lieu_commission" class="mt-1 text-sm text-red-500">{{ form.errors.lieu_commission }}</p>
+                        </div>
+                        <!-- Parquet -->
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                                Parquet compétent
+                            </label>
+                            <div class="flex items-center gap-3 mb-2">
+                                <label class="flex items-center gap-2 text-sm text-gpj-600 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        v-model="aucunParquet"
+                                        @change="onToggleAucunParquet"
+                                        class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                                    />
+                                    Aucun parquet
+                                </label>
+                            </div>
+                            <ParquetSelector
+                                v-model="form.parquet"
+                                :parquets="allParquets"
+                                :error="form.errors.parquet"
+                                :disabled="aucunParquet"
+                                @change="onParquetChange"
+                                @error="onParquetError"
+                                @parquet-created="onParquetCreated"
+                            />
+                            <p v-if="form.errors.parquet_type" class="mt-1 text-sm text-red-500">{{ form.errors.parquet_type }}</p>
+                            <p v-if="form.errors.parquet_id" class="mt-1 text-sm text-red-500">{{ form.errors.parquet_id }}</p>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -156,6 +188,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Card } from '@/Components/GPJ';
 import PhaseFormFields from '@/Components/Procedure/PhaseFormFields.vue';
 import MilitairesMultiples from '@/Components/Procedure/MilitairesMultiples.vue';
+import ParquetSelector from '@/Components/Procedure/ParquetSelector.vue';
 
 const page = usePage();
 
@@ -163,23 +196,31 @@ const props = defineProps({
     militaires: Array,
     infractions: Array,
     phaseTypes: Array,
-    parquets: Array
+    parquets: Array,
+    grades: Array,
+    lieuCommissionOptions: Array,
+    typePersonnelOptions: Array,
 });
 
-// ====== INITIALISATION DES RÉFÉRENCES ======
+// ====== INITIALISATION ======
 const optionsMilitaires = ref(props.militaires || []);
 const allInfractions = ref(props.infractions || []);
 const phaseTypes = ref(props.phaseTypes || []);
+const allParquets = ref(props.parquets || []);
+const grades = ref(props.grades || []);
+const typePersonnelOptions = ref(props.typePersonnelOptions || [
+    { value: 'militaire', label: 'Militaire' },
+    { value: 'civil', label: 'Civil' }
+]);
+const aucunParquet = ref(true);
 
 // ====== GESTION DES ERREURS FLASH ======
 const flashError = ref(null);
 const flashSuccess = ref(null);
 
-// Écouter les erreurs flash
 watch(() => page.props.flash?.error, (error) => {
     if (error) {
         flashError.value = error;
-        console.error('❌ Erreur flash:', error);
         setTimeout(() => flashError.value = null, 8000);
     }
 }, { immediate: true });
@@ -187,7 +228,6 @@ watch(() => page.props.flash?.error, (error) => {
 watch(() => page.props.flash?.success, (success) => {
     if (success) {
         flashSuccess.value = success;
-        console.log('✅ Succès:', success);
         setTimeout(() => flashSuccess.value = null, 5000);
     }
 }, { immediate: true });
@@ -197,10 +237,13 @@ const form = useForm({
     est_plurielle: false,
     militaires: [
         {
+            type_personnel: 'militaire',
             militaire_id: null,
             nom: '',
             prenom: '',
+            profession: '',
             grade: '',
+            grade_id: '',
             matricule: '',
             infractions: [],
             fautes_militaires: [],
@@ -212,7 +255,14 @@ const form = useForm({
     phase_personnalisee: '',
     date_phase: '',
     description: '',
-    parquet_competent: '',
+    lieu_commission: '',
+    parquet: {
+        type: 'militaire',
+        id: null,
+        nom: '',
+        localisation: '',
+        code: ''
+    },
     champs: [],
     personnes: [],
     evenements: [],
@@ -221,10 +271,22 @@ const form = useForm({
     pieces_jointes: [],
 });
 
-// ====== WATCH DES ERREURS DE VALIDATION ======
+// ====== GESTION DE "AUCUN PARQUET" ======
+const onToggleAucunParquet = () => {
+    if (aucunParquet.value) {
+        form.parquet = {
+            type: 'militaire',
+            id: null,
+            nom: '',
+            localisation: '',
+            code: ''
+        };
+    }
+};
+
+// ====== WATCH DES ERREURS ======
 watch(() => form.errors, (errors) => {
     if (errors && Object.keys(errors).length > 0) {
-        console.error('❌ Erreurs de validation:', errors);
         let errorMessage = '';
         Object.keys(errors).forEach(key => {
             if (Array.isArray(errors[key])) {
@@ -233,14 +295,46 @@ watch(() => form.errors, (errors) => {
                 errorMessage += `${key}: ${errors[key]}\n`;
             }
         });
-        flashError.value = errorMessage || 'Erreurs de validation';
+        flashError.value = errorMessage;
         setTimeout(() => flashError.value = null, 8000);
     }
 }, { deep: true });
 
 // ====== FONCTIONS ======
 const onMilitairesChange = (militaires) => {
-    console.log('🔄 Militaires mis à jour:', militaires);
+    console.log('🔄 Personnels mis à jour:', militaires);
+};
+
+const onParquetChange = (value) => {
+    console.log('🔄 Parquet mis à jour:', value);
+    form.parquet = value;
+    if (value && (value.id || value.nom)) {
+        aucunParquet.value = false;
+    }
+};
+
+const onParquetError = (error) => {
+    if (error) {
+        form.errors.parquet = error;
+    } else {
+        delete form.errors.parquet;
+    }
+};
+
+const onParquetCreated = (newParquet) => {
+    allParquets.value.push(newParquet);
+    console.log('✅ Nouveau parquet créé:', newParquet);
+    fetch('/api/parquets')
+        .then(r => r.json())
+        .then(data => {
+            allParquets.value = data;
+        })
+        .catch(err => console.error('Erreur chargement parquets:', err));
+};
+
+const onInfractionCreated = (newInfraction) => {
+    allInfractions.value.push(newInfraction);
+    console.log('✅ Nouvelle infraction créée:', newInfraction);
 };
 
 const onPhaseTypeChange = () => {
@@ -296,58 +390,75 @@ watch(() => form.date_phase, (val) => {
 
 // ====== SOUMISSION ======
 const submit = () => {
-    console.log('📤 Envoi des données:', form.data());
-    
     flashError.value = null;
     flashSuccess.value = null;
     
+    const parquetType = form.parquet.type || 'militaire';
+    const parquetId = form.parquet.id || null;
+    const parquetNom = form.parquet.nom || '';
+    
+    console.log('📤 Vérification parquet:', { type: parquetType, id: parquetId, nom: parquetNom });
+    
+    let finalParquetId = parquetId;
+    let finalParquetNom = parquetNom;
+    let finalParquetType = parquetType;
+    
+    if (aucunParquet.value) {
+        finalParquetId = null;
+        finalParquetNom = '';
+        finalParquetType = '';
+    }
+    
+    const data = {
+        est_plurielle: form.est_plurielle,
+        militaires: form.militaires,
+        phase_type_id: form.phase_type_id,
+        phase_personnalisee: form.phase_personnalisee,
+        date_phase: form.date_phase,
+        description: form.description,
+        lieu_commission: form.lieu_commission || null,
+        champs: form.champs,
+        personnes: form.personnes,
+        evenements: form.evenements,
+        references: form.references,
+        options_cocher: form.options_cocher,
+        pieces_jointes: form.pieces_jointes,
+        parquet_type: finalParquetType,
+        parquet_id: finalParquetId,
+        parquet_nom: finalParquetNom,
+        parquet_localisation: form.parquet.localisation || '',
+        parquet_code: form.parquet.code || '',
+        aucun_parquet: aucunParquet.value,
+    };
+    
+    console.log('📤 Données envoyées:', data);
+    
     form.post(route('procedures.store'), {
         preserveScroll: true,
-        onStart: () => {
-            console.log('⏳ Début de la requête...');
-        },
-        onSuccess: (response) => {
-            console.log('✅ Succès!', response);
+        data: data,
+        onSuccess: () => {
             flashSuccess.value = 'Procédure créée avec succès!';
-            
             fetch('/api/phase-types')
                 .then(r => r.json())
-                .then(data => {
-                    phaseTypes.value = data;
-                })
+                .then(data => { phaseTypes.value = data; })
                 .catch(err => console.error('Erreur chargement phase types:', err));
+            fetch('/api/parquets')
+                .then(r => r.json())
+                .then(data => { allParquets.value = data; })
+                .catch(err => console.error('Erreur chargement parquets:', err));
         },
         onError: (errors) => {
             console.error('❌ Erreurs:', errors);
-            
             let errorMessage = '';
-            if (typeof errors === 'string') {
-                errorMessage = errors;
-            } else if (errors.error) {
-                errorMessage = errors.error;
-            } else if (errors.message) {
-                errorMessage = errors.message;
-            } else if (typeof errors === 'object') {
-                Object.keys(errors).forEach(key => {
-                    if (Array.isArray(errors[key])) {
-                        errorMessage += `${key}: ${errors[key].join(', ')}\n`;
-                    } else if (typeof errors[key] === 'string') {
-                        errorMessage += `${key}: ${errors[key]}\n`;
-                    } else if (typeof errors[key] === 'object') {
-                        errorMessage += `${key}: ${JSON.stringify(errors[key])}\n`;
-                    }
-                });
-            }
-            
-            if (!errorMessage) {
-                errorMessage = 'Une erreur est survenue lors de la création de la procédure. Vérifiez les logs.';
-            }
-            
-            flashError.value = errorMessage;
+            Object.keys(errors).forEach(key => {
+                if (Array.isArray(errors[key])) {
+                    errorMessage += `${key}: ${errors[key].join(', ')}\n`;
+                } else {
+                    errorMessage += `${key}: ${errors[key]}\n`;
+                }
+            });
+            flashError.value = errorMessage || 'Une erreur est survenue';
             setTimeout(() => flashError.value = null, 10000);
-        },
-        onFinish: () => {
-            console.log('🏁 Requête terminée');
         }
     });
 };
