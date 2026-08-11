@@ -85,9 +85,9 @@
                         <p class="font-medium text-gpj-700 dark:text-gpj-300 mb-2">📋 Rôles et responsabilités :</p>
                         <ul class="space-y-2 text-xs">
                             <li class="flex items-start gap-2">
-                                <Badge variant="danger" size="sm">SD</Badge>
+                                <Badge variant="danger" size="sm">ADMIN</Badge>
                                 <span class="text-gpj-600 dark:text-gpj-400">
-                                    <span class="font-medium">Sous-Directeur</span> - Supervision haute, consultation des statistiques, validation ultime
+                                    <span class="font-medium">Administrateur</span> - Supervision haute, gestion des utilisateurs, validation ultime
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">

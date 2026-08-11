@@ -1069,8 +1069,8 @@ class ProcedureController extends Controller
 
     public function destroy(Procedure $procedure)
     {
-        if (auth()->user()->role !== 'SD') {
-            return redirect()->back()->with('error', 'Seul le SD peut supprimer.');
+        if (auth()->user()->role !== 'ADMIN') {
+            return redirect()->back()->with('error', 'Seul l\'Administrateur peut supprimer.');
         }
 
         $numero = $procedure->numero_procedure;

@@ -710,7 +710,7 @@ onMounted(() => {
 });
 
 // ====== PERMISSIONS ======
-const peutValider = computed(() => ['CDS','CDD','SD'].includes(page.props.auth?.user?.role));
+const peutValider = computed(() => ['CDS','CDD','ADMIN'].includes(page.props.auth?.user?.role));
 
 // ====== FORMATAGE ======
 const formatDate = (d) => {

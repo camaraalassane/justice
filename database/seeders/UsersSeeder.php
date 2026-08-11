@@ -12,9 +12,9 @@ class UsersSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Sous-Directeur',
-                'email' => 'sd@gpj.mil',
-                'role' => 'SD',
+                'name' => 'Administrateur',
+                'email' => 'admin@gpj.mil',
+                'role' => 'ADMIN',
             ],
             [
                 'name' => 'Chef Division Disciplinaire',
@@ -35,12 +35,6 @@ class UsersSeeder extends Seeder
                 'name' => 'Agent de Saisie',
                 'email' => 'ads@gpj.mil',
                 'role' => 'ADS',
-            ],
-            // NOUVEAU RÔLE : DIRECTEUR (lecture seule)
-            [
-                'name' => 'Directeur',
-                'email' => 'directeur@gpj.mil',
-                'role' => 'DIR',
             ],
         ];
 

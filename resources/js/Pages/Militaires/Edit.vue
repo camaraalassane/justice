@@ -274,7 +274,7 @@ const props = defineProps({
     }
 });
 
-const isSD = computed(() => page.props.auth?.user?.role === 'SD');
+const isSD = computed(() => page.props.auth?.user?.role === 'ADMIN');
 
 // Alias pour éviter la confusion
 const personnel = props.militaire;

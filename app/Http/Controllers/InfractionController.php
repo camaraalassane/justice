@@ -110,12 +110,12 @@ class InfractionController extends Controller
     }
 
     /**
-     * Supprimer une infraction (SD uniquement)
+     * Supprimer une infraction (ADMIN uniquement)
      */
     public function destroy(InfractionBase $infraction)
     {
-        if (auth()->user()->role !== 'SD') {
-            return back()->with('error', 'Seul le Sous-Directeur peut supprimer une infraction.');
+        if (auth()->user()->role !== 'ADMIN') {
+            return back()->with('error', 'Seul l\'Administrateur peut supprimer une infraction.');
         }
 
         if ($infraction->procedures()->exists()) {

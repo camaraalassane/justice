@@ -12,12 +12,12 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     /**
-     * Vérifier que l'utilisateur est SD
+     * Vérifier que l'utilisateur est Admin
      */
-    private function checkSD()
+    private function checkAdmin()
     {
         if (!auth()->user()->peutGererUtilisateurs()) {
-            abort(403, 'Accès non autorisé. Seul le Sous-Directeur (SD) peut gérer les utilisateurs.');
+            abort(403, 'Accès non autorisé. Seul l\'Administrateur peut gérer les utilisateurs.');
         }
     }
 
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->checkSD();
+        $this->checkAdmin();
 
         $users = User::query()
             ->when($request->search, function($q) use ($request) {
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->checkSD();
+        $this->checkAdmin();
 
         return Inertia::render('Users/Create', [
             'roles' => User::getRoles(),
@@ -66,7 +66,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->checkSD();
+        $this->checkAdmin();
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -98,7 +98,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->checkSD();
+        $this->checkAdmin();
 
         // Empêcher un utilisateur de se modifier lui-même
         if ($user->id === auth()->id()) {
@@ -117,7 +117,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->checkSD();
+        $this->checkAdmin();
 
         // Empêcher la modification de soi-même
         if ($user->id === auth()->id()) {
@@ -125,12 +125,12 @@ class UserController extends Controller
                 ->with('error', 'Vous ne pouvez pas modifier votre propre compte.');
         }
 
-        // Empêcher la modification du dernier SD
-        if ($user->role === 'SD' && $request->role !== 'SD') {
-            $sdCount = User::where('role', 'SD')->count();
-            if ($sdCount <= 1) {
+        // Empêcher la modification du dernier Admin
+        if ($user->role === 'ADMIN' && $request->role !== 'ADMIN') {
+            $adminCount = User::where('role', 'ADMIN')->count();
+            if ($adminCount <= 1) {
                 return redirect()->back()
-                    ->with('error', 'Impossible de supprimer le dernier Sous-Directeur (SD).');
+                    ->with('error', 'Impossible de modifier le dernier Administrateur.');
             }
         }
 
@@ -167,7 +167,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->checkSD();
+        $this->checkAdmin();
 
         // Empêcher la suppression de soi-même
         if ($user->id === auth()->id()) {
@@ -175,12 +175,12 @@ class UserController extends Controller
                 ->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
         }
 
-        // Empêcher la suppression du dernier SD
-        if ($user->role === 'SD') {
-            $sdCount = User::where('role', 'SD')->count();
-            if ($sdCount <= 1) {
+        // Empêcher la suppression du dernier Admin
+        if ($user->role === 'ADMIN') {
+            $adminCount = User::where('role', 'ADMIN')->count();
+            if ($adminCount <= 1) {
                 return redirect()->route('users.index')
-                    ->with('error', 'Impossible de supprimer le dernier Sous-Directeur (SD).');
+                    ->with('error', 'Impossible de supprimer le dernier Administrateur.');
             }
         }
 

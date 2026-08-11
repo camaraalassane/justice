@@ -38,12 +38,11 @@ class User extends Authenticatable
     public static function getRoles(): array
     {
         return [
-            'SD' => 'Sous-Directeur',
+            'ADMIN' => 'Administrateur',
             'CDD' => 'Chef de Division Disciplinaire',
             'CDS' => 'Chef de Section Statistique',
             'CDB' => 'Chef de Bureau Juridique',
             'ADS' => 'Agent de Saisie',
-            'DIR' => 'Directeur', // NOUVEAU RÔLE - Lecture seule
         ];
     }
 
@@ -72,90 +71,75 @@ class User extends Authenticatable
     }
 
     /**
-     * Vérifier si l'utilisateur est en lecture seule
+     * Vérifier si l'utilisateur est en lecture seule (obsolète, aucun rôle en lecture seule)
      */
     public function estLectureSeule(): bool
     {
-        return $this->hasRole('DIR');
+        return false;
     }
 
     // ==================== PERMISSIONS ====================
 
     /**
      * Peut créer des procédures
-     * DIR ne peut pas créer
      */
     public function peutCreerProcedure(): bool
     {
-        if ($this->estLectureSeule()) {
-            return false;
-        }
-        return $this->hasAnyRole(['ADS', 'CDS', 'CDD', 'SD']);
+        return $this->hasAnyRole(['ADS', 'CDS', 'CDD', 'ADMIN']);
     }
 
     /**
      * Peut modifier une procédure
-     * DIR ne peut pas modifier
      */
     public function peutModifierProcedure(): bool
     {
-        if ($this->estLectureSeule()) {
-            return false;
-        }
-        return $this->hasAnyRole(['ADS', 'CDS', 'CDD', 'SD']);
+        return $this->hasAnyRole(['ADS', 'CDS', 'CDD', 'ADMIN']);
     }
 
     /**
      * Peut valider une phase
-     * DIR ne peut pas valider
      */
     public function peutValiderPhase(): bool
     {
-        if ($this->estLectureSeule()) {
-            return false;
-        }
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN']);
     }
 
     /**
      * Peut supprimer une procédure
-     * DIR ne peut pas supprimer, seul SD le peut
+     * Seul l'Administrateur le peut
      */
     public function peutSupprimerProcedure(): bool
     {
-        return $this->hasRole('SD');
+        return $this->hasRole('ADMIN');
     }
 
     /**
      * Peut consulter toutes les procédures
-     * DIR peut consulter tout (lecture seule)
      */
     public function peutConsulterTout(): bool
     {
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD', 'CDB', 'DIR']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN', 'CDB']);
     }
 
     /**
      * Peut gérer les utilisateurs
-     * Seul SD le peut
+     * Seul l'Administrateur le peut
      */
     public function peutGererUtilisateurs(): bool
     {
-        return $this->hasRole('SD');
+        return $this->hasRole('ADMIN');
     }
 
     /**
      * Peut exporter en PDF
-     * DIR peut exporter (lecture seule mais export autorisé)
      */
     public function peutExporter(): bool
     {
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD', 'CDB', 'DIR']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN', 'CDB']);
     }
 
     /**
      * Peut voir le dashboard
-     * Tous les utilisateurs, y compris DIR
      */
     public function peutVoirDashboard(): bool
     {
@@ -164,73 +148,58 @@ class User extends Authenticatable
 
     /**
      * Peut consulter l'historique
-     * DIR peut consulter l'historique
      */
     public function peutVoirHistorique(): bool
     {
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD', 'DIR']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN']);
     }
 
     /**
      * Peut gérer les infractions
-     * DIR ne peut pas gérer les infractions
      */
     public function peutGererInfractions(): bool
     {
-        if ($this->estLectureSeule()) {
-            return false;
-        }
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN']);
     }
 
     /**
      * Peut gérer les militaires
-     * DIR ne peut pas gérer les militaires
      */
     public function peutGererMilitaires(): bool
     {
-        if ($this->estLectureSeule()) {
-            return false;
-        }
-        return $this->hasAnyRole(['ADS', 'CDS', 'CDD', 'SD']);
+        return $this->hasAnyRole(['ADS', 'CDS', 'CDD', 'ADMIN']);
     }
 
     /**
      * Peut voir les statistiques (Dashboard)
-     * Tous les utilisateurs, y compris DIR
      */
     public function peutVoirStatistiques(): bool
     {
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD', 'CDB', 'DIR']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN', 'CDB']);
     }
 
     /**
      * Peut modifier les paramètres système
-     * Seul SD le peut
+     * Seul l'Administrateur le peut
      */
     public function peutModifierSysteme(): bool
     {
-        return $this->hasRole('SD');
+        return $this->hasRole('ADMIN');
     }
 
     /**
      * Peut voir les rapports
-     * DIR peut voir les rapports
      */
     public function peutVoirRapports(): bool
     {
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD', 'CDB', 'DIR']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN', 'CDB']);
     }
 
     /**
      * Peut créer des rapports
-     * DIR ne peut pas créer de rapports
      */
     public function peutCreerRapports(): bool
     {
-        if ($this->estLectureSeule()) {
-            return false;
-        }
-        return $this->hasAnyRole(['CDS', 'CDD', 'SD', 'CDB']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN', 'CDB']);
     }
 }

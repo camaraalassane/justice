@@ -260,7 +260,7 @@ const props = defineProps({
     typePersonnelOptions: Array,
 });
 
-const isSD = computed(() => page.props.auth?.user?.role === 'SD');
+const isSD = computed(() => page.props.auth?.user?.role === 'ADMIN');
 
 // ====== INFOS INFRACTIONS ======
 const infractionsData = ref({});

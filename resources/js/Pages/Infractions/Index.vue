@@ -125,8 +125,8 @@ defineProps({
     infractions: Object,
 });
 
-// Vérifier si l'utilisateur est SD
-const isSD = computed(() => page.props.auth.user.role === 'SD');
+// Vérifier si l'utilisateur est Admin
+const isSD = computed(() => page.props.auth.user.role === 'ADMIN');
 
 const classificationVariant = (c) => {
     const m = { 'Criminelle': 'danger', 'Délictuelle': 'warning', 'Contravention': 'info' };

@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            // AJOUTER 'DIR' DANS L'ENUM
-            $table->enum('role', ['SD', 'CDD', 'CDS', 'CDB', 'ADS', 'DIR'])->default('ADS');
+            $table->enum('role', ['ADMIN', 'CDD', 'CDS', 'CDB', 'ADS'])->default('ADS');
             $table->rememberToken();
             $table->timestamps();
         });

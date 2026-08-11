@@ -201,7 +201,7 @@ const showDeleteModal = ref(false);
 
 const roleLabel = computed(() => {
     const roles = {
-        SD: 'Sous-Directeur',
+        ADMIN: 'Administrateur',
         CDD: 'Chef de Division',
         CDS: 'Chef de Section',
         CDB: 'Chef de Bureau',

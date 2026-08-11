@@ -438,8 +438,8 @@ class MilitaireController extends Controller
      */
     public function destroy(Militaire $militaire, Request $request)
     {
-        if (auth()->user()->role !== 'SD') {
-            return back()->with('error', 'Seul le Sous-Directeur peut supprimer un personnel.');
+        if (auth()->user()->role !== 'ADMIN') {
+            return back()->with('error', 'Seul l\'Administrateur peut supprimer un personnel.');
         }
 
         if ($militaire->procedureMilitaires()->exists() || $militaire->procedures()->exists()) {
@@ -536,7 +536,7 @@ class MilitaireController extends Controller
             return $p->est_condamne === true;
         });
 
-        $peutModifier = auth()->user() && in_array(auth()->user()->role, ['SD', 'CDD', 'CDS', 'ADS']);
+        $peutModifier = auth()->user() && in_array(auth()->user()->role, ['ADMIN', 'CDD', 'CDS', 'ADS']);
 
         return Inertia::render('Militaires/Casier', [
             'militaire' => $militaire,

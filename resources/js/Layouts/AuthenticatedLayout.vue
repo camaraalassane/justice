@@ -75,7 +75,7 @@
                     Historique
                 </NavLink>
 
-                <!-- Gestion des Utilisateurs - UNIQUEMENT pour SD (Sous-Directeur) -->
+                <!-- Gestion des Utilisateurs - UNIQUEMENT pour ADMIN (Administrateur) -->
                 <div v-if="canManageUsers" class="pt-2 mt-2 border-t border-gpj-700/50">
                     <NavLink 
                         :href="route('users.index')" 
@@ -86,7 +86,7 @@
                     >
                         <span class="flex items-center gap-2">
                             Utilisateurs
-                            <span class="text-[10px] bg-gpj-500 text-white px-2 py-0.5 rounded-full font-normal">SD</span>
+                            <span class="text-[10px] bg-gpj-500 text-white px-2 py-0.5 rounded-full font-normal">ADMIN</span>
                         </span>
                     </NavLink>
                 </div>
@@ -192,12 +192,11 @@ const user = computed(() => page.props.auth.user);
 
 // ==================== RÔLES ET LIBELLÉS ====================
 const roles = {
-    SD: 'Sous-Directeur',
+    ADMIN: 'Administrateur',
     CDD: 'Chef de Division',
     CDS: 'Chef de Section',
     CDB: 'Chef de Bureau',
     ADS: 'Agent de Saisie',
-    DIR: 'Directeur',  // AJOUT DU RÔLE DIRECTEUR
 };
 
 const roleLabel = computed(() => {
@@ -211,18 +210,16 @@ const userInitials = computed(() => {
 
 // ==================== PERMISSIONS ====================
 const canManageUsers = computed(() => {
-    return user.value?.role === 'SD';
+    return user.value?.role === 'ADMIN';
 });
 
 // ==================== STYLES PAR RÔLE ====================
 const roleColors = {
-    SD: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-500', avatar: 'bg-red-600' },
+    ADMIN: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-500', avatar: 'bg-red-600' },
     CDD: { bg: 'bg-amber-100', text: 'text-amber-700', dot: 'bg-amber-500', avatar: 'bg-amber-600' },
     CDS: { bg: 'bg-blue-100', text: 'text-blue-700', dot: 'bg-blue-500', avatar: 'bg-blue-600' },
     CDB: { bg: 'bg-purple-100', text: 'text-purple-700', dot: 'bg-purple-500', avatar: 'bg-purple-600' },
     ADS: { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', avatar: 'bg-gray-600' },
-    // AJOUT DU STYLE POUR LE RÔLE DIRECTEUR
-    DIR: { bg: 'bg-emerald-100', text: 'text-emerald-700', dot: 'bg-emerald-500', avatar: 'bg-emerald-600' },
 };
 
 const defaultColor = { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', avatar: 'bg-gray-600' };

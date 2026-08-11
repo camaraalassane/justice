@@ -226,7 +226,7 @@ const deleteUser = () => {
 
 const roleVariant = (role) => {
     const map = { 
-        SD: 'danger',      // Sous-Directeur - Rouge
+        ADMIN: 'danger',   // Administrateur - Rouge
         CDD: 'warning',    // Chef de Division - Orange
         CDS: 'info',       // Chef de Section - Bleu
         CDB: 'primary',    // Chef de Bureau - Violet
@@ -237,7 +237,7 @@ const roleVariant = (role) => {
 
 const avatarColor = (role) => {
     const map = {
-        SD: 'bg-red-500',
+        ADMIN: 'bg-red-500',
         CDD: 'bg-amber-500',
         CDS: 'bg-blue-500',
         CDB: 'bg-purple-500',
