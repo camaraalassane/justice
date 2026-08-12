@@ -17,7 +17,9 @@ return new class extends Migration
         });
 
         // Index Full-Text PostgreSQL sur les militaires
-        DB::statement("CREATE INDEX IF NOT EXISTS idx_militaires_recherche ON militaires USING gin(to_tsvector('french', nom || ' ' || prenoms || ' ' || matricule))");
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement("CREATE INDEX IF NOT EXISTS idx_militaires_recherche ON militaires USING gin(to_tsvector('french', nom || ' ' || prenoms || ' ' || matricule))");
+        }
     }
 
     public function down(): void
@@ -29,6 +31,8 @@ return new class extends Migration
             $table->dropIndex(['date_cloture']);
         });
 
-        DB::statement('DROP INDEX IF EXISTS idx_militaires_recherche');
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement('DROP INDEX IF EXISTS idx_militaires_recherche');
+        }
     }
 };

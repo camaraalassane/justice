@@ -9,6 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('procedures', function (Blueprint $table) {
+            // Supprimer d'abord les index et contrainte FK associés aux colonnes qui vont être supprimées
+            $table->dropIndex(['phase', 'statut_jugement']);
+            $table->dropIndex(['date_ordre_poursuite']);
+            $table->dropForeign(['unite_mad_id']);
+
             // Supprimer les colonnes obsolètes
             $table->dropColumn([
                 'reference_doe',

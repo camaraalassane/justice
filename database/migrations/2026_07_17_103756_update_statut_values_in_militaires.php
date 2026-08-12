@@ -8,7 +8,9 @@ return new class extends Migration
     public function up(): void
     {
         // ÉTAPE 1 : Supprimer l'ancienne contrainte
-        DB::statement('ALTER TABLE militaires DROP CONSTRAINT IF EXISTS militaires_statut_check');
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement('ALTER TABLE militaires DROP CONSTRAINT IF EXISTS militaires_statut_check');
+        }
         
         // ÉTAPE 2 : Mettre à jour toutes les données existantes
         // Convertir les anciens statuts vers les nouveaux
@@ -21,13 +23,17 @@ return new class extends Migration
             ->update(['statut' => 'Non activite']);
         
         // ÉTAPE 3 : Ajouter la nouvelle contrainte avec les bons statuts
-        DB::statement("ALTER TABLE militaires ADD CONSTRAINT militaires_statut_check CHECK (statut IN ('En activité', 'Non activite', 'En retraite', 'Radié'))");
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement("ALTER TABLE militaires ADD CONSTRAINT militaires_statut_check CHECK (statut IN ('En activité', 'Non activite', 'En retraite', 'Radié'))");
+        }
     }
 
     public function down(): void
     {
         // Supprimer la contrainte
-        DB::statement('ALTER TABLE militaires DROP CONSTRAINT IF EXISTS militaires_statut_check');
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement('ALTER TABLE militaires DROP CONSTRAINT IF EXISTS militaires_statut_check');
+        }
         
         // Remettre les anciennes valeurs
         DB::table('militaires')
@@ -39,6 +45,8 @@ return new class extends Migration
             ->update(['statut' => 'Suspendu']);
         
         // Recréer l'ancienne contrainte
-        DB::statement("ALTER TABLE militaires ADD CONSTRAINT militaires_statut_check CHECK (statut IN ('Actif', 'Suspendu', 'Déserteur', 'Radié'))");
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement("ALTER TABLE militaires ADD CONSTRAINT militaires_statut_check CHECK (statut IN ('Actif', 'Suspendu', 'Déserteur', 'Radié'))");
+        }
     }
 };
