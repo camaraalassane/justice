@@ -41,7 +41,7 @@ class User extends Authenticatable
             'ADMIN' => 'Administrateur',
             'CDD' => 'Chef de Division Disciplinaire',
             'CDS' => 'Chef de Section Statistique',
-            'CDB' => 'Chef de Bureau Juridique',
+            'CDB' => 'Observateur',
             'ADS' => 'Agent de Saisie',
         ];
     }
@@ -75,7 +75,7 @@ class User extends Authenticatable
      */
     public function estLectureSeule(): bool
     {
-        return false;
+        return $this->hasRole('CDB');
     }
 
     // ==================== PERMISSIONS ====================
@@ -200,6 +200,6 @@ class User extends Authenticatable
      */
     public function peutCreerRapports(): bool
     {
-        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN', 'CDB']);
+        return $this->hasAnyRole(['CDS', 'CDD', 'ADMIN']);
     }
 }

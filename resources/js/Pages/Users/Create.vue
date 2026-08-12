@@ -81,36 +81,36 @@
                     </div>
 
                     <!-- Informations sur les rôles -->
-                    <div class="bg-gpj-50 dark:bg-gpj-800/50 rounded-lg p-4 text-sm">
-                        <p class="font-medium text-gpj-700 dark:text-gpj-300 mb-2">📋 Rôles et responsabilités :</p>
+                    <div class="bg-white dark:bg-gpj-800/50 rounded-lg p-4 text-sm border border-gpj-100 dark:border-gpj-700">
+                        <p class="font-medium text-gpj-800 dark:text-gpj-300 mb-2">📋 Rôles et responsabilités :</p>
                         <ul class="space-y-2 text-xs">
                             <li class="flex items-start gap-2">
                                 <Badge variant="danger" size="sm">ADMIN</Badge>
-                                <span class="text-gpj-600 dark:text-gpj-400">
+                                <span class="text-gpj-700 dark:text-gpj-400">
                                     <span class="font-medium">Administrateur</span> - Supervision haute, gestion des utilisateurs, validation ultime
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="warning" size="sm">CDD</Badge>
-                                <span class="text-gpj-600 dark:text-gpj-400">
+                                <span class="text-gpj-700 dark:text-gpj-400">
                                     <span class="font-medium">Chef de Division</span> - Gestion administrative de la division, affectation des dossiers
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="info" size="sm">CDS</Badge>
-                                <span class="text-gpj-600 dark:text-gpj-400">
+                                <span class="text-gpj-700 dark:text-gpj-400">
                                     <span class="font-medium">Chef de Section</span> - Supervision des agents, validation des étapes de la procédure
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="primary" size="sm">CDB</Badge>
-                                <span class="text-gpj-600 dark:text-gpj-400">
-                                    <span class="font-medium">Chef de Bureau</span> - Gestion du bureau, accès en consultation avancée
+                                <span class="text-gpj-700 dark:text-gpj-400">
+                                    <span class="font-medium">Observateur</span> - Consultation uniquement, accès en lecture seule
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="neutral" size="sm">ADS</Badge>
-                                <span class="text-gpj-600 dark:text-gpj-400">
+                                <span class="text-gpj-700 dark:text-gpj-400">
                                     <span class="font-medium">Agent de Saisie</span> - Alimentation de la base, création des dossiers, numérisation
                                 </span>
                             </li>

@@ -35,11 +35,11 @@
             </div>
 
             <!-- Légende des rôles -->
-            <div class="flex flex-wrap gap-3 text-xs bg-gpj-50 dark:bg-gpj-800/50 rounded-lg p-3">
-                <span class="font-medium text-gpj-600 dark:text-gpj-400">Rôles :</span>
+            <div class="flex flex-wrap gap-3 text-xs bg-white dark:bg-gpj-800/50 rounded-lg p-3 border border-gpj-100 dark:border-gpj-700">
+                <span class="font-medium text-gpj-800 dark:text-gpj-400">Rôles :</span>
                 <span v-for="(label, key) in roles" :key="key" class="flex items-center gap-1">
                     <Badge :variant="roleVariant(key)" size="sm">{{ key }}</Badge>
-                    <span class="text-gpj-500 dark:text-gpj-400">- {{ label }}</span>
+                    <span class="text-gpj-700 dark:text-gpj-400">- {{ label }}</span>
                 </span>
             </div>
 
@@ -229,7 +229,7 @@ const roleVariant = (role) => {
         ADMIN: 'danger',   // Administrateur - Rouge
         CDD: 'warning',    // Chef de Division - Orange
         CDS: 'info',       // Chef de Section - Bleu
-        CDB: 'primary',    // Chef de Bureau - Violet
+        CDB: 'primary',    // Observateur - Violet
         ADS: 'neutral'     // Agent de Saisie - Gris
     };
     return map[role] || 'default';

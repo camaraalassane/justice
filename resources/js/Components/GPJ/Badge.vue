@@ -23,6 +23,7 @@ const badgeClasses = computed(() => {
 
     const variants = {
         default: 'bg-gpj-100 text-gpj-700',
+        primary: 'bg-purple-100 text-purple-700',
         success: 'bg-emerald-100 text-emerald-700',
         warning: 'bg-amber-100 text-amber-700',
         danger: 'bg-red-100 text-red-700',
