@@ -421,7 +421,6 @@ class ProcedureController extends Controller
 
         if (!empty($procedure->peine_principale) && !$procedure->est_condamne) {
             $procedure->est_condamne = true;
-            $procedure->save();
         }
 
         $allInfractions = InfractionBase::select('id', 'code_infraction', 'libelle', 'classification', 'nature')
@@ -631,9 +630,13 @@ class ProcedureController extends Controller
         } else {
             $autresAvecPeine = $procedure->procedurePhases()
                 ->where('id', '!=', $phase->id)
-                ->where('est_condamne', true)
-                ->orWhereNotNull('peine_principale')
-                ->where('peine_principale', '!=', '')
+                ->where(function ($q) {
+                    $q->where('est_condamne', true)
+                      ->orWhere(function ($q2) {
+                          $q2->whereNotNull('peine_principale')
+                             ->where('peine_principale', '!=', '');
+                      });
+                })
                 ->exists();
 
             if (!$autresAvecPeine) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -11,6 +12,7 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    use LogsActivity;
     /**
      * Vérifier que l'utilisateur est Admin
      */
@@ -83,11 +85,7 @@ class UserController extends Controller
         ]);
 
         // Journalisation
-        activity()
-            ->causedBy(auth()->user())
-            ->performedOn($user)
-            ->withProperties(['role' => $request->role])
-            ->log("Création de l'utilisateur {$user->name}");
+        $this->logCreate($user, "Utilisateur créé : {$user->name} ({$user->email}) - Rôle : {$request->role}");
 
         return redirect()->route('users.index')
             ->with('success', "Utilisateur {$user->name} créé avec succès.");
@@ -152,11 +150,7 @@ class UserController extends Controller
         $user->save();
 
         // Journalisation
-        activity()
-            ->causedBy(auth()->user())
-            ->performedOn($user)
-            ->withProperties(['new_role' => $request->role])
-            ->log("Mise à jour de l'utilisateur {$user->name}");
+        $this->logUpdate($user, "Utilisateur modifié : {$user->name} - Nouveau rôle : {$request->role}");
 
         return redirect()->route('users.index')
             ->with('success', "Utilisateur {$user->name} mis à jour avec succès.");
@@ -188,10 +182,7 @@ class UserController extends Controller
         $user->delete();
 
         // Journalisation
-        activity()
-            ->causedBy(auth()->user())
-            ->withProperties(['deleted_user' => $name])
-            ->log("Suppression de l'utilisateur {$name}");
+        $this->logActivity('delete', 'User', null, "Utilisateur supprimé : {$name}");
 
         return redirect()->route('users.index')
             ->with('success', "Utilisateur {$name} supprimé avec succès.");

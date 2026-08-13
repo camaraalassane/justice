@@ -44,12 +44,12 @@ class RegisteredUserController extends Controller
             'role' => 'ADS', // Rôle par défaut : Agent de Saisie
         ]);
 
-        // Logger la création du compte
-        $this->logCreate($user, "Nouveau compte créé : {$user->name} ({$user->email}) - Rôle : ADS");
-
         event(new Registered($user));
 
         Auth::login($user);
+
+        // Logger la création du compte (après login pour avoir auth()->id())
+        $this->logCreate($user, "Nouveau compte créé : {$user->name} ({$user->email}) - Rôle : ADS");
 
         // Logger la connexion
         $this->logLogin();

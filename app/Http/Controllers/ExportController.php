@@ -34,15 +34,28 @@ class ExportController extends Controller
 
     public function topFautes()
     {
-        $data = DB::table('fautes_militaires')
-            ->join('procedures', 'fautes_militaires.procedure_id', '=', 'procedures.id')
+        $toutesFautes = \App\Models\FauteMilitaire::all()->keyBy('id');
+
+        $data = DB::table('procedure_militaire')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
-            ->select('fautes_militaires.libelle', DB::raw('COUNT(*) as nombre'))
-            ->groupBy('fautes_militaires.libelle')
+            ->whereNotNull('procedure_militaire.fautes_militaires')
+            ->whereRaw("json_array_length(procedure_militaire.fautes_militaires) > 0")
+            ->select(
+                DB::raw("json_array_elements_text(procedure_militaire.fautes_militaires) as faute_id"),
+                DB::raw("COUNT(DISTINCT procedure_militaire.procedure_id) as nombre")
+            )
+            ->groupBy('faute_id')
             ->orderByDesc('nombre')
             ->limit(20)
             ->get()
-            ->map(fn($item) => ['libelle' => $item->libelle, 'nombre' => $item->nombre]);
+            ->map(function ($item) use ($toutesFautes) {
+                $faute = $toutesFautes->get((int)$item->faute_id);
+                return [
+                    'libelle' => $faute ? $faute->libelle : 'Faute #' . $item->faute_id,
+                    'nombre' => $item->nombre,
+                ];
+            });
 
         return Excel::download(
             new StatsExport($data, 'Top Fautes Militaires', ['Libellé', 'Nombre']),
@@ -54,11 +67,15 @@ class ExportController extends Controller
 
     public function infractionsParArmee()
     {
-        $data = DB::table('procedures')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
             ->whereNotNull('militaires.armee')
-            ->select('militaires.armee', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.infractions')
+            ->whereRaw("json_array_length(procedure_militaire.infractions) > 0")
+            ->select('militaires.armee', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('militaires.armee')
             ->orderByDesc('nombre')
             ->get()
@@ -72,12 +89,16 @@ class ExportController extends Controller
 
     public function infractionsParCategorieGrade()
     {
-        $data = DB::table('procedures')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
             ->join('grades', 'militaires.grade_id', '=', 'grades.id')
             ->join('categories_grades', 'grades.categorie_grade_id', '=', 'categories_grades.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
-            ->select('categories_grades.libelle', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.infractions')
+            ->whereRaw("json_array_length(procedure_militaire.infractions) > 0")
+            ->select('categories_grades.libelle', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('categories_grades.libelle')
             ->orderByDesc('nombre')
             ->get()
@@ -91,11 +112,15 @@ class ExportController extends Controller
 
     public function infractionsParGrade()
     {
-        $data = DB::table('procedures')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
             ->join('grades', 'militaires.grade_id', '=', 'grades.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
-            ->select('grades.libelle', 'grades.abreviation', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.infractions')
+            ->whereRaw("json_array_length(procedure_militaire.infractions) > 0")
+            ->select('grades.libelle', 'grades.abreviation', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('grades.libelle', 'grades.abreviation')
             ->orderByDesc('nombre')
             ->get()
@@ -109,12 +134,22 @@ class ExportController extends Controller
 
     public function infractionsParGenre()
     {
-        $total = DB::table('procedures')->whereNull('deleted_at')->count();
-        $data = DB::table('procedures')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $total = DB::table('procedure_militaire')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
+            ->whereNull('procedures.deleted_at')
+            ->whereNotNull('procedure_militaire.infractions')
+            ->whereRaw("json_array_length(procedure_militaire.infractions) > 0")
+            ->count(DB::raw('DISTINCT procedure_militaire.procedure_id'));
+
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
             ->whereNotNull('militaires.genre')
-            ->select('militaires.genre', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.infractions')
+            ->whereRaw("json_array_length(procedure_militaire.infractions) > 0")
+            ->select('militaires.genre', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('militaires.genre')
             ->get()
             ->map(function ($item) use ($total) {
@@ -135,12 +170,15 @@ class ExportController extends Controller
 
     public function fautesParArmee()
     {
-        $data = DB::table('fautes_militaires')
-            ->join('procedures', 'fautes_militaires.procedure_id', '=', 'procedures.id')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
             ->whereNotNull('militaires.armee')
-            ->select('militaires.armee', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.fautes_militaires')
+            ->whereRaw("json_array_length(procedure_militaire.fautes_militaires) > 0")
+            ->select('militaires.armee', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('militaires.armee')
             ->orderByDesc('nombre')
             ->get()
@@ -154,13 +192,16 @@ class ExportController extends Controller
 
     public function fautesParCategorieGrade()
     {
-        $data = DB::table('fautes_militaires')
-            ->join('procedures', 'fautes_militaires.procedure_id', '=', 'procedures.id')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
             ->join('grades', 'militaires.grade_id', '=', 'grades.id')
             ->join('categories_grades', 'grades.categorie_grade_id', '=', 'categories_grades.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
-            ->select('categories_grades.libelle', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.fautes_militaires')
+            ->whereRaw("json_array_length(procedure_militaire.fautes_militaires) > 0")
+            ->select('categories_grades.libelle', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('categories_grades.libelle')
             ->orderByDesc('nombre')
             ->get()
@@ -174,12 +215,15 @@ class ExportController extends Controller
 
     public function fautesParGrade()
     {
-        $data = DB::table('fautes_militaires')
-            ->join('procedures', 'fautes_militaires.procedure_id', '=', 'procedures.id')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
             ->join('grades', 'militaires.grade_id', '=', 'grades.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
-            ->select('grades.libelle', 'grades.abreviation', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.fautes_militaires')
+            ->whereRaw("json_array_length(procedure_militaire.fautes_militaires) > 0")
+            ->select('grades.libelle', 'grades.abreviation', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('grades.libelle', 'grades.abreviation')
             ->orderByDesc('nombre')
             ->get()
@@ -193,13 +237,22 @@ class ExportController extends Controller
 
     public function fautesParGenre()
     {
-        $total = DB::table('fautes_militaires')->count();
-        $data = DB::table('fautes_militaires')
-            ->join('procedures', 'fautes_militaires.procedure_id', '=', 'procedures.id')
-            ->join('militaires', 'procedures.militaire_id', '=', 'militaires.id')
+        $total = DB::table('procedure_militaire')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
+            ->whereNull('procedures.deleted_at')
+            ->whereNotNull('procedure_militaire.fautes_militaires')
+            ->whereRaw("json_array_length(procedure_militaire.fautes_militaires) > 0")
+            ->count(DB::raw('DISTINCT procedure_militaire.procedure_id'));
+
+        $data = DB::table('procedure_militaire')
+            ->join('militaires', 'procedure_militaire.militaire_id', '=', 'militaires.id')
+            ->join('procedures', 'procedure_militaire.procedure_id', '=', 'procedures.id')
             ->whereNull('procedures.deleted_at')
             ->whereNotNull('militaires.genre')
-            ->select('militaires.genre', DB::raw('COUNT(*) as nombre'))
+            ->where('procedure_militaire.type_personnel', 'militaire')
+            ->whereNotNull('procedure_militaire.fautes_militaires')
+            ->whereRaw("json_array_length(procedure_militaire.fautes_militaires) > 0")
+            ->select('militaires.genre', DB::raw('COUNT(DISTINCT procedure_militaire.procedure_id) as nombre'))
             ->groupBy('militaires.genre')
             ->get()
             ->map(function ($item) use ($total) {

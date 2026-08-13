@@ -8,7 +8,7 @@ use App\Http\Controllers\InfractionController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PhaseTypeController;
+
 use App\Http\Controllers\CategorieFauteController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,8 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/procedures/{procedure}/militaire/ajouter', [ProcedureController::class, 'ajouterMilitaire'])
         ->name('procedures.militaire.ajouter');
     
-    Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/update', [ProcedureController::class, 'updateMilitaireInfo'])
-        ->name('procedure.militaire.update');
+
     
     Route::patch('/procedures/{procedure}/militaire/{procedureMilitaire}/infractions', [ProcedureController::class, 'updateMilitaireInfractions'])
         ->name('procedure.militaire.infractions.update');
@@ -83,7 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/militaires/{militaire}/edit', [MilitaireController::class, 'edit'])->name('militaires.edit');
     Route::patch('/militaires/{militaire}', [MilitaireController::class, 'update'])->name('militaires.update');
     Route::delete('/militaires/{militaire}', [MilitaireController::class, 'destroy'])->name('militaires.destroy');
-    Route::get('/militaires/{militaire}/casier', [MilitaireController::class, 'imprimerCasier'])->name('militaires.casier');
+
 
     // ==================== INFRACTIONS ====================
     Route::get('/infractions', [InfractionController::class, 'index'])->name('infractions.index');
@@ -110,9 +109,7 @@ Route::middleware('auth')->group(function () {
     // Casier judiciaire
 Route::get('/militaires/{militaire}/casier', [MilitaireController::class, 'casier'])->name('militaires.casier');
 Route::get('/militaires/{militaire}/casier/pdf', [MilitaireController::class, 'exportCasierPdf'])->name('militaires.casier.pdf');
-    // Routes pour la gestion des fautes dans une procédure
-Route::patch('/procedure/{procedure}/militaire/{procedureMilitaire}/fautes', [ProcedureController::class, 'updateMilitaireFautes'])
-    ->name('procedure.militaire.fautes.update');
+
     // ==================== FAUTES MILITAIRES (API uniquement) ====================
     // Routes API pour les catégories et fautes (utilisées par le composant Vue)
     Route::get('/api/categories-fautes', [CategorieFauteController::class, 'getCategories'])
