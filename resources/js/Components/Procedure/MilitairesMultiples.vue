@@ -257,7 +257,102 @@
 
         <!-- Modale création infraction -->
         <div v-if="showCreateInfractionModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <!-- ... contenu existant ... -->
+            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-gpj-800 dark:text-white">Créer une infraction</h3>
+                    <button @click="fermerModalCreationInfraction" class="text-gpj-400 hover:text-gpj-600">
+                        <i class="pi pi-times"></i>
+                    </button>
+                </div>
+
+                <form @submit.prevent="creerInfraction" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                                Libellé <span class="text-red-500">*</span>
+                            </label>
+                            <input
+                                v-model="newInfraction.libelle"
+                                type="text"
+                                required
+                                placeholder="Ex: Insoumission"
+                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                                Code <span class="text-red-500">*</span>
+                            </label>
+                            <input
+                                v-model="newInfraction.code_infraction"
+                                type="text"
+                                required
+                                placeholder="Ex: INF-001"
+                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                                Classification <span class="text-red-500">*</span>
+                            </label>
+                            <select
+                                v-model="newInfraction.classification"
+                                required
+                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            >
+                                <option value="">Sélectionner</option>
+                                <option value="Criminelle">Criminelle</option>
+                                <option value="Délictuelle">Délictuelle</option>
+                                <option value="Contravention">Contravention</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                                Nature
+                            </label>
+                            <input
+                                v-model="newInfraction.nature"
+                                type="text"
+                                placeholder="Ex: Infraction militaire"
+                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            Description
+                        </label>
+                        <textarea
+                            v-model="newInfraction.description"
+                            rows="3"
+                            placeholder="Description détaillée de l'infraction..."
+                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        ></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-3 pt-3 border-t border-gpj-100">
+                        <button
+                            type="button"
+                            @click="fermerModalCreationInfraction"
+                            class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 transition-colors"
+                        >
+                            Annuler
+                        </button>
+                        <button
+                            type="submit"
+                            :disabled="creerInfractionEnCours"
+                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
+                        >
+                            <i v-if="creerInfractionEnCours" class="pi pi-spin pi-spinner mr-2"></i>
+                            Créer l'infraction
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <!-- ============================================================ -->
