@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div v-for="(pc, index) in modelValue" :key="index" class="p-4 bg-slate-50 rounded-lg border border-slate-200 mb-3">
+        <div v-for="(pc, index) in modelValue" :key="index" class="p-4 bg-white rounded-lg border border-slate-200 mb-3">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
                     <i :class="pc.type === 'Structure' ? 'pi pi-building' : 'pi pi-user'" class="text-slate-600 text-sm"></i>

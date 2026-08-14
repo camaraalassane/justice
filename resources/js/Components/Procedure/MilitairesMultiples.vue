@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-4">
         <!-- En-tête avec le toggle plurialité -->
-        <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg p-4">
+        <div class="flex items-center justify-between bg-white dark:bg-slate-800 rounded-lg p-4">
             <div class="flex items-center gap-3">
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input
@@ -10,7 +10,7 @@
                         class="sr-only peer"
                         @change="onTogglePlurialite"
                     />
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-slate-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-slate-500"></div>
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-slate-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-white0"></div>
                     <span class="ms-3 text-sm font-medium text-slate-800 dark:text-slate-400">
                         {{ estPlurielleLocal ? 'Pluriel' : 'Individuel' }}
                     </span>
@@ -161,7 +161,7 @@
                         :key="inf.id"
                         class="flex items-center gap-1.5 text-xs cursor-pointer px-2 py-1 rounded border border-slate-300 hover:bg-slate-50 transition-colors"
                         :class="{
-                            'bg-slate-50 border-slate-500': (militaire.infractions || []).includes(inf.id)
+                            'bg-white border-slate-500': (militaire.infractions || []).includes(inf.id)
                         }"
                     >
                         <input
@@ -193,7 +193,7 @@
                 <div v-if="(militaire.fautes_militaires || []).length === 0" class="text-xs text-slate-500 py-1">
                     Aucune faute
                 </div>
-                <div v-for="(fauteId, fi) in militaire.fautes_militaires" :key="fi" class="flex items-center gap-2 mb-1 p-1 bg-slate-50 rounded">
+                <div v-for="(fauteId, fi) in militaire.fautes_militaires" :key="fi" class="flex items-center gap-2 mb-1 p-1 bg-white rounded">
                     <span class="text-xs text-slate-800 flex-1">
                         {{ getFauteLibelle(fauteId) }}
                     </span>
@@ -224,7 +224,7 @@
                 <div v-if="(militaire.parties_civiles || []).length === 0" class="text-xs text-slate-500 py-1">
                     Aucune partie civile
                 </div>
-                <div v-for="(pc, pi) in militaire.parties_civiles" :key="pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                <div v-for="(pc, pi) in militaire.parties_civiles" :key="pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 p-2 bg-white dark:bg-slate-800 rounded">
                     <select v-model="pc.type" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500">
                         <option value="Personne">Personne</option>
                         <option value="Structure">Structure</option>
@@ -256,7 +256,7 @@
                 <div v-if="(militaire.temoins || []).length === 0" class="text-xs text-slate-500 py-1">
                     Aucun témoin
                 </div>
-                <div v-for="(pc, pi) in militaire.temoins" :key="'temoin-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                <div v-for="(pc, pi) in militaire.temoins" :key="'temoin-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-white dark:bg-slate-800 rounded">
                     <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                     <div class="flex items-center gap-2">
                         <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -278,7 +278,7 @@
                 <div v-if="(militaire.civile_responsables || []).length === 0" class="text-xs text-slate-500 py-1">
                     Aucune civile responsable
                 </div>
-                <div v-for="(pc, pi) in militaire.civile_responsables" :key="'cr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                <div v-for="(pc, pi) in militaire.civile_responsables" :key="'cr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-white dark:bg-slate-800 rounded">
                     <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                     <div class="flex items-center gap-2">
                         <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -300,7 +300,7 @@
                 <div v-if="(militaire.garants || []).length === 0" class="text-xs text-slate-500 py-1">
                     Aucun garant
                 </div>
-                <div v-for="(pc, pi) in militaire.garants" :key="'garant-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                <div v-for="(pc, pi) in militaire.garants" :key="'garant-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-white dark:bg-slate-800 rounded">
                     <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                     <div class="flex items-center gap-2">
                         <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -322,7 +322,7 @@
                 <div v-if="(militaire.avocats || []).length === 0" class="text-xs text-slate-500 py-1">
                     Aucun avocat
                 </div>
-                <div v-for="(pc, pi) in militaire.avocats" :key="'avocat-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                <div v-for="(pc, pi) in militaire.avocats" :key="'avocat-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-white dark:bg-slate-800 rounded">
                     <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                     <div class="flex items-center gap-2">
                         <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -536,7 +536,7 @@
                                 :key="faute.id"
                                 class="flex items-center gap-2 p-2 rounded-lg border"
                                 :class="{
-                                    'bg-slate-50 border-slate-500': (fautesSelectionnees || []).includes(faute.id),
+                                    'bg-white border-slate-500': (fautesSelectionnees || []).includes(faute.id),
                                     'border-slate-300': !(fautesSelectionnees || []).includes(faute.id)
                                 }"
                             >

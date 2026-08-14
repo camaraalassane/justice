@@ -3,7 +3,7 @@
         <!-- ========================================================== -->
         <!-- CONDAMNATION - ORDRE DE POURSUITE                          -->
         <!-- ========================================================== -->
-        <div v-if="isOrdrePoursuite" class="p-4 border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800">
+        <div v-if="isOrdrePoursuite" class="p-4 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
             <div class="flex items-center gap-4 flex-wrap">
                 <label class="flex items-center gap-2 cursor-pointer">
                     <input 
@@ -84,7 +84,7 @@
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(p, i) in personnes" :key="'pers-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
+            <div v-for="(p, i) in personnes" :key="'pers-'+i" class="p-3 bg-white rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-slate-600">Personne {{ i + 1 }}</span>
                     <button type="button" @click="personnes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
@@ -108,7 +108,7 @@
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(e, i) in evenements" :key="'ev-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
+            <div v-for="(e, i) in evenements" :key="'ev-'+i" class="p-3 bg-white rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-slate-600">Événement {{ i + 1 }}</span>
                     <button type="button" @click="evenements.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
@@ -129,7 +129,7 @@
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(r, i) in references" :key="'ref-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
+            <div v-for="(r, i) in references" :key="'ref-'+i" class="p-3 bg-white rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-slate-600">Référence {{ i + 1 }}</span>
                     <button type="button" @click="references.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
@@ -168,7 +168,7 @@
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(pj, i) in piecesJointes" :key="'pj-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
+            <div v-for="(pj, i) in piecesJointes" :key="'pj-'+i" class="p-3 bg-white rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-slate-600">Pièce {{ i + 1 }}</span>
                     <button type="button" @click="piecesJointes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
@@ -190,7 +190,7 @@
             <button type="button" @click="showCustomForm = !showCustomForm" class="text-xs text-slate-600 hover:text-slate-800 font-medium flex items-center gap-1 cursor-pointer">
                 <i class="pi pi-plus-circle"></i> Ajouter un champ personnalisé
             </button>
-            <div v-if="showCustomForm" class="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
+            <div v-if="showCustomForm" class="p-4 bg-white rounded-lg border border-slate-200 space-y-3">
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-slate-600 mb-1">Nom <span class="text-red-500">*</span></label>

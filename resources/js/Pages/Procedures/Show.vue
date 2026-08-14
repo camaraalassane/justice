@@ -81,7 +81,7 @@
                 </div>
             </Card>
 
-            <div v-if="peutModifier && phasesDisponibles.length === 0" class="p-4 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700"><i class="pi pi-info-circle mr-2"></i> Toutes les phases ont été effectuées.</div>
+            <div v-if="peutModifier && phasesDisponibles.length === 0" class="p-4 bg-white border border-slate-300 rounded-lg text-sm text-slate-700"><i class="pi pi-info-circle mr-2"></i> Toutes les phases ont été effectuées.</div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-6">
@@ -193,7 +193,7 @@
                         <div v-if="procedure.procedure_phases?.length" class="space-y-4">
                             <div v-for="(phase, index) in procedure.procedure_phases" :key="phase.id" class="flex gap-3">
                                 <div class="flex flex-col items-center">
-                                    <div :class="['w-3 h-3 rounded-full mt-1.5', phase.est_retour ? 'bg-amber-400' : 'bg-slate-500']"></div>
+                                    <div :class="['w-3 h-3 rounded-full mt-1.5', phase.est_retour ? 'bg-amber-400' : 'bg-white0']"></div>
                                     <div v-if="index < procedure.procedure_phases.length - 1" class="w-0.5 flex-1 bg-slate-200"></div>
                                 </div>
                                 <div class="flex-1 pb-4 min-w-0">
@@ -215,7 +215,7 @@
                                     </div>
 
                                     <!-- Édition de la phase -->
-                                    <div v-if="editingPhaseId === phase.id" class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-300 space-y-3">
+                                    <div v-if="editingPhaseId === phase.id" class="mt-3 p-3 bg-white rounded-lg border border-slate-300 space-y-3">
                                         <!-- Description et Date -->
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <div><label class="block text-xs font-medium text-slate-600 mb-1">Description</label><textarea v-model="editPhaseForm.description" rows="2" class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2"></textarea></div>
@@ -223,7 +223,7 @@
                                         </div>
 
                                         <!-- CONDAMNATION - Modifiable -->
-                                        <div v-if="isOrdrePoursuitePhase(phase)" class="p-3 border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800">
+                                        <div v-if="isOrdrePoursuitePhase(phase)" class="p-3 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
                                             <div class="flex items-center gap-4 flex-wrap">
                                                 <label class="flex items-center gap-2 cursor-pointer">
                                                     <input 

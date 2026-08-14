@@ -75,7 +75,7 @@
                 <option v-if="!disabled" value="__nouveau__" class="text-slate-600 font-medium">--- Créer un nouveau ---</option>
             </select>
 
-            <div v-if="showNouveauParquet && !disabled" class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-300">
+            <div v-if="showNouveauParquet && !disabled" class="mt-3 p-3 bg-white rounded-lg border border-slate-300">
                 <p class="text-xs font-medium text-slate-700 mb-2">📝 Nouveau parquet de droit commun</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-700">
+    <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-700">
         <!-- En-tête du militaire -->
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-3">
@@ -303,7 +303,7 @@
                                 :key="faute.id"
                                 class="flex items-center gap-2 p-2 rounded-lg border"
                                 :class="{
-                                    'bg-slate-50 border-slate-500': (fautesSelectionnees || []).includes(faute.id),
+                                    'bg-white border-slate-500': (fautesSelectionnees || []).includes(faute.id),
                                     'border-slate-300': !(fautesSelectionnees || []).includes(faute.id)
                                 }"
                             >
@@ -469,7 +469,7 @@
                 <div class="mb-4">
                     <h4 class="text-sm font-semibold text-slate-800 mb-2">Parties civiles</h4>
                     <div class="space-y-2">
-                        <div v-for="(pc, pi) in editPartiesCivilesForm" :key="'epc-'+pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 bg-slate-50 rounded">
+                        <div v-for="(pc, pi) in editPartiesCivilesForm" :key="'epc-'+pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 bg-white rounded">
                             <select v-model="pc.type" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500">
                                 <option value="Personne">Personne</option>
                                 <option value="Structure">Structure</option>
@@ -490,7 +490,7 @@
                 <div class="mb-4 border-t border-slate-200 pt-4">
                     <h4 class="text-sm font-semibold text-slate-800 mb-2">Témoins</h4>
                     <div class="space-y-2">
-                        <div v-for="(pc, pi) in editTemoinsForm" :key="'etm-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
+                        <div v-for="(pc, pi) in editTemoinsForm" :key="'etm-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-white rounded">
                             <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
                                 <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -507,7 +507,7 @@
                 <div class="mb-4 border-t border-slate-200 pt-4">
                     <h4 class="text-sm font-semibold text-slate-800 mb-2">Civile responsable</h4>
                     <div class="space-y-2">
-                        <div v-for="(pc, pi) in editCivileResponsablesForm" :key="'ecr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
+                        <div v-for="(pc, pi) in editCivileResponsablesForm" :key="'ecr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-white rounded">
                             <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
                                 <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -524,7 +524,7 @@
                 <div class="mb-4 border-t border-slate-200 pt-4">
                     <h4 class="text-sm font-semibold text-slate-800 mb-2">Garants</h4>
                     <div class="space-y-2">
-                        <div v-for="(pc, pi) in editGarantsForm" :key="'eg-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
+                        <div v-for="(pc, pi) in editGarantsForm" :key="'eg-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-white rounded">
                             <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
                                 <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
@@ -541,7 +541,7 @@
                 <div class="mb-4 border-t border-slate-200 pt-4">
                     <h4 class="text-sm font-semibold text-slate-800 mb-2">Avocats</h4>
                     <div class="space-y-2">
-                        <div v-for="(pc, pi) in editAvocatsForm" :key="'ea-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
+                        <div v-for="(pc, pi) in editAvocatsForm" :key="'ea-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-white rounded">
                             <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
                                 <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
