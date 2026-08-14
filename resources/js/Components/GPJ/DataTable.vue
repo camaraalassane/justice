@@ -1,14 +1,14 @@
 <template>
-    <div class="overflow-hidden rounded-xl border border-gpj-200">
+    <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
         <!-- En-tête avec recherche -->
-        <div v-if="searchable || $slots.toolbar" class="px-4 py-3 bg-white border-b border-gpj-200 flex flex-wrap items-center gap-3">
+        <div v-if="searchable || $slots.toolbar" class="px-4 py-3 bg-white border-b border-slate-200 flex flex-wrap items-center gap-3">
             <div v-if="searchable" class="relative flex-1 max-w-sm">
-                <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400"></i>
+                <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
                 <input
                     v-model="searchQuery"
                     type="text"
                     placeholder="Rechercher..."
-                    class="w-full pl-10 pr-3 py-2 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                    class="w-full pl-10 pr-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
                     @input="onSearch"
                 />
             </div>
@@ -18,12 +18,12 @@
         <!-- Table -->
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
-                <thead class="bg-gpj-100 text-gpj-700">
+                <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
                     <tr>
                         <th
                             v-for="col in columns"
                             :key="col.key"
-                            :class="['px-4 py-3 text-left font-semibold', col.sortable ? 'cursor-pointer hover:bg-gpj-200 select-none' : '']"
+                            :class="['px-4 py-3 text-left font-semibold tracking-wide text-xs uppercase', col.sortable ? 'cursor-pointer hover:bg-slate-100 select-none' : '']"
                             @click="col.sortable && sort(col.key)"
                         >
                             <div class="flex items-center gap-1">
@@ -31,27 +31,27 @@
                                 <span v-if="sortColumn === col.key" class="text-gpj-500">
                                     <i :class="sortDirection === 'asc' ? 'pi pi-sort-up-fill' : 'pi pi-sort-down-fill'"></i>
                                 </span>
-                                <span v-else-if="col.sortable" class="text-gpj-300">
+                                <span v-else-if="col.sortable" class="text-slate-300">
                                     <i class="pi pi-sort"></i>
                                 </span>
                             </div>
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gpj-100">
+                <tbody class="divide-y divide-slate-100">
                     <tr
                         v-for="(row, index) in paginatedData"
                         :key="row.id || index"
-                        class="bg-white hover:bg-gpj-50 transition-colors"
+                        class="bg-white hover:bg-slate-50 transition-colors"
                     >
-                        <td v-for="col in columns" :key="col.key" class="px-4 py-3 text-gpj-800">
+                        <td v-for="col in columns" :key="col.key" class="px-4 py-3 text-slate-800">
                             <slot :name="`cell-${col.key}`" :row="row" :value="row[col.key]">
                                 {{ row[col.key] }}
                             </slot>
                         </td>
                     </tr>
                     <tr v-if="!paginatedData.length">
-                        <td :colspan="columns.length" class="px-4 py-12 text-center text-gpj-400">
+                        <td :colspan="columns.length" class="px-4 py-12 text-center text-slate-400">
                             <i class="pi pi-inbox text-3xl mb-2 block"></i>
                             {{ emptyMessage }}
                         </td>
@@ -61,21 +61,21 @@
         </div>
 
         <!-- Pagination -->
-        <div v-if="totalPages > 1" class="px-4 py-3 bg-white border-t border-gpj-200 flex items-center justify-between">
-            <span class="text-sm text-gpj-500">
+        <div v-if="totalPages > 1" class="px-4 py-3 bg-white border-t border-slate-200 flex items-center justify-between">
+            <span class="text-sm text-slate-500">
                 {{ (currentPage - 1) * perPage + 1 }}-{{ Math.min(currentPage * perPage, data.length) }} sur {{ data.length }} résultats
             </span>
             <div class="flex items-center gap-1">
                 <button
                     :disabled="currentPage === 1"
-                    class="w-8 h-8 flex items-center justify-center rounded-lg text-gpj-500 hover:bg-gpj-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"
                     @click="currentPage = 1"
                 >
                     <i class="pi pi-angle-double-left text-xs"></i>
                 </button>
                 <button
                     :disabled="currentPage === 1"
-                    class="w-8 h-8 flex items-center justify-center rounded-lg text-gpj-500 hover:bg-gpj-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"
                     @click="currentPage--"
                 >
                     <i class="pi pi-angle-left text-xs"></i>
@@ -83,14 +83,14 @@
                 <span class="px-3 py-1 text-sm font-medium bg-gpj-500 text-white rounded-lg">{{ currentPage }}</span>
                 <button
                     :disabled="currentPage === totalPages"
-                    class="w-8 h-8 flex items-center justify-center rounded-lg text-gpj-500 hover:bg-gpj-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"
                     @click="currentPage++"
                 >
                     <i class="pi pi-angle-right text-xs"></i>
                 </button>
                 <button
                     :disabled="currentPage === totalPages"
-                    class="w-8 h-8 flex items-center justify-center rounded-lg text-gpj-500 hover:bg-gpj-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"
                     @click="currentPage = totalPages"
                 >
                     <i class="pi pi-angle-double-right text-xs"></i>

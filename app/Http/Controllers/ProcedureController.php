@@ -26,8 +26,11 @@ class ProcedureController extends Controller
     public function index(Request $request)
     {
         $procedures = Procedure::with([
-                'militaire:id,matricule,nom,prenoms,grade,unite,type_personnel,profession',
-                'procedureMilitaires.militaire',
+                'militaire:id,matricule,nom,prenoms,grade_id,unite,type_personnel,profession,armee_id',
+                'militaire.grade',
+                'militaire.armeeRelation',
+                'procedureMilitaires.militaire.grade',
+                'procedureMilitaires.militaire.armeeRelation',
                 'parquet'
             ])
             ->when($request->phase, fn($q) => $q->parPhase($request->phase))
@@ -313,6 +316,10 @@ class ProcedureController extends Controller
                         'infractions' => $militaireData['infractions'] ?? [],
                         'fautes_militaires' => $militaireData['fautes_militaires'] ?? [],
                         'parties_civiles' => $militaireData['parties_civiles'] ?? [],
+                        'temoins' => $militaireData['temoins'] ?? [],
+                        'civile_responsables' => $militaireData['civile_responsables'] ?? [],
+                        'garants' => $militaireData['garants'] ?? [],
+                        'avocats' => $militaireData['avocats'] ?? [],
                         'est_nouveau' => !($militaireData['militaire_id'] ?? false),
                         'nom_temp' => $militaireData['nom'] ?? null,
                         'prenom_temp' => $militaireData['prenom'] ?? null,
@@ -462,7 +469,7 @@ class ProcedureController extends Controller
 
     public function ajouterPhase(Request $request, Procedure $procedure)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -566,7 +573,7 @@ class ProcedureController extends Controller
 
     public function updatePhase(Request $request, Procedure $procedure, $phaseId)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -689,18 +696,33 @@ class ProcedureController extends Controller
                 $phase->optionsCocher()->create(array_merge($o, ['ordre' => $i]));
             }
         }
-        if ($request->has('pieces_jointes')) {
-            $existingIds = collect($request->pieces_jointes)->pluck('id')->filter()->toArray();
-            $phase->piecesJointes()->whereNotIn('id', $existingIds)->delete();
-            foreach ($request->pieces_jointes as $i => $pj) {
+        if ($request->exists('pieces_jointes')) {
+            $pjInput = $request->input('pieces_jointes') ?: [];
+            $existingIds = collect($pjInput)->pluck('id')->filter()->toArray();
+            
+            if (empty($existingIds)) {
+                $phase->piecesJointes()->delete();
+            } else {
+                $phase->piecesJointes()->whereNotIn('id', $existingIds)->delete();
+            }
+            
+            foreach ($pjInput as $i => $pj) {
                 if (!empty($pj['nom'])) {
                     $data = ['nom' => $pj['nom'], 'description' => $pj['description'] ?? null, 'ordre' => $i];
                     if ($request->hasFile("pieces_jointes.{$i}.fichier")) {
                         $data['chemin_fichier'] = $request->file("pieces_jointes.{$i}.fichier")->store('pieces_jointes', 'public');
+                    } elseif (isset($pj['_supprimerFichier']) && $pj['_supprimerFichier']) {
+                        $data['chemin_fichier'] = null;
                     }
+                    
                     if (!empty($pj['id'])) {
                         $pjm = $phase->piecesJointes()->find($pj['id']);
-                        if ($pjm) $pjm->update($data);
+                        if ($pjm) {
+                            if (isset($data['chemin_fichier']) && $data['chemin_fichier'] === null && $pjm->chemin_fichier) {
+                                \Storage::disk('public')->delete($pjm->chemin_fichier);
+                            }
+                            $pjm->update($data);
+                        }
                     } else {
                         $phase->piecesJointes()->create($data);
                     }
@@ -849,7 +871,7 @@ class ProcedureController extends Controller
 
     public function updateParquet(Request $request, Procedure $procedure)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -890,7 +912,7 @@ class ProcedureController extends Controller
 
     public function updateDateOuverture(Request $request, Procedure $procedure)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
         $request->validate(['date_ouverture' => 'required|date']);
@@ -902,7 +924,7 @@ class ProcedureController extends Controller
 
     public function ajouterMilitaire(Request $request, Procedure $procedure)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -969,7 +991,7 @@ class ProcedureController extends Controller
 
     public function updateMilitaireInfractions(Request $request, Procedure $procedure, $procedureMilitaireId)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -991,7 +1013,7 @@ class ProcedureController extends Controller
 
     public function updateMilitaireFautes(Request $request, Procedure $procedure, $procedureMilitaireId)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -1013,7 +1035,7 @@ class ProcedureController extends Controller
 
     public function updateMilitairePartiesCiviles(Request $request, Procedure $procedure, $procedureMilitaireId)
     {
-        if (!auth()->user()->peutValiderPhase()) {
+        if (!auth()->user()->peutModifierProcedure()) {
             return redirect()->back()->with('error', 'Action non autorisée.');
         }
 
@@ -1025,13 +1047,21 @@ class ProcedureController extends Controller
             'parties_civiles' => 'nullable|array',
             'parties_civiles.*.type' => 'required|in:Personne,Structure',
             'parties_civiles.*.nom' => 'required|string|max:255',
+            'temoins' => 'nullable|array',
+            'civile_responsables' => 'nullable|array',
+            'garants' => 'nullable|array',
+            'avocats' => 'nullable|array',
         ]);
 
         $procedureMilitaire->update([
             'parties_civiles' => $request->parties_civiles ?? [],
+            'temoins' => $request->temoins ?? [],
+            'civile_responsables' => $request->civile_responsables ?? [],
+            'garants' => $request->garants ?? [],
+            'avocats' => $request->avocats ?? [],
         ]);
 
-        return redirect()->back()->with('success', 'Parties civiles mises à jour pour le personnel.');
+        return redirect()->back()->with('success', 'Acteurs annexes mis à jour pour le personnel.');
     }
 
     public function supprimerMilitaire(Procedure $procedure, $procedureMilitaireId)

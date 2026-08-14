@@ -13,40 +13,40 @@
             <Card padding>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold">Code</th>
-                                <th class="px-4 py-3 text-left font-semibold">Libellé</th>
-                                <th class="px-4 py-3 text-left font-semibold">Classification</th>
-                                <th class="px-4 py-3 text-left font-semibold">Nature</th>
-                                <th class="px-4 py-3 text-center font-semibold">Gravité</th>
-                                <th class="px-4 py-3 text-center font-semibold">Actions</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Code</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Libellé</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Classification</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Nature</th>
+                                <th class="px-4 py-3 text-center font-semibold text-xs uppercase tracking-wide">Gravité</th>
+                                <th class="px-4 py-3 text-center font-semibold text-xs uppercase tracking-wide">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gpj-100">
-                            <tr v-for="infraction in infractions.data" :key="infraction.id" class="hover:bg-gpj-50 transition-colors">
+                        <tbody class="divide-y divide-slate-100">
+                            <tr v-for="infraction in infractions.data" :key="infraction.id" class="hover:bg-slate-50 transition-colors">
                                 <td class="px-4 py-3">
                                     <span class="font-mono text-xs px-2 py-0.5 rounded" :class="codeBadgeClass(infraction.code_infraction)">
                                         {{ infraction.code_infraction }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-3 font-medium text-gpj-800">{{ infraction.libelle }}</td>
+                                <td class="px-4 py-3 font-medium text-slate-800">{{ infraction.libelle }}</td>
                                 <td class="px-4 py-3">
                                     <Badge :variant="classificationVariant(infraction.classification)" size="sm">
                                         {{ infraction.classification }}
                                     </Badge>
                                 </td>
-                                <td class="px-4 py-3 text-gpj-600 text-xs">{{ infraction.nature }}</td>
+                                <td class="px-4 py-3 text-slate-600 text-xs">{{ infraction.nature }}</td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center gap-0.5">
                                         <i v-for="i in 5" :key="i" class="pi text-xs"
-                                            :class="i <= infraction.gravite ? 'pi-star-fill text-amber-500' : 'pi-star text-gpj-200'"></i>
+                                            :class="i <= infraction.gravite ? 'pi-star-fill text-amber-500' : 'pi-star text-slate-200'"></i>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center gap-1">
                                         <Link :href="route('infractions.edit', infraction.id)"
-                                            class="w-8 h-8 flex items-center justify-center rounded-lg text-gpj-400 hover:bg-gpj-100 hover:text-gpj-600" title="Modifier">
+                                            class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Modifier">
                                             <i class="pi pi-pencil text-sm"></i>
                                         </Link>
                                         <button v-if="isSD" @click="confirmDeleteInfraction(infraction)"
@@ -57,7 +57,7 @@
                                 </td>
                             </tr>
                             <tr v-if="!infractions.data?.length">
-                                <td colspan="6" class="px-4 py-12 text-center text-gpj-400">
+                                <td colspan="6" class="px-4 py-12 text-center text-slate-400">
                                     <i class="pi pi-inbox text-3xl mb-2 block"></i>
                                     Aucune infraction
                                 </td>
@@ -67,13 +67,13 @@
                 </div>
 
                 <!-- Pagination -->
-                <div v-if="infractions.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-gpj-100 gap-3">
-                    <p class="text-sm text-gpj-400">
+                <div v-if="infractions.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-slate-100 gap-3">
+                    <p class="text-sm text-slate-500">
                         {{ infractions.from }}-{{ infractions.to }} sur {{ infractions.total }}
                     </p>
                     <div class="flex flex-wrap gap-1">
                         <Link v-for="link in infractions.links" :key="link.label" :href="link.url"
-                            :class="['px-3 py-1.5 text-sm rounded-lg transition-colors', link.active ? 'bg-gpj-500 text-white' : 'text-gpj-600 hover:bg-gpj-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']"
+                            :class="['px-3 py-1.5 text-sm rounded-lg transition-colors', link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']"
                             v-html="link.label"
                         />
                     </div>
@@ -87,19 +87,19 @@
                         <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                             <i class="pi pi-exclamation-triangle text-red-600"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-gpj-800">Confirmer la suppression</h3>
+                        <h3 class="text-lg font-bold text-slate-800">Confirmer la suppression</h3>
                     </div>
-                    <p class="text-sm text-gpj-600 mb-2">
+                    <p class="text-sm text-slate-600 mb-2">
                         Vous êtes sur le point de supprimer définitivement l'infraction :
                     </p>
-                    <p class="text-sm font-bold text-gpj-800 mb-2">
+                    <p class="text-sm font-bold text-slate-800 mb-2">
                         {{ infractionToDelete?.code_infraction }} - {{ infractionToDelete?.libelle }}
                     </p>
                     <p class="text-sm text-red-500 mb-6">
                         ⚠️ Cette action est irréversible. Les infractions utilisées dans des procédures ne peuvent pas être supprimées.
                     </p>
                     <div class="flex gap-3 justify-end">
-                        <button @click="showDeleteModal = false" class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer">
+                        <button @click="showDeleteModal = false" class="px-4 py-2 border border-slate-200 text-slate-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                             Annuler
                         </button>
                         <button @click="deleteInfraction" :disabled="deleteProcessing" class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 disabled:opacity-50 cursor-pointer">
@@ -134,11 +134,11 @@ const classificationVariant = (c) => {
 };
 
 const codeBadgeClass = (code) => {
-    if (!code) return 'bg-gpj-100 text-gpj-600';
+    if (!code) return 'bg-slate-100 text-slate-600';
     if (code.startsWith('INF-CR')) return 'bg-red-100 text-red-700';
     if (code.startsWith('INF-DE')) return 'bg-amber-100 text-amber-700';
     if (code.startsWith('INF-CO')) return 'bg-sky-100 text-sky-700';
-    return 'bg-gpj-100 text-gpj-600';
+    return 'bg-slate-100 text-slate-600';
 };
 
 // ==================== SUPPRESSION ====================

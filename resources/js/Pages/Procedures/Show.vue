@@ -35,7 +35,7 @@
 
         <div class="space-y-6">
             <!-- Ajouter une phase -->
-            <Card v-if="peutValider && phasesDisponibles.length > 0">
+            <Card v-if="peutModifier && phasesDisponibles.length > 0">
                 <template #header><div class="px-6 py-4 border-b border-gpj-200"><h3 class="text-lg font-semibold text-gpj-800">Ajouter une phase</h3></div></template>
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -81,7 +81,7 @@
                 </div>
             </Card>
 
-            <div v-if="peutValider && phasesDisponibles.length === 0" class="p-4 bg-gpj-50 border border-gpj-200 rounded-lg text-sm text-gpj-600"><i class="pi pi-info-circle mr-2"></i> Toutes les phases ont été effectuées.</div>
+            <div v-if="peutModifier && phasesDisponibles.length === 0" class="p-4 bg-gpj-50 border border-gpj-200 rounded-lg text-sm text-gpj-600"><i class="pi pi-info-circle mr-2"></i> Toutes les phases ont été effectuées.</div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-6">
@@ -121,7 +121,7 @@
                                         {{ procedure.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }}
                                         - {{ procedure.parquet?.nom || 'Non défini' }}
                                     </Badge>
-                                    <button v-if="peutValider" @click="startEditParquet" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
+                                    <button v-if="peutModifier" @click="startEditParquet" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
                                 </div>
                             </div>
                             <div>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div v-else class="flex items-center gap-2">
                                     <p class="font-medium">{{ formatDate(procedure.date_ouverture) }}</p>
-                                    <button v-if="peutValider" @click="editDateOuverture = true; editForm.date_ouverture = formatDateForInput(procedure.date_ouverture)" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
+                                    <button v-if="peutModifier" @click="editDateOuverture = true; editForm.date_ouverture = formatDateForInput(procedure.date_ouverture)" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
                                 </div>
                             </div>
                             <div><p class="text-gpj-400">Créé par</p><p class="font-medium">{{ procedure.createur?.name || '-' }}</p></div>
@@ -158,7 +158,7 @@
                                 {{ procedure.procedure_militaires?.length || 0 }} personnel(s) associé(s)
                             </span>
                             <button
-                                v-if="peutValider"
+                                v-if="peutModifier"
                                 @click="openAddPersonnelModal"
                                 class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
                             >
@@ -175,7 +175,7 @@
                                 :est-principal="pm.militaire_id === procedure.militaire_id"
                                 :all-infractions="allInfractions"
                                 :all-fautes="allFautes"
-                                :peut-modifier="peutValider"
+                                :peut-modifier="peutModifier"
                                 :grades="grades"
                                 :armees="armees"
                                 :total-militaires="procedure.procedure_militaires?.length || 0"
@@ -210,7 +210,7 @@
                                             </div>
                                             <p class="text-xs text-gpj-400 mt-0.5">{{ formatDate(phase.date_phase) }} — par {{ phase.createur?.name || '-' }}</p>
                                         </div>
-                                        <button v-if="peutValider && editingPhaseId !== phase.id" @click="startEditPhase(phase)" class="text-gpj-400 hover:text-gpj-600 shrink-0" title="Modifier"><i class="pi pi-pencil text-xs"></i></button>
+                                        <button v-if="peutModifier && editingPhaseId !== phase.id" @click="startEditPhase(phase)" class="text-gpj-400 hover:text-gpj-600 shrink-0" title="Modifier"><i class="pi pi-pencil text-xs"></i></button>
                                         <button v-if="peutValider && index === 0 && procedure.procedure_phases.length > 1 && editingPhaseId !== phase.id" @click="confirmRetourPhase(phase)" class="text-amber-500 hover:text-amber-700 shrink-0" title="Revenir à la phase précédente"><i class="pi pi-undo text-xs"></i></button>
                                     </div>
 
@@ -711,6 +711,7 @@ onMounted(() => {
 
 // ====== PERMISSIONS ======
 const peutValider = computed(() => ['CDS','CDD','ADMIN'].includes(page.props.auth?.user?.role));
+const peutModifier = computed(() => ['ADS','CDS','CDD','ADMIN'].includes(page.props.auth?.user?.role));
 
 // ====== FORMATAGE ======
 const formatDate = (d) => {
@@ -1123,9 +1124,11 @@ const onEditFileChange = (e, i) => {
 
 const savePhaseEdit = (phaseId) => { 
     editPhaseProcessing.value = true; 
-    router.put(route('procedures.update-phase', { procedure: props.procedure.id, phase: phaseId }), { 
+    router.post(route('procedures.update-phase', { procedure: props.procedure.id, phase: phaseId }), { 
+        _method: 'put',
         ...editPhaseForm.value 
     }, { 
+        forceFormData: true,
         onSuccess: () => { 
             editPhaseProcessing.value = false; 
             editingPhaseId.value = null; 

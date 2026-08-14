@@ -22,7 +22,7 @@ const badgeClasses = computed(() => {
     const base = 'inline-flex items-center font-medium rounded-full';
 
     const variants = {
-        default: 'bg-gpj-100 text-gpj-700',
+        default: 'bg-slate-100 text-slate-700',
         primary: 'bg-purple-100 text-purple-700',
         success: 'bg-emerald-100 text-emerald-700',
         warning: 'bg-amber-100 text-amber-700',

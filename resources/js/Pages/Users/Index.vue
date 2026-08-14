@@ -5,19 +5,19 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="relative w-full sm:w-64">
-                        <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400 text-sm"></i>
+                        <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                         <input
                             v-model="filters.search"
                             type="text"
                             placeholder="Rechercher un utilisateur..."
-                            class="w-full pl-9 pr-3 py-2 rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm"
                             @input="appliquerFiltres"
                         />
                     </div>
                     <select 
                         v-model="filters.role" 
                         @change="appliquerFiltres" 
-                        class="rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="rounded-lg border border-slate-300 text-slate-800 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm"
                     >
                         <option value="">Tous les rôles</option>
                         <option v-for="(label, key) in roles" :key="key" :value="key">
@@ -35,11 +35,11 @@
             </div>
 
             <!-- Légende des rôles -->
-            <div class="flex flex-wrap gap-3 text-xs bg-white dark:bg-gpj-800/50 rounded-lg p-3 border border-gpj-100 dark:border-gpj-700">
-                <span class="font-medium text-gpj-800 dark:text-gpj-400">Rôles :</span>
+            <div class="flex flex-wrap gap-3 text-xs bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                <span class="font-semibold text-slate-700">Rôles :</span>
                 <span v-for="(label, key) in roles" :key="key" class="flex items-center gap-1">
                     <Badge :variant="roleVariant(key)" size="sm">{{ key }}</Badge>
-                    <span class="text-gpj-700 dark:text-gpj-400">- {{ label }}</span>
+                    <span class="text-slate-600">- {{ label }}</span>
                 </span>
             </div>
 
@@ -47,17 +47,17 @@
             <Card padding>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 dark:bg-gpj-800/50 text-gpj-600 dark:text-gpj-400">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold">Utilisateur</th>
-                                <th class="px-4 py-3 text-left font-semibold">Email</th>
-                                <th class="px-4 py-3 text-left font-semibold">Rôle</th>
-                                <th class="px-4 py-3 text-left font-semibold">Créé le</th>
-                                <th class="px-4 py-3 text-right font-semibold">Actions</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Email</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Rôle</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Créé le</th>
+                                <th class="px-4 py-3 text-right font-semibold text-xs uppercase tracking-wide">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gpj-100 dark:divide-gpj-800">
-                            <tr v-for="user in users.data" :key="user.id" class="hover:bg-gpj-50 dark:hover:bg-gpj-800/50 transition-colors">
+                        <tbody class="divide-y divide-slate-100">
+                            <tr v-for="user in users.data" :key="user.id" class="hover:bg-slate-50 transition-colors">
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-3">
                                         <div 
@@ -67,35 +67,35 @@
                                             {{ user.name.charAt(0).toUpperCase() }}
                                         </div>
                                         <div>
-                                            <p class="font-medium text-gpj-800 dark:text-white">{{ user.name }}</p>
-                                            <p class="text-xs text-gpj-400 dark:text-gpj-500">ID #{{ user.id }}</p>
+                                            <p class="font-medium text-slate-800">{{ user.name }}</p>
+                                            <p class="text-xs text-slate-400">ID #{{ user.id }}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-gpj-600 dark:text-gpj-300">{{ user.email }}</td>
+                                <td class="px-4 py-3 text-slate-600">{{ user.email }}</td>
                                 <td class="px-4 py-3">
                                     <div>
                                         <Badge :variant="roleVariant(user.role)">
                                             {{ user.role }}
                                         </Badge>
-                                        <p class="text-xs text-gpj-400 dark:text-gpj-500 mt-0.5">{{ roles[user.role] }}</p>
+                                        <p class="text-xs text-slate-400 mt-0.5">{{ roles[user.role] }}</p>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-xs text-gpj-400 dark:text-gpj-500">
+                                <td class="px-4 py-3 text-xs text-slate-500">
                                     {{ new Date(user.created_at).toLocaleDateString('fr-FR') }}
                                 </td>
                                 <td class="px-4 py-3 text-right">
                                     <div class="flex items-center justify-end gap-1">
                                         <Link 
                                             :href="route('users.edit', user.id)" 
-                                            class="p-2 text-gpj-400 hover:text-gpj-600 dark:hover:text-gpj-300 hover:bg-gpj-100 dark:hover:bg-gpj-800 rounded-lg transition-colors"
+                                            class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
                                             title="Modifier"
                                         >
                                             <i class="pi pi-pencil"></i>
                                         </Link>
                                         <button 
                                             @click="confirmDelete(user)" 
-                                            class="p-2 text-red-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 rounded-lg transition-colors"
+                                            class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                             title="Supprimer"
                                             :disabled="user.id === $page.props.auth.user.id"
                                         >
@@ -105,7 +105,7 @@
                                 </td>
                             </tr>
                             <tr v-if="!users.data?.length">
-                                <td colspan="5" class="px-4 py-12 text-center text-gpj-400 dark:text-gpj-500">
+                                <td colspan="5" class="px-4 py-12 text-center text-slate-400">
                                     <i class="pi pi-users text-3xl mb-2 block"></i>
                                     Aucun utilisateur trouvé
                                 </td>
@@ -115,8 +115,8 @@
                 </div>
 
                 <!-- Pagination -->
-                <div v-if="users.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-gpj-100 dark:border-gpj-800 gap-3">
-                    <p class="text-sm text-gpj-400 dark:text-gpj-500">
+                <div v-if="users.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-slate-100 gap-3">
+                    <p class="text-sm text-slate-500">
                         {{ users.from }}-{{ users.to }} sur {{ users.total }}
                     </p>
                     <div class="flex flex-wrap gap-1">
@@ -126,7 +126,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-gpj-500 text-white' : 'text-gpj-600 dark:text-gpj-300 hover:bg-gpj-100 dark:hover:bg-gpj-800',
+                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label"
@@ -143,16 +143,16 @@
                     <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center shrink-0">
                         <i class="pi pi-exclamation-triangle text-red-600 dark:text-red-400"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gpj-800 dark:text-white">Confirmer la suppression</h3>
+                    <h3 class="text-lg font-bold text-slate-800">Confirmer la suppression</h3>
                 </div>
-                <p class="text-sm text-gpj-600 dark:text-gpj-300 mb-6">
+                <p class="text-sm text-slate-600 mb-6">
                     Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ userToDelete?.name }}</strong> ?
                     <br><span class="text-red-500">Cette action est irréversible.</span>
                 </p>
                 <div class="flex gap-3 justify-end">
                     <button 
                         @click="showDeleteModal = false" 
-                        class="px-4 py-2 border border-gpj-200 dark:border-gpj-700 text-gpj-600 dark:text-gpj-300 text-sm rounded-lg hover:bg-gpj-50 dark:hover:bg-gpj-800 cursor-pointer"
+                        class="px-4 py-2 border border-slate-200 text-slate-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer"
                     >
                         Annuler
                     </button>

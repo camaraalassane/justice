@@ -35,10 +35,10 @@ const buttonClasses = computed(() => {
 
     const variants = {
         primary: 'bg-gpj-500 text-white hover:bg-gpj-600 focus:ring-gpj-500 shadow-sm',
-        secondary: 'bg-gpj-200 text-gpj-800 hover:bg-gpj-300 focus:ring-gpj-300',
+        secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400 shadow-sm',
         outline: 'border-2 border-gpj-500 text-gpj-500 hover:bg-gpj-50 focus:ring-gpj-500',
         danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-        ghost: 'text-gpj-600 hover:bg-gpj-100 focus:ring-gpj-400',
+        ghost: 'text-slate-600 hover:bg-slate-100 focus:ring-slate-400',
     };
 
     const sizes = {

@@ -121,12 +121,56 @@
                         @click="ouvrirEditionPartiesCiviles"
                         class="text-xs text-gpj-500 hover:text-gpj-700"
                     >
-                        <i class="pi pi-pencil text-xs mr-1"></i> Modifier
+                        <i class="pi pi-pencil text-xs mr-1"></i> Modifier acteurs
                     </button>
                 </div>
                 <div v-if="getPartiesCiviles().length === 0" class="text-xs text-gpj-400 py-1">Aucune partie civile</div>
-                <div v-for="(pc, pi) in getPartiesCiviles()" :key="pi" class="text-xs text-gpj-600">
-                    - {{ pc.type === 'Structure' ? 'Structure: ' + pc.nom : pc.nom + ' ' + (pc.prenom || '') }}{{ pc.profession ? ' (' + pc.profession + ')' : '' }}
+                <div v-for="(pc, pi) in getPartiesCiviles()" :key="'pc-'+pi" class="text-xs text-gpj-600">
+                    - {{ pc.type === 'Structure' ? 'Structure: ' + pc.nom : pc.nom + ' ' + (pc.prenom || '') }}
+                </div>
+            </div>
+
+            <!-- Témoins -->
+            <div class="border-t border-gpj-100 pt-3">
+                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                    <i class="pi pi-users mr-1"></i> Témoins
+                </label>
+                <div v-if="getPersonnes('temoins').length === 0" class="text-xs text-gpj-400 py-1">Aucun témoin</div>
+                <div v-for="(pc, pi) in getPersonnes('temoins')" :key="'t-'+pi" class="text-xs text-gpj-600">
+                    - {{ pc.nom }} {{ pc.prenom || '' }}
+                </div>
+            </div>
+
+            <!-- Civile Responsable -->
+            <div class="border-t border-gpj-100 pt-3">
+                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                    <i class="pi pi-user mr-1"></i> Civile responsable
+                </label>
+                <div v-if="getPersonnes('civile_responsables').length === 0" class="text-xs text-gpj-400 py-1">Aucune civile responsable</div>
+                <div v-for="(pc, pi) in getPersonnes('civile_responsables')" :key="'cr-'+pi" class="text-xs text-gpj-600">
+                    - {{ pc.nom }} {{ pc.prenom || '' }}
+                </div>
+            </div>
+
+            <!-- Garants -->
+            <div class="border-t border-gpj-100 pt-3">
+                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                    <i class="pi pi-shield mr-1"></i> Garants
+                </label>
+                <div v-if="getPersonnes('garants').length === 0" class="text-xs text-gpj-400 py-1">Aucun garant</div>
+                <div v-for="(pc, pi) in getPersonnes('garants')" :key="'g-'+pi" class="text-xs text-gpj-600">
+                    - {{ pc.nom }} {{ pc.prenom || '' }}
+                </div>
+            </div>
+
+            <!-- Avocat -->
+            <div class="border-t border-gpj-100 pt-3">
+                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                    <i class="pi pi-briefcase mr-1"></i> Avocat
+                </label>
+                <div v-if="getPersonnes('avocats').length === 0" class="text-xs text-gpj-400 py-1">Aucun avocat</div>
+                <div v-for="(pc, pi) in getPersonnes('avocats')" :key="'av-'+pi" class="text-xs text-gpj-600">
+                    - {{ pc.nom }} {{ pc.prenom || '' }}
                 </div>
             </div>
         </div>
@@ -416,31 +460,100 @@
             </div>
         </div>
 
-        <!-- Modale édition parties civiles -->
+        <!-- Modale édition acteurs annexes -->
         <div v-if="showEditPartiesCiviles" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
             <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Modifier les parties civiles</h3>
-                <div class="space-y-2">
-                    <div v-for="(pc, pi) in editPartiesCivilesForm" :key="pi" class="grid grid-cols-4 gap-2 p-2 bg-gpj-50 rounded">
-                        <select v-model="pc.type" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
-                            <option value="Personne">Personne</option>
-                            <option value="Structure">Structure</option>
-                        </select>
-                        <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                        <input v-if="pc.type === 'Personne'" v-model="pc.prenom" placeholder="Prénom" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                        <div class="flex items-center gap-2">
-                            <input v-model="pc.profession" placeholder="Profession" class="flex-1 rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                            <button @click="editPartiesCivilesForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs">
-                                <i class="pi pi-times"></i>
-                            </button>
+                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Modifier les acteurs annexes</h3>
+                
+                <!-- Parties civiles -->
+                <div class="mb-4">
+                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Parties civiles</h4>
+                    <div class="space-y-2">
+                        <div v-for="(pc, pi) in editPartiesCivilesForm" :key="'epc-'+pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 bg-gpj-50 rounded">
+                            <select v-model="pc.type" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                                <option value="Personne">Personne</option>
+                                <option value="Structure">Structure</option>
+                            </select>
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <div class="flex items-center gap-2">
+                                <input v-if="pc.type === 'Personne'" v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <button @click="editPartiesCivilesForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex items-center gap-2 mt-2">
-                    <button @click="editPartiesCivilesForm.push({ type: 'Personne', nom: '', prenom: '', profession: '', adresse: '' })" class="text-xs text-gpj-500 hover:text-gpj-700">
+                    <button @click="editPartiesCivilesForm.push({ type: 'Personne', nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
                         <i class="pi pi-plus-circle mr-1"></i> Ajouter une partie civile
                     </button>
                 </div>
+
+                <!-- Témoins -->
+                <div class="mb-4 border-t border-gpj-100 pt-4">
+                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Témoins</h4>
+                    <div class="space-y-2">
+                        <div v-for="(pc, pi) in editTemoinsForm" :key="'etm-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-gpj-50 rounded">
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <div class="flex items-center gap-2">
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <button @click="editTemoinsForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <button @click="editTemoinsForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter un témoin
+                    </button>
+                </div>
+
+                <!-- Civile responsable -->
+                <div class="mb-4 border-t border-gpj-100 pt-4">
+                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Civile responsable</h4>
+                    <div class="space-y-2">
+                        <div v-for="(pc, pi) in editCivileResponsablesForm" :key="'ecr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-gpj-50 rounded">
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <div class="flex items-center gap-2">
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <button @click="editCivileResponsablesForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <button @click="editCivileResponsablesForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter civile responsable
+                    </button>
+                </div>
+
+                <!-- Garants -->
+                <div class="mb-4 border-t border-gpj-100 pt-4">
+                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Garants</h4>
+                    <div class="space-y-2">
+                        <div v-for="(pc, pi) in editGarantsForm" :key="'eg-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-gpj-50 rounded">
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <div class="flex items-center gap-2">
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <button @click="editGarantsForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <button @click="editGarantsForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter un garant
+                    </button>
+                </div>
+
+                <!-- Avocats -->
+                <div class="mb-4 border-t border-gpj-100 pt-4">
+                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Avocats</h4>
+                    <div class="space-y-2">
+                        <div v-for="(pc, pi) in editAvocatsForm" :key="'ea-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-gpj-50 rounded">
+                            <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <div class="flex items-center gap-2">
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <button @click="editAvocatsForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <button @click="editAvocatsForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter un avocat
+                    </button>
+                </div>
+
                 <div class="flex items-center gap-2 mt-4 pt-4 border-t border-gpj-100">
                     <button @click="sauvegarderPartiesCiviles" :disabled="savingPartiesCiviles" class="px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer">
                         <i v-if="savingPartiesCiviles" class="pi pi-spin pi-spinner mr-1"></i>
@@ -648,6 +761,10 @@ const fautesParCategorie = computed(() => {
 // ====== DONNÉES ======
 const editInfractionsForm = ref([...(props.procedureMilitaire?.infractions || [])]);
 const editPartiesCivilesForm = ref(JSON.parse(JSON.stringify(props.procedureMilitaire?.parties_civiles || [])));
+const editTemoinsForm = ref(JSON.parse(JSON.stringify(props.procedureMilitaire?.temoins || [])));
+const editCivileResponsablesForm = ref(JSON.parse(JSON.stringify(props.procedureMilitaire?.civile_responsables || [])));
+const editGarantsForm = ref(JSON.parse(JSON.stringify(props.procedureMilitaire?.garants || [])));
+const editAvocatsForm = ref(JSON.parse(JSON.stringify(props.procedureMilitaire?.avocats || [])));
 
 // ====== CHARGEMENT DES CATÉGORIES DE FAUTES ======
 const loadCategoriesFautes = async () => {
@@ -768,6 +885,10 @@ const getInfractionsDisplay = () => {
 
 const getPartiesCiviles = () => {
     return props.procedureMilitaire?.parties_civiles || [];
+};
+
+const getPersonnes = (field) => {
+    return props.procedureMilitaire?.[field] || [];
 };
 
 const formatDate = (d) => {
@@ -1031,6 +1152,10 @@ const supprimerFauteDb = async (id) => {
 // ====== PARTIES CIVILES ======
 const ouvrirEditionPartiesCiviles = () => {
     editPartiesCivilesForm.value = JSON.parse(JSON.stringify(props.procedureMilitaire?.parties_civiles || []));
+    editTemoinsForm.value = JSON.parse(JSON.stringify(props.procedureMilitaire?.temoins || []));
+    editCivileResponsablesForm.value = JSON.parse(JSON.stringify(props.procedureMilitaire?.civile_responsables || []));
+    editGarantsForm.value = JSON.parse(JSON.stringify(props.procedureMilitaire?.garants || []));
+    editAvocatsForm.value = JSON.parse(JSON.stringify(props.procedureMilitaire?.avocats || []));
     showEditPartiesCiviles.value = true;
 };
 
@@ -1039,7 +1164,13 @@ const sauvegarderPartiesCiviles = () => {
     router.patch(route('procedure.militaire.parties-civiles.update', {
         procedure: props.procedureId,
         procedureMilitaire: props.procedureMilitaire.id
-    }), { parties_civiles: editPartiesCivilesForm.value }, {
+    }), { 
+        parties_civiles: editPartiesCivilesForm.value,
+        temoins: editTemoinsForm.value,
+        civile_responsables: editCivileResponsablesForm.value,
+        garants: editGarantsForm.value,
+        avocats: editAvocatsForm.value
+    }, {
         onSuccess: () => {
             savingPartiesCiviles.value = false;
             showEditPartiesCiviles.value = false;

@@ -3,29 +3,29 @@
         <div class="space-y-4">
             <!-- Cartes stats -->
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div class="bg-white rounded-xl border border-gpj-200 p-3 text-center">
+                <div class="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
                     <p class="text-2xl font-bold text-gpj-600">{{ stats.today }}</p>
-                    <p class="text-xs text-gpj-400">Aujourd'hui</p>
+                    <p class="text-xs text-slate-500">Aujourd'hui</p>
                 </div>
-                <div class="bg-white rounded-xl border border-gpj-200 p-3 text-center">
+                <div class="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
                     <p class="text-2xl font-bold text-blue-600">{{ stats.creations }}</p>
-                    <p class="text-xs text-gpj-400">Créations</p>
+                    <p class="text-xs text-slate-500">Créations</p>
                 </div>
-                <div class="bg-white rounded-xl border border-gpj-200 p-3 text-center">
+                <div class="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
                     <p class="text-2xl font-bold text-amber-600">{{ stats.modifications }}</p>
-                    <p class="text-xs text-gpj-400">Modifications</p>
+                    <p class="text-xs text-slate-500">Modifications</p>
                 </div>
-                <div class="bg-white rounded-xl border border-gpj-200 p-3 text-center">
+                <div class="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
                     <p class="text-2xl font-bold text-red-600">{{ stats.suppressions }}</p>
-                    <p class="text-xs text-gpj-400">Suppressions</p>
+                    <p class="text-xs text-slate-500">Suppressions</p>
                 </div>
-                <div class="bg-white rounded-xl border border-gpj-200 p-3 text-center">
+                <div class="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
                     <p class="text-2xl font-bold text-purple-600">{{ stats.phase_changes }}</p>
-                    <p class="text-xs text-gpj-400">Changements phase</p>
+                    <p class="text-xs text-slate-500">Changements phase</p>
                 </div>
-                <div class="bg-white rounded-xl border border-gpj-200 p-3 text-center">
-                    <p class="text-2xl font-bold text-gpj-600">{{ stats.total }}</p>
-                    <p class="text-xs text-gpj-400">Total</p>
+                <div class="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
+                    <p class="text-2xl font-bold text-slate-700">{{ stats.total }}</p>
+                    <p class="text-xs text-slate-500">Total</p>
                 </div>
             </div>
 
@@ -33,36 +33,36 @@
             <Card>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-gpj-500 mb-1">Action</label>
-                        <select v-model="filtres.action" @change="appliquerFiltres" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Action</label>
+                        <select v-model="filtres.action" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-sm text-slate-800 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
                             <option value="">Toutes</option>
                             <option v-for="a in actions" :key="a" :value="a">{{ actionLabel(a) }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gpj-500 mb-1">Type</label>
-                        <select v-model="filtres.model_type" @change="appliquerFiltres" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Type</label>
+                        <select v-model="filtres.model_type" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-sm text-slate-800 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
                             <option value="">Tous</option>
                             <option v-for="m in modelTypes" :key="m" :value="m">{{ m }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gpj-500 mb-1">Date début</label>
-                        <input v-model="filtres.date_debut" type="date" @change="appliquerFiltres" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date début</label>
+                        <input v-model="filtres.date_debut" type="date" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-sm text-slate-800 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" />
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gpj-500 mb-1">Date fin</label>
-                        <input v-model="filtres.date_fin" type="date" @change="appliquerFiltres" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date fin</label>
+                        <input v-model="filtres.date_fin" type="date" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-sm text-slate-800 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" />
                     </div>
                 </div>
                 <div class="mt-3">
                     <div class="relative max-w-sm">
-                        <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400 text-sm"></i>
+                        <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                         <input
                             v-model="filtres.search"
                             type="text"
                             placeholder="Rechercher dans la description..."
-                            class="w-full pl-9 pr-3 py-2 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm"
                             @input="appliquerFiltres"
                         />
                     </div>
@@ -73,39 +73,39 @@
             <Card padding>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold">Date</th>
-                                <th class="px-4 py-3 text-left font-semibold">Utilisateur</th>
-                                <th class="px-4 py-3 text-left font-semibold">Action</th>
-                                <th class="px-4 py-3 text-left font-semibold">Description</th>
-                                <th class="px-4 py-3 text-left font-semibold">IP</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Date</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Action</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Description</th>
+                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">IP</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gpj-100">
-                            <tr v-for="log in logs.data" :key="log.id" class="hover:bg-gpj-50 transition-colors">
-                                <td class="px-4 py-3 text-xs text-gpj-400 whitespace-nowrap">
+                        <tbody class="divide-y divide-slate-100">
+                            <tr v-for="log in logs.data" :key="log.id" class="hover:bg-slate-50 transition-colors">
+                                <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
                                     {{ new Date(log.created_at).toLocaleString('fr-FR') }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-7 h-7 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-600 text-xs font-bold">
+                                        <div class="w-7 h-7 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-xs font-bold">
                                             {{ log.user?.name?.charAt(0) || '?' }}
                                         </div>
                                         <div>
-                                            <p class="text-xs font-medium text-gpj-800">{{ log.user?.name || 'Système' }}</p>
-                                            <p class="text-xs text-gpj-400">{{ log.user?.role || '-' }}</p>
+                                            <p class="text-xs font-medium text-slate-800">{{ log.user?.name || 'Système' }}</p>
+                                            <p class="text-xs text-slate-400">{{ log.user?.role || '-' }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">
                                     <Badge :variant="actionVariant(log.action)" size="sm">{{ actionLabel(log.action) }}</Badge>
                                 </td>
-                                <td class="px-4 py-3 text-xs text-gpj-600 max-w-xs truncate">{{ log.description }}</td>
-                                <td class="px-4 py-3 text-xs text-gpj-400 font-mono">{{ log.ip_address }}</td>
+                                <td class="px-4 py-3 text-xs text-slate-600 max-w-xs truncate">{{ log.description }}</td>
+                                <td class="px-4 py-3 text-xs text-slate-400 font-mono">{{ log.ip_address }}</td>
                             </tr>
                             <tr v-if="!logs.data?.length">
-                                <td colspan="5" class="px-4 py-12 text-center text-gpj-400">
+                                <td colspan="5" class="px-4 py-12 text-center text-slate-400">
                                     <i class="pi pi-inbox text-3xl mb-2 block"></i>
                                     Aucun log trouvé
                                 </td>
@@ -115,8 +115,8 @@
                 </div>
 
                 <!-- Pagination -->
-                <div v-if="logs.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-gpj-100 gap-3">
-                    <p class="text-sm text-gpj-400">{{ logs.from }}-{{ logs.to }} sur {{ logs.total }}</p>
+                <div v-if="logs.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-slate-100 gap-3">
+                    <p class="text-sm text-slate-500">{{ logs.from }}-{{ logs.to }} sur {{ logs.total }}</p>
                     <div class="flex flex-wrap gap-1">
                         <Link
                             v-for="link in logs.links"
@@ -124,7 +124,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-gpj-500 text-white' : 'text-gpj-600 hover:bg-gpj-100',
+                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label"

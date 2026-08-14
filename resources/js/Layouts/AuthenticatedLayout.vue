@@ -133,18 +133,18 @@
         <!-- Contenu principal -->
         <div class="flex-1 flex flex-col min-h-screen lg:ml-64">
             <!-- Top bar -->
-            <header class="bg-white border-b border-gpj-200 px-3 md:px-6 py-3 flex items-center justify-between sticky top-0 z-30 transition-colors duration-300">
+            <header class="bg-white border-b border-slate-200 px-3 md:px-6 py-3 flex items-center justify-between sticky top-0 z-30 transition-colors duration-300">
                 <div class="flex items-center gap-2 md:gap-3 min-w-0">
                     <button
-                        class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-gpj-600 hover:bg-gpj-100 transition-colors shrink-0"
+                        class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 transition-colors shrink-0"
                         @click="toggleSidebar"
                         :aria-label="sidebarOpen ? 'Fermer le menu' : 'Ouvrir le menu'"
                     >
                         <i :class="sidebarOpen ? 'pi pi-times' : 'pi pi-bars'" class="text-lg"></i>
                     </button>
                     <div class="min-w-0">
-                        <h2 class="text-base md:text-xl font-bold text-gpj-800 truncate">{{ pageTitle }}</h2>
-                        <p class="text-xs text-gpj-400 mt-0.5 hidden sm:block truncate">{{ pageSubtitle }}</p>
+                        <h2 class="text-base md:text-xl font-bold text-slate-800 truncate">{{ pageTitle }}</h2>
+                        <p class="text-xs text-slate-500 mt-0.5 hidden sm:block truncate">{{ pageSubtitle }}</p>
                     </div>
                 </div>
 
@@ -157,11 +157,11 @@
                         <span class="w-1.5 h-1.5 rounded-full" :class="roleDotClass"></span>
                         {{ roleLabel }}
                     </span>
-                    <span class="hidden md:inline text-xs text-gpj-400 bg-gpj-100 px-2 py-1 rounded-full whitespace-nowrap">
+                    <span class="hidden md:inline text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full whitespace-nowrap">
                         {{ formattedDate }}
                     </span>
                     <button
-                        class="w-10 h-10 flex items-center justify-center rounded-lg text-gpj-500 hover:bg-gpj-100 transition-colors"
+                        class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
                         @click="toggleDarkMode"
                         :title="isDark ? 'Mode clair' : 'Mode sombre'"
                     >

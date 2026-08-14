@@ -17,9 +17,91 @@
 
 /* ==================== BASE ==================== */
 body {
-    background-color: var(--color-gpj-50);
-    color: var(--color-gpj-900);
+    background-color: #f8fafc; /* slate-50 */
+    color: #0f172a; /* slate-900 */
     transition: background-color 0.3s, color 0.3s;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==================== PREMIUM TABLE STYLES ==================== */
+/* En-tête tableau premium */
+table thead {
+    border-bottom: 2px solid #e2e8f0;
+}
+
+table thead th {
+    letter-spacing: 0.025em;
+    text-transform: none;
+    font-weight: 600;
+}
+
+/* Lignes striées subtiles */
+table tbody tr:nth-child(even) {
+    background-color: rgba(248, 250, 252, 0.5);
+}
+
+table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+/* ==================== PREMIUM FORM STYLES ==================== */
+/* Inputs premium avec ombre intérieure */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-gpj-500);
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* ==================== TEXTE SUR FOND VERT — HAUTE VISIBILITÉ ==================== */
+/* Quand le texte est sur un fond vert foncé, il DOIT être blanc */
+.bg-gpj-500,
+.bg-gpj-600,
+.bg-gpj-700,
+.bg-gpj-800,
+.bg-gpj-900,
+.bg-gpj-950 {
+    color: #ffffff;
+}
+
+.bg-gpj-500 *,
+.bg-gpj-600 *,
+.bg-gpj-700 *,
+.bg-gpj-800 *,
+.bg-gpj-900 * {
+    color: inherit;
+}
+
+/* Texte spécifique dans sidebar et zones foncées */
+.bg-gpj-800 .text-gpj-300,
+.bg-gpj-800 .text-gpj-200 {
+    color: #a9ccb1 !important; /* gpj-200 - clair et lisible */
+}
+
+.bg-gpj-800 .text-white,
+.bg-gpj-700 .text-white,
+.bg-gpj-900 .text-white {
+    color: #ffffff !important;
+}
+
+.bg-gpj-800 .hover\:text-white:hover {
+    color: #ffffff !important;
+}
+
+/* Sur fond vert moyen (gpj-100/gpj-200), texte foncé neutre */
+.bg-gpj-50 {
+    color: #334155; /* slate-700 */
+}
+
+.bg-gpj-100 {
+    color: #1e293b; /* slate-800 */
 }
 
 /* ==================== DARK MODE ==================== */
@@ -36,13 +118,13 @@ body {
     --color-gpj-900: #e8f7ee;
     --color-gpj-950: #f0faf4;
     background-color: #060e09;
-    color: #d4e5d8;
+    color: #e2e8f0; /* slate-200 */
 }
 
 /* ==================== DARK MODE - ÉLÉMENTS GÉNÉRAUX ==================== */
 .gpj-dark body {
     background-color: #060e09;
-    color: #d4e5d8;
+    color: #e2e8f0;
 }
 
 /* Inputs, selects, textareas */
@@ -51,14 +133,14 @@ body {
 .gpj-dark textarea {
     background-color: #0d1c13;
     border-color: #1c3a27;
-    color: #d4e5d8;
+    color: #e2e8f0;
 }
 
 .gpj-dark input:focus,
 .gpj-dark select:focus,
 .gpj-dark textarea:focus {
     border-color: #4ade80;
-    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
 }
 
 .gpj-dark input::placeholder,
@@ -75,12 +157,22 @@ body {
     background-color: #0d1c13 !important;
 }
 
-/* Bordures */
+/* Bordures — slate en dark mode */
+.gpj-dark .border-slate-200,
+.gpj-dark .border-slate-100,
 .gpj-dark .border-gpj-200,
 .gpj-dark .border-gpj-100 {
     border-color: #1c3a27;
 }
 
+.gpj-dark .border-slate-300 {
+    border-color: #1c3a27;
+}
+
+.gpj-dark .border-t-slate-100,
+.gpj-dark .border-b-slate-100,
+.gpj-dark .border-t-slate-200,
+.gpj-dark .border-b-slate-200,
 .gpj-dark .border-t-gpj-100,
 .gpj-dark .border-b-gpj-100,
 .gpj-dark .border-t-gpj-200,
@@ -88,22 +180,48 @@ body {
     border-color: #1c3a27;
 }
 
+.gpj-dark .divide-slate-100 > * + *,
+.gpj-dark .divide-slate-200 > * + *,
 .gpj-dark .divide-gpj-100 > * + * {
     border-color: #1c3a27;
 }
 
-/* ==================== DARK MODE - TEXTES ==================== */
-/* Titres et textes principaux */
+/* ==================== DARK MODE - TEXTES SLATE ==================== */
+.gpj-dark .text-slate-900 {
+    color: #f1f5f9 !important;
+}
+
+.gpj-dark .text-slate-800 {
+    color: #e2e8f0 !important;
+}
+
+.gpj-dark .text-slate-700 {
+    color: #cbd5e1 !important;
+}
+
+.gpj-dark .text-slate-600 {
+    color: #94a3b8 !important;
+}
+
+.gpj-dark .text-slate-500 {
+    color: #64748b !important;
+}
+
+.gpj-dark .text-slate-400 {
+    color: #64748b !important;
+}
+
+/* ==================== DARK MODE - TEXTES GPJ (héritage) ==================== */
 .gpj-dark .text-gpj-800 {
-    color: #d4f0de !important;
+    color: #e2e8f0 !important;
 }
 
 .gpj-dark .text-gpj-700 {
-    color: #b8e6c8 !important;
+    color: #cbd5e1 !important;
 }
 
 .gpj-dark .text-gpj-600 {
-    color: #6ba07a !important;
+    color: #94a3b8 !important;
 }
 
 .gpj-dark .text-gpj-500 {
@@ -111,11 +229,11 @@ body {
 }
 
 .gpj-dark .text-gpj-400 {
-    color: #4a7a5a !important;
+    color: #64748b !important;
 }
 
 .gpj-dark .text-gpj-300 {
-    color: #4a7a5a !important;
+    color: #64748b !important;
 }
 
 /* Texte blanc dans les zones sombres (ne pas toucher) */
@@ -141,7 +259,15 @@ body {
     color: #ffffff !important;
 }
 
-/* ==================== DARK MODE - FONDS ==================== */
+/* ==================== DARK MODE - FONDS SLATE ==================== */
+.gpj-dark .bg-slate-50 {
+    background-color: #0a1210 !important;
+}
+
+.gpj-dark .bg-slate-100 {
+    background-color: #0d1c13 !important;
+}
+
 .gpj-dark .bg-gpj-50 {
     background-color: #060e09 !important;
 }
@@ -154,10 +280,12 @@ body {
     background-color: #142b1d !important;
 }
 
+.gpj-dark .hover\:bg-slate-50:hover,
 .gpj-dark .hover\:bg-gpj-50:hover {
     background-color: #0d1c13 !important;
 }
 
+.gpj-dark .hover\:bg-slate-100:hover,
 .gpj-dark .hover\:bg-gpj-100:hover {
     background-color: #142b1d !important;
 }
@@ -233,40 +361,56 @@ body {
     color: #38bdf8 !important;
 }
 
-.gpj-dark .bg-gray-100 {
+.gpj-dark .bg-gray-100,
+.gpj-dark .bg-slate-100 {
     background-color: #142b1d !important;
 }
 
 .gpj-dark .text-gray-700 {
-    color: #7eb38a !important;
+    color: #94a3b8 !important;
 }
 
 /* ==================== DARK MODE - TABLEAUX ==================== */
-.gpj-dark .bg-gpj-50 thead,
-.gpj-dark thead.bg-gpj-50,
-.gpj-dark thead[class*="bg-gpj-50"] {
-    background-color: #0d1c13 !important;
+.gpj-dark table thead {
+    border-bottom-color: #1c3a27;
 }
 
+.gpj-dark .bg-slate-50 thead,
+.gpj-dark .bg-gpj-50 thead,
+.gpj-dark thead.bg-slate-50,
+.gpj-dark thead.bg-gpj-50,
+.gpj-dark thead[class*="bg-slate-50"],
+.gpj-dark thead[class*="bg-gpj-50"] {
+    background-color: #0a1210 !important;
+}
+
+.gpj-dark thead .text-slate-700,
 .gpj-dark thead .text-gpj-600,
 .gpj-dark thead .text-gpj-700 {
-    color: #7eb38a !important;
+    color: #94a3b8 !important;
+}
+
+.gpj-dark tbody tr:nth-child(even) {
+    background-color: rgba(13, 28, 19, 0.3);
 }
 
 .gpj-dark tbody tr:hover {
     background-color: #0d1c13 !important;
 }
 
+.gpj-dark tbody .text-slate-800,
 .gpj-dark tbody .text-gpj-800 {
-    color: #d4f0de !important;
+    color: #e2e8f0 !important;
 }
 
+.gpj-dark tbody .text-slate-600,
 .gpj-dark tbody .text-gpj-600 {
-    color: #6ba07a !important;
+    color: #94a3b8 !important;
 }
 
+.gpj-dark tbody .text-slate-400,
 .gpj-dark tbody .text-gpj-400 {
-    color: #4a7a5a !important;
+    color: #64748b !important;
 }
 
 /* ==================== DARK MODE - HERO WELCOME ==================== */
@@ -282,29 +426,19 @@ body {
     --tw-gradient-to: #0d1c13;
 }
 
-.gpj-dark .text-gpj-200 {
-    color: #b8e6c8 !important;
-}
-
-.gpj-dark .text-gpj-300 {
-    color: #7eb38a !important;
-}
-
 /* ==================== DARK MODE - TOPBAR ==================== */
 .gpj-dark header.bg-white {
     background-color: #0a0f0b !important;
 }
 
+.gpj-dark header .text-slate-800,
 .gpj-dark header .text-gpj-800 {
-    color: #d4f0de !important;
+    color: #e2e8f0 !important;
 }
 
-.gpj-dark header .text-gpj-600 {
-    color: #7eb38a !important;
-}
-
+.gpj-dark header .text-slate-500,
 .gpj-dark header .text-gpj-400 {
-    color: #4a7a5a !important;
+    color: #64748b !important;
 }
 
 /* ==================== DARK MODE - SCROLLBAR ==================== */
@@ -338,7 +472,7 @@ body {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
 }
 
-/* ==================== DARK MODE - ZONES ROUGES (SUPPRESSION COMPTE) ==================== */
+/* ==================== DARK MODE - ZONES ROUGES ==================== */
 .gpj-dark .bg-red-50 {
     background-color: #1a0a0a !important;
 }
@@ -375,6 +509,7 @@ body {
 .gpj-dark .text-emerald-700 {
     color: #6aee9a !important;
 }
+
 /* ==================== CONTRASTE AMÉLIORÉ - MODE CLAIR ==================== */
 /* Texte emerald sur fond emerald clair - renforcer le contraste */
 .bg-emerald-50 .text-emerald-600,
@@ -392,17 +527,6 @@ span.text-emerald-600,
 p.text-emerald-600,
 div.text-emerald-600 {
     color: #047857 !important; /* emerald-700 */
-}
-
-/* Texte gpj sur fond gpj - renforcer le contraste */
-.bg-gpj-100 .text-gpj-500,
-.bg-gpj-100 .text-gpj-600,
-.bg-gpj-50 .text-gpj-600 {
-    color: #1c3a27 !important; /* gpj-700 plus foncé */
-}
-
-.bg-gpj-100.text-gpj-600 {
-    color: #1c3a27 !important; /* gpj-700 pour les éléments avec fond gpj-100 */
 }
 
 /* Badge emerald sur même élément - améliorer la lisibilité */
@@ -435,7 +559,7 @@ div.text-emerald-600 {
     color: #6ee7b7 !important;
 }
 
-/* ==================== DARK MODE - COULEURS GREEN (manquantes) ==================== */
+/* ==================== DARK MODE - COULEURS GREEN ==================== */
 .gpj-dark .bg-green-100 {
     background-color: #0d2e1a !important;
 }
@@ -448,7 +572,7 @@ div.text-emerald-600 {
     color: #6aee9a !important;
 }
 
-/* ==================== DARK MODE - COULEURS PURPLE (manquantes) ==================== */
+/* ==================== DARK MODE - COULEURS PURPLE ==================== */
 .gpj-dark .bg-purple-100 {
     background-color: #1a0d2e !important;
 }
@@ -461,7 +585,7 @@ div.text-emerald-600 {
     color: #d8b4fe !important;
 }
 
-/* ==================== DARK MODE - COULEURS BLUE (manquantes) ==================== */
+/* ==================== DARK MODE - COULEURS BLUE ==================== */
 .gpj-dark .bg-blue-100 {
     background-color: #0a1a2e !important;
 }
@@ -473,26 +597,12 @@ div.text-emerald-600 {
 /* ==================== DARK MODE - CONTRASTE EMERALD AMÉLIORÉ ==================== */
 .gpj-dark .bg-emerald-50 .text-emerald-600,
 .gpj-dark .bg-emerald-100 .text-emerald-600 {
-    color: #6ee7b7 !important; /* plus clair pour contraste sur fond sombre */
+    color: #6ee7b7 !important;
 }
 
 .gpj-dark .bg-emerald-50 .text-emerald-700,
 .gpj-dark .bg-emerald-100 .text-emerald-700 {
-    color: #a7f3d0 !important; /* encore plus clair */
-}
-
-/* ==================== DARK MODE - CONTRASTE GPJ AMÉLIORÉ ==================== */
-.gpj-dark .bg-gpj-100 .text-gpj-500,
-.gpj-dark .bg-gpj-100 .text-gpj-600 {
-    color: #6ba07a !important; /* plus clair pour visibilité */
-}
-
-.gpj-dark .bg-gpj-100.text-gpj-600 {
-    color: #6ba07a !important;
-}
-
-.gpj-dark .bg-gpj-50 .text-gpj-600 {
-    color: #6ba07a !important;
+    color: #a7f3d0 !important;
 }
 
 /* ==================== DARK MODE - COULEURS SUPPLÉMENTAIRES ==================== */

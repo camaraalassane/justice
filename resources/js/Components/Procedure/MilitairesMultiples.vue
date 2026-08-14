@@ -224,7 +224,7 @@
                 <div v-if="(militaire.parties_civiles || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucune partie civile
                 </div>
-                <div v-for="(pc, pi) in militaire.parties_civiles" :key="pi" class="grid grid-cols-3 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
+                <div v-for="(pc, pi) in militaire.parties_civiles" :key="pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
                     <select v-model="pc.type" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
                         <option value="Personne">Personne</option>
                         <option value="Structure">Structure</option>
@@ -239,6 +239,94 @@
                         >
                             <i class="pi pi-times"></i>
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Témoins -->
+            <div class="mt-3 border-t border-gpj-100 pt-3">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-medium text-gpj-600">
+                        <i class="pi pi-users mr-1"></i> Témoins
+                    </label>
+                    <button type="button" @click="ajouterPersonne(index, 'temoins')" class="text-xs text-gpj-500 hover:text-gpj-700">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter
+                    </button>
+                </div>
+                <div v-if="(militaire.temoins || []).length === 0" class="text-xs text-gpj-400 py-1">
+                    Aucun témoin
+                </div>
+                <div v-for="(pc, pi) in militaire.temoins" :key="'temoin-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <div class="flex items-center gap-2">
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <button type="button" @click="supprimerPersonne(index, pi, 'temoins')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Civile Responsable -->
+            <div class="mt-3 border-t border-gpj-100 pt-3">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-medium text-gpj-600">
+                        <i class="pi pi-user mr-1"></i> Civile responsable
+                    </label>
+                    <button type="button" @click="ajouterPersonne(index, 'civile_responsables')" class="text-xs text-gpj-500 hover:text-gpj-700">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter
+                    </button>
+                </div>
+                <div v-if="(militaire.civile_responsables || []).length === 0" class="text-xs text-gpj-400 py-1">
+                    Aucune civile responsable
+                </div>
+                <div v-for="(pc, pi) in militaire.civile_responsables" :key="'cr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <div class="flex items-center gap-2">
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <button type="button" @click="supprimerPersonne(index, pi, 'civile_responsables')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garants -->
+            <div class="mt-3 border-t border-gpj-100 pt-3">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-medium text-gpj-600">
+                        <i class="pi pi-shield mr-1"></i> Garants
+                    </label>
+                    <button type="button" @click="ajouterPersonne(index, 'garants')" class="text-xs text-gpj-500 hover:text-gpj-700">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter
+                    </button>
+                </div>
+                <div v-if="(militaire.garants || []).length === 0" class="text-xs text-gpj-400 py-1">
+                    Aucun garant
+                </div>
+                <div v-for="(pc, pi) in militaire.garants" :key="'garant-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <div class="flex items-center gap-2">
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <button type="button" @click="supprimerPersonne(index, pi, 'garants')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avocat -->
+            <div class="mt-3 border-t border-gpj-100 pt-3">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-medium text-gpj-600">
+                        <i class="pi pi-briefcase mr-1"></i> Avocat
+                    </label>
+                    <button type="button" @click="ajouterPersonne(index, 'avocats')" class="text-xs text-gpj-500 hover:text-gpj-700">
+                        <i class="pi pi-plus-circle mr-1"></i> Ajouter
+                    </button>
+                </div>
+                <div v-if="(militaire.avocats || []).length === 0" class="text-xs text-gpj-400 py-1">
+                    Aucun avocat
+                </div>
+                <div v-for="(pc, pi) in militaire.avocats" :key="'avocat-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <div class="flex items-center gap-2">
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <button type="button" @click="supprimerPersonne(index, pi, 'avocats')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                     </div>
                 </div>
             </div>
@@ -1064,6 +1152,21 @@ const ajouterPartieCivile = (index) => {
 
 const supprimerPartieCivile = (index, pcIndex) => {
     militairesLocal.value[index].parties_civiles.splice(pcIndex, 1);
+    emitChange();
+};
+
+const ajouterPersonne = (index, field) => {
+    if (!militairesLocal.value[index][field]) {
+        militairesLocal.value[index][field] = [];
+    }
+    militairesLocal.value[index][field].push({ 
+        nom: '', 
+        prenom: '' 
+    });
+};
+
+const supprimerPersonne = (index, pIndex, field) => {
+    militairesLocal.value[index][field].splice(pIndex, 1);
     emitChange();
 };
 

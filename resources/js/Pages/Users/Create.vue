@@ -5,13 +5,13 @@
                 <form @submit.prevent="submit" class="space-y-5">
                     <!-- Nom -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 dark:text-gpj-300 mb-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">
                             Nom complet <span class="text-red-500">*</span>
                         </label>
                         <input 
                             v-model="form.name" 
                             type="text" 
-                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
                             placeholder="Jean Dupont" 
                             required 
                         />
@@ -20,13 +20,13 @@
 
                     <!-- Email -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 dark:text-gpj-300 mb-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">
                             Email <span class="text-red-500">*</span>
                         </label>
                         <input 
                             v-model="form.email" 
                             type="email" 
-                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
                             placeholder="jean@exemple.com" 
                             required 
                         />
@@ -35,12 +35,12 @@
 
                     <!-- Rôle -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 dark:text-gpj-300 mb-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">
                             Rôle <span class="text-red-500">*</span>
                         </label>
                         <select 
                             v-model="form.role" 
-                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
                             required
                         >
                             <option value="">Sélectionner un rôle</option>
@@ -53,13 +53,13 @@
 
                     <!-- Mot de passe -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 dark:text-gpj-300 mb-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">
                             Mot de passe <span class="text-red-500">*</span>
                         </label>
                         <input 
                             v-model="form.password" 
                             type="password" 
-                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
                             placeholder="••••••••" 
                             required 
                         />
@@ -68,49 +68,49 @@
 
                     <!-- Confirmation -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 dark:text-gpj-300 mb-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">
                             Confirmer le mot de passe <span class="text-red-500">*</span>
                         </label>
                         <input 
                             v-model="form.password_confirmation" 
                             type="password" 
-                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-700 dark:bg-gpj-800 dark:text-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
                             placeholder="••••••••" 
                             required 
                         />
                     </div>
 
                     <!-- Informations sur les rôles -->
-                    <div class="bg-white dark:bg-gpj-800/50 rounded-lg p-4 text-sm border border-gpj-100 dark:border-gpj-700">
-                        <p class="font-medium text-gpj-800 dark:text-gpj-300 mb-2">📋 Rôles et responsabilités :</p>
+                    <div class="bg-slate-50 rounded-lg p-4 text-sm border border-slate-200">
+                        <p class="font-semibold text-slate-800 mb-2">📋 Rôles et responsabilités :</p>
                         <ul class="space-y-2 text-xs">
                             <li class="flex items-start gap-2">
                                 <Badge variant="danger" size="sm">ADMIN</Badge>
-                                <span class="text-gpj-700 dark:text-gpj-400">
+                                <span class="text-slate-600">
                                     <span class="font-medium">Administrateur</span> - Supervision haute, gestion des utilisateurs, validation ultime
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="warning" size="sm">CDD</Badge>
-                                <span class="text-gpj-700 dark:text-gpj-400">
+                                <span class="text-slate-600">
                                     <span class="font-medium">Chef de Division</span> - Gestion administrative de la division, affectation des dossiers
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="info" size="sm">CDS</Badge>
-                                <span class="text-gpj-700 dark:text-gpj-400">
+                                <span class="text-slate-600">
                                     <span class="font-medium">Chef de Section</span> - Supervision des agents, validation des étapes de la procédure
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="primary" size="sm">CDB</Badge>
-                                <span class="text-gpj-700 dark:text-gpj-400">
+                                <span class="text-slate-600">
                                     <span class="font-medium">Observateur</span> - Consultation uniquement, accès en lecture seule
                                 </span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <Badge variant="neutral" size="sm">ADS</Badge>
-                                <span class="text-gpj-700 dark:text-gpj-400">
+                                <span class="text-slate-600">
                                     <span class="font-medium">Agent de Saisie</span> - Alimentation de la base, création des dossiers, numérisation
                                 </span>
                             </li>
@@ -118,10 +118,10 @@
                     </div>
 
                     <!-- Boutons -->
-                    <div class="flex items-center gap-3 pt-3 border-t border-gpj-100 dark:border-gpj-800">
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <Link 
                             :href="route('users.index')" 
-                            class="px-4 py-2.5 border border-gpj-200 dark:border-gpj-700 text-gpj-600 dark:text-gpj-300 text-sm rounded-lg hover:bg-gpj-50 dark:hover:bg-gpj-800 transition-colors"
+                            class="px-4 py-2.5 border border-slate-300 text-slate-600 text-sm rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Annuler
                         </Link>

@@ -1,9 +1,9 @@
 <template>
-    <div :class="['rounded-xl border p-5 transition-all duration-200', 'border-gpj-200 bg-white hover:shadow-md']">
+    <div :class="['rounded-xl border p-5 transition-all duration-200', 'border-slate-200 bg-white hover:shadow-md']">
         <div class="flex items-start justify-between">
             <div>
-                <p class="text-sm font-medium text-gpj-400">{{ label }}</p>
-                <p class="text-3xl font-bold text-gpj-800 mt-1">{{ value }}</p>
+                <p class="text-sm font-medium text-slate-500">{{ label }}</p>
+                <p class="text-3xl font-bold text-slate-900 mt-1">{{ value }}</p>
             </div>
             <div :class="['w-12 h-12 rounded-lg flex items-center justify-center', iconBg]">
                 <i :class="icon" class="text-xl" :style="{ color: iconColor }"></i>
@@ -17,7 +17,7 @@
             <span :class="trend >= 0 ? 'text-emerald-600' : 'text-red-600'" class="text-sm font-medium">
                 {{ Math.abs(trend) }}%
             </span>
-            <span class="text-sm text-gpj-400">vs mois dernier</span>
+            <span class="text-sm text-slate-400">vs mois dernier</span>
         </div>
     </div>
 </template>
