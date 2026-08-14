@@ -8,7 +8,7 @@
                     v-model="searchQuery"
                     type="text"
                     placeholder="Rechercher..."
-                    class="w-full pl-10 pr-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                    class="w-full pl-10 pr-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
                     @input="onSearch"
                 />
             </div>
@@ -28,7 +28,7 @@
                         >
                             <div class="flex items-center gap-1">
                                 {{ col.label }}
-                                <span v-if="sortColumn === col.key" class="text-gpj-500">
+                                <span v-if="sortColumn === col.key" class="text-slate-600">
                                     <i :class="sortDirection === 'asc' ? 'pi pi-sort-up-fill' : 'pi pi-sort-down-fill'"></i>
                                 </span>
                                 <span v-else-if="col.sortable" class="text-slate-300">
@@ -80,7 +80,7 @@
                 >
                     <i class="pi pi-angle-left text-xs"></i>
                 </button>
-                <span class="px-3 py-1 text-sm font-medium bg-slate-500 text-white rounded-lg">{{ currentPage }}</span>
+                <span class="px-3 py-1 text-sm font-medium bg-gpj-500 text-white rounded-lg">{{ currentPage }}</span>
                 <button
                     :disabled="currentPage === totalPages"
                     class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"

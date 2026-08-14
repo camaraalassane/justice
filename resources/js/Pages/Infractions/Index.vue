@@ -4,16 +4,16 @@
             <div class="flex justify-end">
                 <Link
                     :href="route('infractions.create')"
-                    class="px-4 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2"
+                    class="px-4 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2"
                 >
                     <i class="pi pi-plus"></i> Nouvelle Infraction
                 </Link>
             </div>
 
             <Card padding>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
                                 <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Code</th>
                                 <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Libellé</th>
@@ -73,7 +73,7 @@
                     </p>
                     <div class="flex flex-wrap gap-1">
                         <Link v-for="link in infractions.links" :key="link.label" :href="link.url"
-                            :class="['px-3 py-1.5 text-sm rounded-lg transition-colors', link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']"
+                            :class="['px-3 py-1.5 text-sm rounded-lg transition-colors', link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']"
                             v-html="link.label"
                         />
                     </div>
@@ -82,7 +82,7 @@
 
             <!-- Modal confirmation suppression -->
             <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
+                <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                             <i class="pi pi-exclamation-triangle text-red-600"></i>

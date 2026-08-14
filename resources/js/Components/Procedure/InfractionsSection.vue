@@ -3,10 +3,10 @@
         <!-- En-tête -->
         <div class="flex items-center justify-between">
             <div>
-                <h4 class="text-sm font-medium text-gpj-700">Infractions</h4>
-                <p class="text-xs text-gpj-400">Sélectionnez les infractions pour ce militaire</p>
+                <h4 class="text-sm font-medium text-slate-800">Infractions</h4>
+                <p class="text-xs text-slate-500">Sélectionnez les infractions pour ce militaire</p>
             </div>
-            <span class="text-xs text-gpj-500 bg-slate-100 px-2 py-0.5 rounded-full">
+            <span class="text-xs text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full">
                 {{ selectedInfractions.length }} sélectionnée(s)
             </span>
         </div>
@@ -16,18 +16,18 @@
             <!-- Barre de recherche + bouton créer -->
             <div class="flex gap-2">
                 <div class="relative flex-1">
-                    <i class="pi pi-search absolute left-2.5 top-1/2 -translate-y-1/2 text-gpj-400 text-xs"></i>
+                    <i class="pi pi-search absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
                     <input
                         v-model="searchQuery"
                         type="text"
                         placeholder="Rechercher une infraction..."
-                        class="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-slate-500"
                     />
                 </div>
                 <button
                     v-if="peutCreer"
                     @click="ouvrirModalCreation"
-                    class="px-3 py-1.5 bg-slate-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1 whitespace-nowrap"
+                    class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1 whitespace-nowrap"
                 >
                     <i class="pi pi-plus text-xs"></i> Créer
                 </button>
@@ -46,12 +46,12 @@
                         :checked="selectedInfractions.includes(inf.id)"
                         @click.stop
                         @change="toggleInfraction(inf.id)"
-                        class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500 shrink-0"
+                        class="rounded border-slate-400 text-slate-600 focus:ring-slate-500 shrink-0"
                     />
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-medium text-gpj-700 truncate">{{ inf.libelle }}</p>
+                        <p class="text-xs font-medium text-slate-800 truncate">{{ inf.libelle }}</p>
                         <div class="flex items-center gap-1 flex-wrap">
-                            <span class="text-[10px] text-gpj-400">{{ inf.code_infraction }}</span>
+                            <span class="text-[10px] text-slate-500">{{ inf.code_infraction }}</span>
                             <Badge v-if="inf.classification" variant="neutral" size="sm" class="text-[9px]">
                                 {{ inf.classification }}
                             </Badge>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div v-if="infractionsFiltrees.length === 0" class="text-center py-4 text-gpj-400 text-xs">
+                <div v-if="infractionsFiltrees.length === 0" class="text-center py-4 text-slate-500 text-xs">
                     <i class="pi pi-inbox text-lg block mb-1"></i>
                     <span v-if="searchQuery">Aucune infraction trouvée pour "{{ searchQuery }}"</span>
                     <span v-else>Aucune infraction disponible</span>
@@ -75,10 +75,10 @@
 
         <!-- Modale de création d'infraction -->
         <div v-if="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold text-gpj-800 dark:text-white">Créer une infraction</h3>
-                    <button @click="fermerModalCreation" class="text-gpj-400 hover:text-gpj-600">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Créer une infraction</h3>
+                    <button @click="fermerModalCreation" class="text-slate-500 hover:text-slate-700">
                         <i class="pi pi-times"></i>
                     </button>
                 </div>
@@ -86,7 +86,7 @@
                 <form @submit.prevent="creerInfraction" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Libellé <span class="text-red-500">*</span>
                             </label>
                             <input
@@ -94,11 +94,11 @@
                                 type="text"
                                 required
                                 placeholder="Ex: Insoumission"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             />
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Code <span class="text-red-500">*</span>
                             </label>
                             <input
@@ -106,20 +106,20 @@
                                 type="text"
                                 required
                                 placeholder="Ex: INF-001"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             />
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Classification <span class="text-red-500">*</span>
                             </label>
                             <select
                                 v-model="newInfraction.classification"
                                 required
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             >
                                 <option value="">Sélectionner</option>
                                 <option value="Criminelle">Criminelle</option>
@@ -128,27 +128,27 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Nature
                             </label>
                             <input
                                 v-model="newInfraction.nature"
                                 type="text"
                                 placeholder="Ex: Infraction militaire"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">
+                        <label class="block text-sm font-medium text-slate-800 mb-1">
                             Description
                         </label>
                         <textarea
                             v-model="newInfraction.description"
                             rows="3"
                             placeholder="Description détaillée de l'infraction..."
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         ></textarea>
                     </div>
 
@@ -156,14 +156,14 @@
                         <button
                             type="button"
                             @click="fermerModalCreation"
-                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors"
+                            class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Annuler
                         </button>
                         <button
                             type="submit"
                             :disabled="creerEnCours"
-                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
+                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
                         >
                             <i v-if="creerEnCours" class="pi pi-spin pi-spinner mr-2"></i>
                             Créer l'infraction

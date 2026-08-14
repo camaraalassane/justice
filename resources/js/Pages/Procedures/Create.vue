@@ -31,7 +31,7 @@
             <form @submit.prevent="submit" class="space-y-6">
                 <!-- Militaires / Personnels -->
                 <div class="border-b border-slate-200 pb-6">
-                    <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-4">
+                    <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-4">
                         <i class="pi pi-users mr-2"></i> Personnels concernés
                     </h3>
                     <MilitairesMultiples
@@ -49,19 +49,19 @@
 
                 <!-- Phase initiale -->
                 <div class="border-b border-slate-200 pb-6">
-                    <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-4">
+                    <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-4">
                         <i class="pi pi-file mr-2"></i> Phase initiale
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Type de phase <span class="text-red-500">*</span>
                             </label>
                             <select
                                 v-model="form.phase_type_id"
                                 required
                                 @change="onPhaseTypeChange"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             >
                                 <option value="">Choisir la phase</option>
                                 <option v-for="pt in phaseTypes" :key="pt.id" :value="pt.id">
@@ -72,7 +72,7 @@
                             <p v-if="form.errors.phase_type_id" class="mt-1 text-sm text-red-500">{{ form.errors.phase_type_id }}</p>
                         </div>
                         <div v-if="form.phase_type_id === 'autre'">
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Nom de la phase <span class="text-red-500">*</span>
                             </label>
                             <input
@@ -80,30 +80,30 @@
                                 type="text"
                                 required
                                 placeholder="Nom personnalisé"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             />
                             <p v-if="form.errors.phase_personnalisee" class="mt-1 text-sm text-red-500">{{ form.errors.phase_personnalisee }}</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Date du document <span class="text-red-500">*</span>
                             </label>
                             <input
                                 v-model="form.date_phase"
                                 type="date"
                                 required
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             />
                             <p v-if="form.errors.date_phase" class="mt-1 text-sm text-red-500">{{ form.errors.date_phase }}</p>
                         </div>
                         <!-- Lieu de commission -->
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Lieu de commission
                             </label>
                             <select
                                 v-model="form.lieu_commission"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                             >
                                 <option value="">Non défini</option>
                                 <option value="Organique">Organique</option>
@@ -113,16 +113,16 @@
                         </div>
                         <!-- Parquet -->
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Parquet compétent
                             </label>
                             <div class="flex items-center gap-3 mb-2">
-                                <label class="flex items-center gap-2 text-sm text-gpj-600 cursor-pointer">
+                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
                                     <input
                                         type="checkbox"
                                         v-model="aucunParquet"
                                         @change="onToggleAucunParquet"
-                                        class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
+                                        class="rounded border-slate-400 text-slate-600 focus:ring-slate-500"
                                     />
                                     Aucun parquet
                                 </label>
@@ -141,12 +141,12 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Description</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Description</label>
                         <textarea
                             v-model="form.description"
                             rows="2"
                             placeholder="Description..."
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         ></textarea>
                         <p v-if="form.errors.description" class="mt-1 text-sm text-red-500">{{ form.errors.description }}</p>
                     </div>
@@ -164,13 +164,13 @@
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-3">
-                    <Link :href="route('procedures.index')" class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors">
+                    <Link :href="route('procedures.index')" class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 transition-colors">
                         Annuler
                     </Link>
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="px-6 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
+                        class="px-6 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
                     >
                         <i v-if="form.processing" class="pi pi-spin pi-spinner mr-2"></i>
                         Créer la procédure

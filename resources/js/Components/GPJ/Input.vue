@@ -52,7 +52,7 @@ defineEmits(['update:modelValue']);
 const inputClasses = computed(() => {
     return [
         'w-full rounded-lg border bg-white text-slate-900 placeholder-slate-400 transition-all duration-200',
-        'focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500',
+        'focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500',
         'shadow-sm',
         props.disabled ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : '',
         props.error ? 'border-red-400 focus:ring-red-500 focus:border-red-500' : 'border-slate-300 hover:border-slate-400',

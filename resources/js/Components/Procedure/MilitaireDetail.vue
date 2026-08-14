@@ -1,26 +1,26 @@
 <template>
-    <div class="p-4 bg-slate-50 dark:bg-gpj-800 rounded-lg border border-slate-300 dark:border-gpj-700">
+    <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-700">
         <!-- En-tête du militaire -->
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-gpj-700 flex items-center justify-center text-gpj-600 dark:text-gpj-300 font-bold text-sm">
+                <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-400 font-bold text-sm">
                     {{ getInitiales() }}
                 </div>
                 <div>
                     <div class="flex items-center gap-2 flex-wrap">
-                        <span class="font-medium text-gpj-800 dark:text-white">{{ getNomComplet() }}</span>
+                        <span class="font-medium text-slate-900 dark:text-white">{{ getNomComplet() }}</span>
                         <span v-if="estPrincipal" class="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full">Principal</span>
                         <span v-if="procedureMilitaire?.est_nouveau" class="text-[10px] bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">Nouveau</span>
                         <Badge v-if="typePersonnel === 'civil'" variant="primary" size="sm">Civil</Badge>
                     </div>
-                    <p class="text-xs text-gpj-400">{{ getMatricule() }}</p>
+                    <p class="text-xs text-slate-500">{{ getMatricule() }}</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
                 <Link 
                     v-if="peutModifier && procedureMilitaire?.militaire_id"
                     :href="getEditUrl()"
-                    class="text-gpj-400 hover:text-gpj-600 text-xs transition-colors"
+                    class="text-slate-500 hover:text-slate-700 text-xs transition-colors"
                     title="Modifier les informations du militaire"
                 >
                     <i class="pi pi-pencil"></i>
@@ -37,7 +37,7 @@
                     v-if="procedureMilitaire?.militaire_id"
                     :href="route('militaires.casier', procedureMilitaire.militaire_id)" 
                     target="_blank" 
-                    class="text-gpj-400 hover:text-gpj-600 text-xs"
+                    class="text-slate-500 hover:text-slate-700 text-xs"
                     title="Imprimer le casier"
                 >
                     <i class="pi pi-print"></i>
@@ -48,30 +48,30 @@
         <!-- Mode affichage -->
         <div class="space-y-3">
             <!-- Informations du militaire -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm bg-white dark:bg-gpj-900 p-3 rounded-lg">
-                <div><span class="text-gpj-400">Grade / Profession:</span> <span class="font-medium">{{ getGradeOuProfession() }}</span></div>
-                <div><span class="text-gpj-400">Unité:</span> <span class="font-medium">{{ getUnite() }}</span></div>
-                <div><span class="text-gpj-400">Genre:</span> <span class="font-medium">{{ getGenre() }}</span></div>
-                <div><span class="text-gpj-400">Armée:</span> <span class="font-medium">{{ getArmee() }}</span></div>
-                <div><span class="text-gpj-400">Statut:</span> <Badge :variant="statutVariant(getStatut())" size="sm">{{ getStatut() }}</Badge></div>
-                <div><span class="text-gpj-400">Date naissance:</span> <span class="font-medium">{{ formatDate(getDateNaissance()) }}</span></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm bg-white dark:bg-slate-900 p-3 rounded-lg">
+                <div><span class="text-slate-500">Grade / Profession:</span> <span class="font-medium">{{ getGradeOuProfession() }}</span></div>
+                <div><span class="text-slate-500">Unité:</span> <span class="font-medium">{{ getUnite() }}</span></div>
+                <div><span class="text-slate-500">Genre:</span> <span class="font-medium">{{ getGenre() }}</span></div>
+                <div><span class="text-slate-500">Armée:</span> <span class="font-medium">{{ getArmee() }}</span></div>
+                <div><span class="text-slate-500">Statut:</span> <Badge :variant="statutVariant(getStatut())" size="sm">{{ getStatut() }}</Badge></div>
+                <div><span class="text-slate-500">Date naissance:</span> <span class="font-medium">{{ formatDate(getDateNaissance()) }}</span></div>
             </div>
 
             <!-- Infractions -->
             <div class="border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-gpj-600">
+                    <label class="text-xs font-medium text-slate-700">
                         <i class="pi pi-list mr-1"></i> Infractions
                     </label>
                     <button 
                         v-if="peutModifier"
                         @click="ouvrirEditionInfractions"
-                        class="text-xs text-gpj-500 hover:text-gpj-700"
+                        class="text-xs text-slate-600 hover:text-slate-800"
                     >
                         <i class="pi pi-pencil text-xs mr-1"></i> Modifier
                     </button>
                 </div>
-                <div v-if="getInfractionsDisplay().length === 0" class="text-xs text-gpj-400 py-1">Aucune infraction</div>
+                <div v-if="getInfractionsDisplay().length === 0" class="text-xs text-slate-500 py-1">Aucune infraction</div>
                 <div class="flex flex-wrap gap-1">
                     <Badge v-for="inf in getInfractionsDisplay()" :key="inf.id" variant="neutral" size="sm" class="text-[10px]">
                         {{ inf.libelle }}
@@ -82,29 +82,29 @@
             <!-- Fautes militaires par catégorie -->
             <div v-if="typePersonnel === 'militaire'" class="border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-gpj-600">
+                    <label class="text-xs font-medium text-slate-700">
                         <i class="pi pi-exclamation-triangle mr-1"></i> Fautes militaires
                     </label>
                     <button 
                         v-if="peutModifier"
                         @click="ouvrirGestionFautes"
-                        class="text-xs text-gpj-500 hover:text-gpj-700"
+                        class="text-xs text-slate-600 hover:text-slate-800"
                     >
                         <i class="pi pi-cog text-xs mr-1"></i> Gérer
                     </button>
                 </div>
                 
-                <div v-if="getFautesAffichees().length === 0" class="text-xs text-gpj-400 py-1">
+                <div v-if="getFautesAffichees().length === 0" class="text-xs text-slate-500 py-1">
                     Aucune faute
                 </div>
                 
                 <!-- Affichage des fautes par catégorie -->
                 <div v-for="(groupe, categorie) in fautesParCategorie" :key="categorie" class="mb-2">
-                    <span class="text-xs font-semibold text-gpj-500 block mb-1">{{ categorie }}</span>
+                    <span class="text-xs font-semibold text-slate-600 block mb-1">{{ categorie }}</span>
                     <div class="flex flex-wrap gap-1">
                         <span v-for="faute in groupe" :key="faute.id" class="text-xs bg-slate-100 px-2 py-0.5 rounded">
                             {{ faute.libelle }}
-                            <span v-if="faute.code" class="text-[10px] text-gpj-400 ml-1">({{ faute.code }})</span>
+                            <span v-if="faute.code" class="text-[10px] text-slate-500 ml-1">({{ faute.code }})</span>
                         </span>
                     </div>
                 </div>
@@ -113,63 +113,63 @@
             <!-- Parties civiles -->
             <div class="border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-gpj-600">
+                    <label class="text-xs font-medium text-slate-700">
                         <i class="pi pi-users mr-1"></i> Parties civiles
                     </label>
                     <button 
                         v-if="peutModifier"
                         @click="ouvrirEditionPartiesCiviles"
-                        class="text-xs text-gpj-500 hover:text-gpj-700"
+                        class="text-xs text-slate-600 hover:text-slate-800"
                     >
                         <i class="pi pi-pencil text-xs mr-1"></i> Modifier acteurs
                     </button>
                 </div>
-                <div v-if="getPartiesCiviles().length === 0" class="text-xs text-gpj-400 py-1">Aucune partie civile</div>
-                <div v-for="(pc, pi) in getPartiesCiviles()" :key="'pc-'+pi" class="text-xs text-gpj-600">
+                <div v-if="getPartiesCiviles().length === 0" class="text-xs text-slate-500 py-1">Aucune partie civile</div>
+                <div v-for="(pc, pi) in getPartiesCiviles()" :key="'pc-'+pi" class="text-xs text-slate-700">
                     - {{ pc.type === 'Structure' ? 'Structure: ' + pc.nom : pc.nom + ' ' + (pc.prenom || '') }}
                 </div>
             </div>
 
             <!-- Témoins -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                <label class="text-xs font-medium text-slate-700 mb-2 block">
                     <i class="pi pi-users mr-1"></i> Témoins
                 </label>
-                <div v-if="getPersonnes('temoins').length === 0" class="text-xs text-gpj-400 py-1">Aucun témoin</div>
-                <div v-for="(pc, pi) in getPersonnes('temoins')" :key="'t-'+pi" class="text-xs text-gpj-600">
+                <div v-if="getPersonnes('temoins').length === 0" class="text-xs text-slate-500 py-1">Aucun témoin</div>
+                <div v-for="(pc, pi) in getPersonnes('temoins')" :key="'t-'+pi" class="text-xs text-slate-700">
                     - {{ pc.nom }} {{ pc.prenom || '' }}
                 </div>
             </div>
 
             <!-- Civile Responsable -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                <label class="text-xs font-medium text-slate-700 mb-2 block">
                     <i class="pi pi-user mr-1"></i> Civile responsable
                 </label>
-                <div v-if="getPersonnes('civile_responsables').length === 0" class="text-xs text-gpj-400 py-1">Aucune civile responsable</div>
-                <div v-for="(pc, pi) in getPersonnes('civile_responsables')" :key="'cr-'+pi" class="text-xs text-gpj-600">
+                <div v-if="getPersonnes('civile_responsables').length === 0" class="text-xs text-slate-500 py-1">Aucune civile responsable</div>
+                <div v-for="(pc, pi) in getPersonnes('civile_responsables')" :key="'cr-'+pi" class="text-xs text-slate-700">
                     - {{ pc.nom }} {{ pc.prenom || '' }}
                 </div>
             </div>
 
             <!-- Garants -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                <label class="text-xs font-medium text-slate-700 mb-2 block">
                     <i class="pi pi-shield mr-1"></i> Garants
                 </label>
-                <div v-if="getPersonnes('garants').length === 0" class="text-xs text-gpj-400 py-1">Aucun garant</div>
-                <div v-for="(pc, pi) in getPersonnes('garants')" :key="'g-'+pi" class="text-xs text-gpj-600">
+                <div v-if="getPersonnes('garants').length === 0" class="text-xs text-slate-500 py-1">Aucun garant</div>
+                <div v-for="(pc, pi) in getPersonnes('garants')" :key="'g-'+pi" class="text-xs text-slate-700">
                     - {{ pc.nom }} {{ pc.prenom || '' }}
                 </div>
             </div>
 
             <!-- Avocat -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-gpj-600 mb-2 block">
+                <label class="text-xs font-medium text-slate-700 mb-2 block">
                     <i class="pi pi-briefcase mr-1"></i> Avocat
                 </label>
-                <div v-if="getPersonnes('avocats').length === 0" class="text-xs text-gpj-400 py-1">Aucun avocat</div>
-                <div v-for="(pc, pi) in getPersonnes('avocats')" :key="'av-'+pi" class="text-xs text-gpj-600">
+                <div v-if="getPersonnes('avocats').length === 0" class="text-xs text-slate-500 py-1">Aucun avocat</div>
+                <div v-for="(pc, pi) in getPersonnes('avocats')" :key="'av-'+pi" class="text-xs text-slate-700">
                     - {{ pc.nom }} {{ pc.prenom || '' }}
                 </div>
             </div>
@@ -177,18 +177,18 @@
 
         <!-- Modale édition infractions -->
         <div v-if="showEditInfractions" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Modifier les infractions</h3>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Modifier les infractions</h3>
                 <div class="space-y-2">
                     <div v-for="inf in allInfractions" :key="inf.id" class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded">
                         <input 
                             type="checkbox" 
                             :value="inf.id" 
                             v-model="editInfractionsForm" 
-                            class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
+                            class="rounded border-slate-400 text-slate-600 focus:ring-slate-500"
                         />
                         <span class="text-sm">{{ inf.libelle }}</span>
-                        <span class="text-xs text-gpj-400">{{ inf.code_infraction }}</span>
+                        <span class="text-xs text-slate-500">{{ inf.code_infraction }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 mt-4 pt-4 border-t border-slate-200">
@@ -196,7 +196,7 @@
                         <i v-if="savingInfractions" class="pi pi-spin pi-spinner mr-1"></i>
                         Enregistrer
                     </button>
-                    <button @click="showEditInfractions = false" class="px-3 py-1.5 border border-slate-300 text-gpj-600 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <button @click="showEditInfractions = false" class="px-3 py-1.5 border border-slate-300 text-slate-700 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">
                         Annuler
                     </button>
                 </div>
@@ -205,13 +205,13 @@
 
         <!-- MODALE GESTION DES FAUTES -->
         <div v-if="showGestionFautes" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        <h3 class="text-lg font-bold text-gpj-800 dark:text-white">Gestion des fautes militaires</h3>
-                        <p class="text-sm text-gpj-500">Sélectionnez les fautes pour {{ getNomComplet() }}</p>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Gestion des fautes militaires</h3>
+                        <p class="text-sm text-slate-600">Sélectionnez les fautes pour {{ getNomComplet() }}</p>
                     </div>
-                    <button @click="fermerGestionFautes" class="text-gpj-400 hover:text-gpj-600 transition-colors">
+                    <button @click="fermerGestionFautes" class="text-slate-500 hover:text-slate-700 transition-colors">
                         <i class="pi pi-times text-lg"></i>
                     </button>
                 </div>
@@ -220,11 +220,11 @@
                     <!-- Colonne gauche : Catégories -->
                     <div class="border-r border-slate-300 pr-4">
                         <div class="flex items-center justify-between mb-3">
-                            <h4 class="text-sm font-semibold text-gpj-700">Catégories</h4>
+                            <h4 class="text-sm font-semibold text-slate-800">Catégories</h4>
                             <div class="flex items-center gap-2">
                                 <button
                                     @click="loadCategoriesFautes"
-                                    class="px-3 py-1.5 bg-slate-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
+                                    class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
                                     title="Rafraîchir"
                                 >
                                     <i class="pi pi-refresh text-xs"></i>
@@ -250,13 +250,13 @@
                                 @click="categorieSelectionnee = cat.id"
                             >
                                 <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-gpj-700 truncate">{{ cat.libelle }}</p>
-                                    <p class="text-xs text-gpj-400">{{ cat.fautes?.length || 0 }} faute(s)</p>
+                                    <p class="text-sm font-medium text-slate-800 truncate">{{ cat.libelle }}</p>
+                                    <p class="text-xs text-slate-500">{{ cat.fautes?.length || 0 }} faute(s)</p>
                                 </div>
                                 <div class="flex items-center gap-1 ml-2" @click.stop>
                                     <button
                                         @click="ouvrirModalEditionCategorie(cat)"
-                                        class="text-gpj-400 hover:text-gpj-600 text-xs p-1"
+                                        class="text-slate-500 hover:text-slate-700 text-xs p-1"
                                         title="Modifier"
                                     >
                                         <i class="pi pi-pencil"></i>
@@ -271,7 +271,7 @@
                                 </div>
                             </div>
                             
-                            <div v-if="categoriesFautes.length === 0" class="text-center py-4 text-gpj-400 text-sm">
+                            <div v-if="categoriesFautes.length === 0" class="text-center py-4 text-slate-500 text-sm">
                                 <i class="pi pi-inbox text-2xl block mb-1"></i>
                                 Aucune catégorie
                             </div>
@@ -281,7 +281,7 @@
                     <!-- Colonne droite : Fautes de la catégorie sélectionnée -->
                     <div class="pl-4">
                         <div v-if="categorieSelectionnee" class="flex items-center justify-between mb-3">
-                            <h4 class="text-sm font-semibold text-gpj-700">
+                            <h4 class="text-sm font-semibold text-slate-800">
                                 Fautes : {{ getCategorieLibelle(categorieSelectionnee) }}
                             </h4>
                             <button
@@ -292,7 +292,7 @@
                             </button>
                         </div>
                         
-                        <div v-if="!categorieSelectionnee" class="text-center py-8 text-gpj-400 text-sm">
+                        <div v-if="!categorieSelectionnee" class="text-center py-8 text-slate-500 text-sm">
                             <i class="pi pi-arrow-left text-2xl block mb-1"></i>
                             Sélectionnez une catégorie
                         </div>
@@ -311,14 +311,14 @@
                                     type="checkbox"
                                     :value="faute.id"
                                     v-model="fautesSelectionnees"
-                                    class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
+                                    class="rounded border-slate-400 text-slate-600 focus:ring-slate-500"
                                 />
                                 <span class="text-sm flex-1">{{ faute.libelle }}</span>
-                                <span v-if="faute.code" class="text-xs text-gpj-400">{{ faute.code }}</span>
+                                <span v-if="faute.code" class="text-xs text-slate-500">{{ faute.code }}</span>
                                 <div class="flex items-center gap-1">
                                     <button
                                         @click="ouvrirModalEditionFaute(faute)"
-                                        class="text-gpj-400 hover:text-gpj-600 text-xs p-1"
+                                        class="text-slate-500 hover:text-slate-700 text-xs p-1"
                                         title="Modifier"
                                     >
                                         <i class="pi pi-pencil"></i>
@@ -333,7 +333,7 @@
                                 </div>
                             </div>
                             
-                            <div v-if="getFautesByCategorie(categorieSelectionnee).length === 0" class="text-center py-4 text-gpj-400 text-sm">
+                            <div v-if="getFautesByCategorie(categorieSelectionnee).length === 0" class="text-center py-4 text-slate-500 text-sm">
                                 <i class="pi pi-inbox text-2xl block mb-1"></i>
                                 Aucune faute dans cette catégorie
                             </div>
@@ -349,7 +349,7 @@
                         Enregistrer les sélections
                     </button>
                     <button @click="fermerGestionFautes"
-                        class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
+                        class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                         Fermer
                     </button>
                 </div>
@@ -358,37 +358,37 @@
 
         <!-- Modale création/modification catégorie -->
         <div v-if="showCategorieModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full shadow-xl">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full shadow-xl">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">
                     {{ categorieEditId ? 'Modifier la catégorie' : 'Nouvelle catégorie' }}
                 </h3>
                 <form @submit.prevent="sauvegarderCategorie" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Libellé <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Libellé <span class="text-red-500">*</span></label>
                         <input
                             v-model="categorieForm.libelle"
                             type="text"
                             required
                             placeholder="Ex: Manquement à la discipline"
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Description</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Description</label>
                         <textarea
                             v-model="categorieForm.description"
                             rows="2"
                             placeholder="Description de la catégorie..."
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         ></textarea>
                     </div>
                     <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <button type="button" @click="fermerModalCategorie"
-                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
+                            class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                             Annuler
                         </button>
                         <button type="submit" :disabled="categorieEnCours"
-                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
+                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
                             <i v-if="categorieEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                             {{ categorieEditId ? 'Modifier' : 'Créer' }}
                         </button>
@@ -399,17 +399,17 @@
 
         <!-- Modale création/modification faute -->
         <div v-if="showFauteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full shadow-xl">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full shadow-xl">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">
                     {{ fauteEditId ? 'Modifier la faute' : 'Nouvelle faute' }}
                 </h3>
                 <form @submit.prevent="sauvegarderFaute" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Catégorie <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Catégorie <span class="text-red-500">*</span></label>
                         <select
                             v-model="fauteForm.categorie_faute_id"
                             required
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         >
                             <option value="">Sélectionner une catégorie</option>
                             <option v-for="cat in categoriesFautes" :key="cat.id" :value="cat.id">
@@ -418,40 +418,40 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Libellé <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Libellé <span class="text-red-500">*</span></label>
                         <input
                             v-model="fauteForm.libelle"
                             type="text"
                             required
                             placeholder="Ex: Insoumission"
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Code</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Code</label>
                         <input
                             v-model="fauteForm.code"
                             type="text"
                             placeholder="Ex: F-001"
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Description</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Description</label>
                         <textarea
                             v-model="fauteForm.description"
                             rows="2"
                             placeholder="Description de la faute..."
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         ></textarea>
                     </div>
                     <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <button type="button" @click="fermerModalFaute"
-                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
+                            class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                             Annuler
                         </button>
                         <button type="submit" :disabled="fauteEnCours"
-                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
+                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
                             <i v-if="fauteEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                             {{ fauteEditId ? 'Modifier' : 'Créer' }}
                         </button>
@@ -462,94 +462,94 @@
 
         <!-- Modale édition acteurs annexes -->
         <div v-if="showEditPartiesCiviles" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Modifier les acteurs annexes</h3>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Modifier les acteurs annexes</h3>
                 
                 <!-- Parties civiles -->
                 <div class="mb-4">
-                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Parties civiles</h4>
+                    <h4 class="text-sm font-semibold text-slate-800 mb-2">Parties civiles</h4>
                     <div class="space-y-2">
                         <div v-for="(pc, pi) in editPartiesCivilesForm" :key="'epc-'+pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 bg-slate-50 rounded">
-                            <select v-model="pc.type" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                            <select v-model="pc.type" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500">
                                 <option value="Personne">Personne</option>
                                 <option value="Structure">Structure</option>
                             </select>
-                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
-                                <input v-if="pc.type === 'Personne'" v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-if="pc.type === 'Personne'" v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                                 <button @click="editPartiesCivilesForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <button @click="editPartiesCivilesForm.push({ type: 'Personne', nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                    <button @click="editPartiesCivilesForm.push({ type: 'Personne', nom: '', prenom: '' })" class="text-xs text-slate-600 hover:text-slate-800 mt-2">
                         <i class="pi pi-plus-circle mr-1"></i> Ajouter une partie civile
                     </button>
                 </div>
 
                 <!-- Témoins -->
                 <div class="mb-4 border-t border-slate-200 pt-4">
-                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Témoins</h4>
+                    <h4 class="text-sm font-semibold text-slate-800 mb-2">Témoins</h4>
                     <div class="space-y-2">
                         <div v-for="(pc, pi) in editTemoinsForm" :key="'etm-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
-                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
-                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                                 <button @click="editTemoinsForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <button @click="editTemoinsForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                    <button @click="editTemoinsForm.push({ nom: '', prenom: '' })" class="text-xs text-slate-600 hover:text-slate-800 mt-2">
                         <i class="pi pi-plus-circle mr-1"></i> Ajouter un témoin
                     </button>
                 </div>
 
                 <!-- Civile responsable -->
                 <div class="mb-4 border-t border-slate-200 pt-4">
-                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Civile responsable</h4>
+                    <h4 class="text-sm font-semibold text-slate-800 mb-2">Civile responsable</h4>
                     <div class="space-y-2">
                         <div v-for="(pc, pi) in editCivileResponsablesForm" :key="'ecr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
-                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
-                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                                 <button @click="editCivileResponsablesForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <button @click="editCivileResponsablesForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                    <button @click="editCivileResponsablesForm.push({ nom: '', prenom: '' })" class="text-xs text-slate-600 hover:text-slate-800 mt-2">
                         <i class="pi pi-plus-circle mr-1"></i> Ajouter civile responsable
                     </button>
                 </div>
 
                 <!-- Garants -->
                 <div class="mb-4 border-t border-slate-200 pt-4">
-                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Garants</h4>
+                    <h4 class="text-sm font-semibold text-slate-800 mb-2">Garants</h4>
                     <div class="space-y-2">
                         <div v-for="(pc, pi) in editGarantsForm" :key="'eg-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
-                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
-                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                                 <button @click="editGarantsForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <button @click="editGarantsForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                    <button @click="editGarantsForm.push({ nom: '', prenom: '' })" class="text-xs text-slate-600 hover:text-slate-800 mt-2">
                         <i class="pi pi-plus-circle mr-1"></i> Ajouter un garant
                     </button>
                 </div>
 
                 <!-- Avocats -->
                 <div class="mb-4 border-t border-slate-200 pt-4">
-                    <h4 class="text-sm font-semibold text-gpj-700 mb-2">Avocats</h4>
+                    <h4 class="text-sm font-semibold text-slate-800 mb-2">Avocats</h4>
                     <div class="space-y-2">
                         <div v-for="(pc, pi) in editAvocatsForm" :key="'ea-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 bg-slate-50 rounded">
-                            <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             <div class="flex items-center gap-2">
-                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                                 <button @click="editAvocatsForm.splice(pi, 1)" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                             </div>
                         </div>
                     </div>
-                    <button @click="editAvocatsForm.push({ nom: '', prenom: '' })" class="text-xs text-gpj-500 hover:text-gpj-700 mt-2">
+                    <button @click="editAvocatsForm.push({ nom: '', prenom: '' })" class="text-xs text-slate-600 hover:text-slate-800 mt-2">
                         <i class="pi pi-plus-circle mr-1"></i> Ajouter un avocat
                     </button>
                 </div>
@@ -559,7 +559,7 @@
                         <i v-if="savingPartiesCiviles" class="pi pi-spin pi-spinner mr-1"></i>
                         Enregistrer
                     </button>
-                    <button @click="showEditPartiesCiviles = false" class="px-3 py-1.5 border border-slate-300 text-gpj-600 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <button @click="showEditPartiesCiviles = false" class="px-3 py-1.5 border border-slate-300 text-slate-700 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">
                         Annuler
                     </button>
                 </div>
@@ -568,24 +568,24 @@
 
         <!-- Modale confirmation suppression -->
         <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full shadow-lg">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full shadow-lg">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center shrink-0">
                         <i class="pi pi-exclamation-triangle text-red-600 dark:text-red-400"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gpj-800 dark:text-white">Confirmer la suppression</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Confirmer la suppression</h3>
                 </div>
-                <p class="text-sm text-gpj-600 dark:text-gpj-300 mb-2">
+                <p class="text-sm text-slate-700 dark:text-slate-400 mb-2">
                     Êtes-vous sûr de vouloir retirer le militaire suivant de la procédure ?
                 </p>
-                <p class="text-sm font-bold text-gpj-800 dark:text-white mb-4">
+                <p class="text-sm font-bold text-slate-900 dark:text-white mb-4">
                     {{ getNomComplet() }} ({{ getMatricule() }})
                 </p>
                 <p class="text-sm text-red-500 mb-6">
                     ⚠️ Cette action supprimera toutes les données associées à ce militaire (infractions, fautes, parties civiles).
                 </p>
                 <div class="flex gap-3 justify-end">
-                    <button @click="showDeleteModal = false" class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <button @click="showDeleteModal = false" class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                         Annuler
                     </button>
                     <button @click="supprimerMilitaire" :disabled="deleting" class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 disabled:opacity-50 cursor-pointer">

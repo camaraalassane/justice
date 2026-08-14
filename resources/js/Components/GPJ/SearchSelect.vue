@@ -17,7 +17,7 @@
                 @keydown.arrow-up.prevent="highlightPrev"
                 type="text"
                 :placeholder="placeholder"
-                class="w-full pl-10 pr-8 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 transition-all shadow-sm"
+                class="w-full pl-10 pr-8 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all shadow-sm"
                 autocomplete="off"
             />
             <button
@@ -32,7 +32,7 @@
         </div>
 
         <div v-if="selectedItem" class="mt-2 flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200">
-            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-xs font-bold shrink-0">
                 {{ selectedItemLabel.charAt(0) }}
             </div>
             <div class="flex-1 min-w-0">
@@ -58,7 +58,7 @@
                     highlightedIndex === index ? 'bg-slate-50 text-slate-900' : 'text-slate-700 hover:bg-slate-50'
                 ]"
             >
-                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
+                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-xs font-bold shrink-0">
                     {{ option.label.charAt(0) }}
                 </div>
                 <div class="flex-1 min-w-0">

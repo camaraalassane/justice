@@ -5,30 +5,30 @@
             <Card title="Informations du profil">
                 <form @submit.prevent="updateProfile" class="space-y-4">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gpj-700 mb-1">Nom complet</label>
+                        <label for="name" class="block text-sm font-medium text-slate-800 mb-1">Nom complet</label>
                         <div class="relative">
-                            <i class="pi pi-user absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400"></i>
+                            <i class="pi pi-user absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
                             <input
                                 id="name"
                                 v-model="profileForm.name"
                                 type="text"
                                 required
-                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
                             />
                         </div>
                         <p v-if="profileForm.errors.name" class="mt-1 text-sm text-red-500">{{ profileForm.errors.name }}</p>
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gpj-700 mb-1">Email</label>
+                        <label for="email" class="block text-sm font-medium text-slate-800 mb-1">Email</label>
                         <div class="relative">
-                            <i class="pi pi-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400"></i>
+                            <i class="pi pi-envelope absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
                             <input
                                 id="email"
                                 v-model="profileForm.email"
                                 type="email"
                                 required
-                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
                             />
                         </div>
                         <p v-if="profileForm.errors.email" class="mt-1 text-sm text-red-500">{{ profileForm.errors.email }}</p>
@@ -36,12 +36,12 @@
 
                     <!-- Rôle (affichage seul) -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Rôle</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Rôle</label>
                         <div class="flex items-center gap-2">
-                            <span class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-gpj-600 text-sm font-bold">
+                            <span class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 text-sm font-bold">
                                 {{ $page.props.auth.user.role }}
                             </span>
-                            <span class="text-gpj-600 text-sm font-medium">{{ roleLabel }}</span>
+                            <span class="text-slate-700 text-sm font-medium">{{ roleLabel }}</span>
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@
                         <button
                             type="submit"
                             :disabled="profileForm.processing"
-                            class="px-6 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
+                            class="px-6 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
                         >
                             <i v-if="profileForm.processing" class="pi pi-spin pi-spinner mr-2"></i>
                             Enregistrer
@@ -66,46 +66,46 @@
             <Card title="Changer le mot de passe">
                 <form @submit.prevent="updatePassword" class="space-y-4">
                     <div>
-                        <label for="current_password" class="block text-sm font-medium text-gpj-700 mb-1">Mot de passe actuel</label>
+                        <label for="current_password" class="block text-sm font-medium text-slate-800 mb-1">Mot de passe actuel</label>
                         <div class="relative">
-                            <i class="pi pi-lock absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400"></i>
+                            <i class="pi pi-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
                             <input
                                 id="current_password"
                                 v-model="passwordForm.current_password"
                                 type="password"
                                 required
-                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
                             />
                         </div>
                         <p v-if="passwordForm.errors.current_password" class="mt-1 text-sm text-red-500">{{ passwordForm.errors.current_password }}</p>
                     </div>
 
                     <div>
-                        <label for="new_password" class="block text-sm font-medium text-gpj-700 mb-1">Nouveau mot de passe</label>
+                        <label for="new_password" class="block text-sm font-medium text-slate-800 mb-1">Nouveau mot de passe</label>
                         <div class="relative">
-                            <i class="pi pi-lock absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400"></i>
+                            <i class="pi pi-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
                             <input
                                 id="new_password"
                                 v-model="passwordForm.password"
                                 type="password"
                                 required
                                 placeholder="Minimum 8 caractères"
-                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
                             />
                         </div>
                         <p v-if="passwordForm.errors.password" class="mt-1 text-sm text-red-500">{{ passwordForm.errors.password }}</p>
                     </div>
 
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gpj-700 mb-1">Confirmer le mot de passe</label>
+                        <label for="password_confirmation" class="block text-sm font-medium text-slate-800 mb-1">Confirmer le mot de passe</label>
                         <div class="relative">
-                            <i class="pi pi-lock absolute left-3 top-1/2 -translate-y-1/2 text-gpj-400"></i>
+                            <i class="pi pi-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
                             <input
                                 id="password_confirmation"
                                 v-model="passwordForm.password_confirmation"
                                 type="password"
                                 required
-                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                                class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
                             />
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                         <button
                             type="submit"
                             :disabled="passwordForm.processing"
-                            class="px-6 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
+                            class="px-6 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
                         >
                             <i v-if="passwordForm.processing" class="pi pi-spin pi-spinner mr-2"></i>
                             Changer le mot de passe
@@ -136,7 +136,7 @@
                         </h3>
                     </div>
                 </template>
-                <p class="text-sm text-gpj-600 mb-4">
+                <p class="text-sm text-slate-700 mb-4">
                     Une fois votre compte supprimé, toutes ses données seront définitivement effacées. Cette action est irréversible.
                 </p>
                 <button
@@ -151,13 +151,13 @@
         <!-- Modal de confirmation -->
         <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
             <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
-                <h3 class="text-lg font-bold text-gpj-800 mb-2">Confirmer la suppression</h3>
-                <p class="text-sm text-gpj-600 mb-6">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Confirmer la suppression</h3>
+                <p class="text-sm text-slate-700 mb-6">
                     Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
                 </p>
                 <form @submit.prevent="deleteUser" class="space-y-4">
                     <div>
-                        <label for="delete_password" class="block text-sm font-medium text-gpj-700 mb-1">Mot de passe actuel</label>
+                        <label for="delete_password" class="block text-sm font-medium text-slate-800 mb-1">Mot de passe actuel</label>
                         <input
                             id="delete_password"
                             v-model="deleteForm.password"
@@ -171,7 +171,7 @@
                         <button
                             type="button"
                             @click="showDeleteModal = false"
-                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+                            class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                             Annuler
                         </button>

@@ -34,9 +34,9 @@ const buttonClasses = computed(() => {
     const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer';
 
     const variants = {
-        primary: 'bg-slate-500 text-white hover:bg-gpj-600 focus:ring-gpj-500 shadow-sm',
+        primary: 'bg-gpj-500 text-white hover:bg-gpj-600 focus:ring-slate-500 shadow-sm',
         secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400 shadow-sm',
-        outline: 'border-2 border-gpj-500 text-gpj-500 hover:bg-slate-50 focus:ring-gpj-500',
+        outline: 'border-2 border-slate-500 text-slate-600 hover:bg-slate-50 focus:ring-slate-500',
         danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
         ghost: 'text-slate-600 hover:bg-slate-100 focus:ring-slate-400',
     };

@@ -10,13 +10,13 @@
                             v-model="filtres.search"
                             type="text"
                             placeholder="Rechercher par nom, prénom, matricule..."
-                            class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm transition-colors"
+                            class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm transition-colors"
                             @input="appliquerFiltres"
                         />
                     </div>
                     <select
                         v-model="filtres.type_personnel"
-                        class="rounded-lg border border-slate-300 text-sm text-slate-800 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm transition-colors"
+                        class="rounded-lg border border-slate-300 text-sm text-slate-800 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm transition-colors"
                         @change="appliquerFiltres"
                     >
                         <option value="">Tous les types</option>
@@ -25,7 +25,7 @@
                     </select>
                     <select
                         v-model="filtres.statut"
-                        class="rounded-lg border border-slate-300 text-sm text-slate-800 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm transition-colors"
+                        class="rounded-lg border border-slate-300 text-sm text-slate-800 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm transition-colors"
                         @change="appliquerFiltres"
                     >
                         <option value="">Tous les statuts</option>
@@ -37,7 +37,7 @@
                     <div class="flex-1"></div>
                     <Link
                         :href="route('militaires.create')"
-                        class="px-4 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2 whitespace-nowrap"
+                        class="px-4 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2 whitespace-nowrap"
                     >
                         <i class="pi pi-plus"></i> Nouveau Personnel
                     </Link>
@@ -46,9 +46,9 @@
 
             <!-- Tableau -->
             <Card padding>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
                                 <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Type</th>
                                 <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Matricule</th>
@@ -69,13 +69,13 @@
                                     </Badge>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <Link :href="route('militaires.show', personnel.id)" class="text-gpj-500 font-medium hover:underline">
+                                    <Link :href="route('militaires.show', personnel.id)" class="text-slate-600 font-medium hover:underline">
                                         {{ personnel.matricule || 'N/A' }}
                                     </Link>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
+                                        <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-xs font-bold shrink-0">
                                             {{ personnel.nom ? personnel.nom.charAt(0) : '?' }}{{ personnel.prenoms ? personnel.prenoms.charAt(0) : '' }}
                                         </div>
                                         <div>
@@ -139,7 +139,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100',
+                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label || '...'"
@@ -151,7 +151,7 @@
 
             <!-- Modal confirmation suppression -->
             <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
+                <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                             <i class="pi pi-exclamation-triangle text-red-600"></i>

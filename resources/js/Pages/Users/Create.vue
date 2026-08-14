@@ -11,7 +11,7 @@
                         <input 
                             v-model="form.name" 
                             type="text" 
-                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" 
                             placeholder="Jean Dupont" 
                             required 
                         />
@@ -26,7 +26,7 @@
                         <input 
                             v-model="form.email" 
                             type="email" 
-                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" 
                             placeholder="jean@exemple.com" 
                             required 
                         />
@@ -40,7 +40,7 @@
                         </label>
                         <select 
                             v-model="form.role" 
-                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" 
                             required
                         >
                             <option value="">Sélectionner un rôle</option>
@@ -59,7 +59,7 @@
                         <input 
                             v-model="form.password" 
                             type="password" 
-                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" 
                             placeholder="••••••••" 
                             required 
                         />
@@ -74,7 +74,7 @@
                         <input 
                             v-model="form.password_confirmation" 
                             type="password" 
-                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" 
+                            class="w-full rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" 
                             placeholder="••••••••" 
                             required 
                         />
@@ -128,7 +128,7 @@
                         <button 
                             type="submit" 
                             :disabled="processing" 
-                            class="flex-1 px-4 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
+                            class="flex-1 px-4 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
                         >
                             <i v-if="processing" class="pi pi-spin pi-spinner mr-2"></i>
                             Créer l'utilisateur

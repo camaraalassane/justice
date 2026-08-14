@@ -5,28 +5,28 @@
                 <!-- Code + Gravité -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">
+                        <label class="block text-sm font-medium text-slate-800 mb-1">
                             Code <span class="text-red-500">*</span>
                         </label>
                         <input
                             v-model="form.code_infraction"
                             type="text"
                             required
-                            class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-slate-500"
                         />
-                        <p class="mt-1 text-xs text-gpj-400">
+                        <p class="mt-1 text-xs text-slate-500">
                             Format : INF-CRxx (Criminelle), INF-DExx (Délictuelle), INF-COxx (Contravention)
                         </p>
                         <p v-if="form.errors.code_infraction" class="mt-1 text-sm text-red-500">{{ form.errors.code_infraction }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">
+                        <label class="block text-sm font-medium text-slate-800 mb-1">
                             Gravité (1-5) <span class="text-red-500">*</span>
                         </label>
                         <select
                             v-model="form.gravite"
                             required
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         >
                             <option v-for="i in 5" :key="i" :value="i">{{ i }} - {{ graviteLabel(i) }}</option>
                         </select>
@@ -36,44 +36,44 @@
 
                 <!-- Libellé -->
                 <div>
-                    <label class="block text-sm font-medium text-gpj-700 mb-1">
+                    <label class="block text-sm font-medium text-slate-800 mb-1">
                         Libellé <span class="text-red-500">*</span>
                     </label>
                     <input
                         v-model="form.libelle"
                         type="text"
                         required
-                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
                     />
                     <p v-if="form.errors.libelle" class="mt-1 text-sm text-red-500">{{ form.errors.libelle }}</p>
                 </div>
 
                 <!-- Description -->
                 <div>
-                    <label class="block text-sm font-medium text-gpj-700 mb-1">Description</label>
+                    <label class="block text-sm font-medium text-slate-800 mb-1">Description</label>
                     <textarea
                         v-model="form.description"
                         rows="3"
                         placeholder="Description détaillée et référence aux textes..."
-                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
                     ></textarea>
                 </div>
 
                 <!-- Classification + Nature -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">
+                        <label class="block text-sm font-medium text-slate-800 mb-1">
                             Classification <span class="text-red-500">*</span>
                         </label>
                         <select
                             v-model="form.classification"
                             required
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         >
                             <option value="">Sélectionner</option>
                             <option v-for="c in classifications" :key="c" :value="c">{{ c }}</option>
                         </select>
-                        <p class="mt-1 text-xs text-gpj-400">
+                        <p class="mt-1 text-xs text-slate-500">
                             <span v-if="form.classification === 'Criminelle'">Crimes : meurtre, viol, trahison, désertion en guerre</span>
                             <span v-else-if="form.classification === 'Délictuelle'">Délits : vol, escroquerie, abandon de poste</span>
                             <span v-else-if="form.classification === 'Contravention'">Contraventions : trouble, négligence, retard</span>
@@ -81,13 +81,13 @@
                         <p v-if="form.errors.classification" class="mt-1 text-sm text-red-500">{{ form.errors.classification }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">
+                        <label class="block text-sm font-medium text-slate-800 mb-1">
                             Nature <span class="text-red-500">*</span>
                         </label>
                         <select
                             v-model="form.nature"
                             required
-                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                         >
                             <option value="">Sélectionner</option>
                             <option v-for="n in natures" :key="n" :value="n">{{ n }}</option>
@@ -108,14 +108,14 @@
                     <div class="flex gap-3">
                         <Link
                             :href="route('infractions.index')"
-                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors"
+                            class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Annuler
                         </Link>
                         <button
                             type="submit"
                             :disabled="form.processing"
-                            class="px-6 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
+                            class="px-6 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
                         >
                             <i v-if="form.processing" class="pi pi-spin pi-spinner mr-2"></i>
                             Enregistrer
@@ -127,9 +127,9 @@
 
         <!-- Modal confirmation -->
         <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
-                <h3 class="text-lg font-bold text-gpj-800 mb-2">Confirmer la suppression</h3>
-                <p class="text-sm text-gpj-600 mb-2">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Confirmer la suppression</h3>
+                <p class="text-sm text-slate-700 mb-2">
                     Êtes-vous sûr de vouloir supprimer l'infraction <strong>{{ infraction.libelle }}</strong> ?
                 </p>
                 <p class="text-sm text-red-500 mb-6">
@@ -139,7 +139,7 @@
                     <button
                         type="button"
                         @click="showDeleteModal = false"
-                        class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer"
+                        class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer"
                     >
                         Annuler
                     </button>

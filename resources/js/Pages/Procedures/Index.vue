@@ -12,7 +12,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Phase</label>
-                        <select v-model="filtres.phase" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
+                        <select v-model="filtres.phase" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm">
                             <option value="">Toutes</option>
                             <option value="Ordre de Poursuite">Ordre de Poursuite</option>
                             <option value="Mise à Disposition">Mise à Disposition</option>
@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Type personnel</label>
-                        <select v-model="filtres.type_personnel" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
+                        <select v-model="filtres.type_personnel" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm">
                             <option value="">Tous</option>
                             <option value="militaire">Militaire</option>
                             <option value="civil">Civil</option>
@@ -29,25 +29,25 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Mois</label>
-                        <select v-model="filtres.mois" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
+                        <select v-model="filtres.mois" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm">
                             <option value="">Tous</option>
                             <option v-for="mois in moisOptions" :key="mois.value" :value="mois.value">{{ mois.label }}</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Année</label>
-                        <select v-model="filtres.annee" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
+                        <select v-model="filtres.annee" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm">
                             <option value="">Toutes</option>
                             <option v-for="annee in anneeOptions" :key="annee.value" :value="annee.value">{{ annee.label }}</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Jour</label>
-                        <input v-model="filtres.jour" type="date" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" />
+                        <input v-model="filtres.jour" type="date" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" />
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Infraction</label>
-                        <select v-model="filtres.type_infraction" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm">
+                        <select v-model="filtres.type_infraction" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm">
                             <option value="">Tous</option>
                             <option v-for="type in infractionsTypes" :key="type" :value="type">{{ type }}</option>
                         </select>
@@ -56,13 +56,13 @@
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mt-3 gap-2">
                     <div class="relative flex-1 w-full sm:max-w-sm">
                         <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input v-model="filtres.search" type="text" placeholder="N° procédure, nom, matricule..." class="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm" @input="appliquerFiltres" />
+                        <input v-model="filtres.search" type="text" placeholder="N° procédure, nom, matricule..." class="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm" @input="appliquerFiltres" />
                     </div>
                     <div class="flex gap-2">
                         <button @click="exporterListe" class="px-4 py-2 bg-emerald-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-emerald-600 transition-colors flex items-center gap-1">
                             <i class="pi pi-file-excel text-xs"></i> Exporter
                         </button>
-                        <Link :href="route('procedures.create')" class="px-4 py-2 bg-slate-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap">
+                        <Link :href="route('procedures.create')" class="px-4 py-2 bg-gpj-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap">
                             <i class="pi pi-plus text-xs"></i> <span class="hidden sm:inline">Nouvelle</span> Procédure
                         </Link>
                     </div>
@@ -74,9 +74,9 @@
 
             <!-- Tableau Desktop -->
             <Card padding class="hidden md:block">
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
                                 <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">N° Procédure</th>
                                 <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Type</th>
@@ -94,7 +94,7 @@
                         <tbody class="divide-y divide-slate-100">
                             <tr v-for="procedure in procedures.data" :key="procedure.id" class="hover:bg-slate-50 transition-colors">
                                 <td class="px-3 py-2.5">
-                                    <Link :href="route('procedures.show', procedure.id)" class="text-gpj-500 font-semibold hover:underline text-xs sm:text-sm">{{ procedure.numero_procedure }}</Link>
+                                    <Link :href="route('procedures.show', procedure.id)" class="text-slate-600 font-semibold hover:underline text-xs sm:text-sm">{{ procedure.numero_procedure }}</Link>
                                     <span v-if="procedure.est_plurielle" class="ml-1 text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full font-medium">Pluriel</span>
                                 </td>
                                 <td class="px-3 py-2.5">
@@ -106,7 +106,7 @@
                                     <div class="flex flex-wrap items-center gap-1">
                                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="pm.id">
                                             <div class="flex items-center gap-1 bg-slate-50 rounded-full px-2 py-0.5 border border-slate-200">
-                                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-[10px] font-bold shrink-0">
+                                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-[10px] font-bold shrink-0">
                                                     {{ pm.militaire?.nom?.charAt(0) }}{{ pm.militaire?.prenoms?.charAt(0) }}
                                                 </div>
                                                 <span class="text-xs text-slate-700 truncate max-w-20 font-medium">{{ pm.militaire?.nom }} {{ pm.militaire?.prenoms }}</span>
@@ -191,7 +191,7 @@
                 <div v-if="procedures.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-slate-100 gap-3">
                     <p class="text-xs sm:text-sm text-slate-500">{{ procedures.from }}-{{ procedures.to }} sur {{ procedures.total }}</p>
                     <div class="flex flex-wrap gap-1">
-                        <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg transition-colors', link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
+                        <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg transition-colors', link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
                     </div>
                 </div>
             </Card>
@@ -202,7 +202,7 @@
                 <div v-for="procedure in procedures.data" :key="procedure.id" class="bg-white rounded-xl border border-slate-200 p-3 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-start justify-between mb-2">
                         <div>
-                            <Link :href="route('procedures.show', procedure.id)" class="text-gpj-500 font-semibold text-sm hover:underline">{{ procedure.numero_procedure }}</Link>
+                            <Link :href="route('procedures.show', procedure.id)" class="text-slate-600 font-semibold text-sm hover:underline">{{ procedure.numero_procedure }}</Link>
                             <span v-if="procedure.est_plurielle" class="ml-1 text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full font-medium">Pluriel</span>
                         </div>
                         <Badge :variant="phaseVariant(procedure.phase)" size="sm" class="text-xs">{{ procedure.phase || '-' }}</Badge>
@@ -210,7 +210,7 @@
                     <div class="flex flex-wrap items-center gap-2 mb-2">
                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="pm.id">
                             <div class="flex items-center gap-1 bg-slate-50 rounded-full px-2 py-0.5 border border-slate-200">
-                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-[10px] font-bold shrink-0">
+                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-[10px] font-bold shrink-0">
                                     {{ pm.militaire?.nom?.charAt(0) }}{{ pm.militaire?.prenoms?.charAt(0) }}
                                 </div>
                                 <span class="text-xs text-slate-700 truncate max-w-20 font-medium">{{ pm.militaire?.nom }} {{ pm.militaire?.prenoms }}</span>
@@ -245,13 +245,13 @@
             <!-- Pagination mobile -->
             <div v-if="procedures.links?.length > 3" class="md:hidden flex justify-center">
                 <div class="flex flex-wrap gap-1">
-                    <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg', link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
+                    <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg', link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
                 </div>
             </div>
 
             <!-- Modal confirmation suppression -->
             <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                <div class="bg-white dark:bg-gpj-900 rounded-xl p-5 sm:p-6 max-w-md w-full shadow-xl">
+                <div class="bg-white dark:bg-slate-900 rounded-xl p-5 sm:p-6 max-w-md w-full shadow-xl">
                     <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0"><i class="pi pi-exclamation-triangle text-red-600"></i></div><h3 class="text-lg font-bold text-slate-800">Confirmer la suppression</h3></div>
                     <p class="text-sm text-slate-600 mb-2">Vous êtes sur le point de supprimer :</p>
                     <p class="text-sm font-bold text-slate-800 mb-4">{{ procedureToDelete?.numero_procedure }}</p>

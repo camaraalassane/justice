@@ -10,14 +10,14 @@
                             v-model="filters.search"
                             type="text"
                             placeholder="Rechercher un utilisateur..."
-                            class="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm"
+                            class="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm"
                             @input="appliquerFiltres"
                         />
                     </div>
                     <select 
                         v-model="filters.role" 
                         @change="appliquerFiltres" 
-                        class="rounded-lg border border-slate-300 text-slate-800 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500 shadow-sm"
+                        class="rounded-lg border border-slate-300 text-slate-800 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm"
                     >
                         <option value="">Tous les rôles</option>
                         <option v-for="(label, key) in roles" :key="key" :value="key">
@@ -27,7 +27,7 @@
                 </div>
                 <Link 
                     :href="route('users.create')" 
-                    class="flex items-center gap-2 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors shrink-0"
+                    class="flex items-center gap-2 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors shrink-0"
                 >
                     <i class="pi pi-plus"></i> 
                     Nouvel utilisateur
@@ -45,9 +45,9 @@
 
             <!-- Tableau -->
             <Card padding>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200">
+                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
                                 <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
                                 <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Email</th>
@@ -126,7 +126,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100',
+                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label"
@@ -138,7 +138,7 @@
 
         <!-- Modal de confirmation de suppression -->
         <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-md w-full shadow-xl">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-md w-full shadow-xl">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center shrink-0">
                         <i class="pi pi-exclamation-triangle text-red-600 dark:text-red-400"></i>

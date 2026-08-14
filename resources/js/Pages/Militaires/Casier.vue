@@ -4,23 +4,23 @@
             <!-- En-tête avec boutons d'action -->
             <div class="flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-slate-100 dark:bg-gpj-800 flex items-center justify-center text-gpj-600 dark:text-gpj-300 text-xl font-bold">
+                    <div class="w-14 h-14 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-400 text-xl font-bold">
                         {{ getInitiales() }}
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-gpj-800 dark:text-white">{{ militaire.nom }} {{ militaire.prenoms }}</h1>
-                        <div class="flex items-center gap-3 flex-wrap text-sm text-gpj-500">
-                            <span><span class="text-gpj-400">Matricule:</span> {{ militaire.matricule || 'Non défini' }}</span>
-                            <span><span class="text-gpj-400">Grade:</span> {{ militaire.grade?.libelle || 'Non renseigné' }}</span>
-                            <span><span class="text-gpj-400">Statut:</span> <Badge :variant="statutVariant(militaire.statut)" size="sm">{{ militaire.statut || 'Non renseigné' }}</Badge></span>
+                        <h1 class="text-xl font-bold text-slate-900 dark:text-white">{{ militaire.nom }} {{ militaire.prenoms }}</h1>
+                        <div class="flex items-center gap-3 flex-wrap text-sm text-slate-600">
+                            <span><span class="text-slate-500">Matricule:</span> {{ militaire.matricule || 'Non défini' }}</span>
+                            <span><span class="text-slate-500">Grade:</span> {{ militaire.grade?.libelle || 'Non renseigné' }}</span>
+                            <span><span class="text-slate-500">Statut:</span> <Badge :variant="statutVariant(militaire.statut)" size="sm">{{ militaire.statut || 'Non renseigné' }}</Badge></span>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <Link :href="route('militaires.show', militaire.id)" class="px-3 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1">
+                    <Link :href="route('militaires.show', militaire.id)" class="px-3 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1">
                         <i class="pi pi-arrow-left text-xs"></i> Retour
                     </Link>
-                    <a :href="route('militaires.casier.pdf', militaire.id)" target="_blank" class="px-3 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2">
+                    <a :href="route('militaires.casier.pdf', militaire.id)" target="_blank" class="px-3 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2">
                         <i class="pi pi-download"></i> Exporter PDF
                     </a>
                     <button v-if="peutModifier" @click="printCasier" class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
@@ -40,26 +40,26 @@
             <!-- Section Identité -->
             <Card title="I - IDENTITÉ DU MILITAIRE">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div><p class="text-gpj-400">Matricule</p><p class="font-medium">{{ militaire.matricule || 'Non défini' }}</p></div>
-                    <div><p class="text-gpj-400">Grade</p><p class="font-medium">{{ militaire.grade?.libelle || militaire.grade || 'Non renseigné' }}</p></div>
-                    <div><p class="text-gpj-400">Nom</p><p class="font-medium">{{ militaire.nom || 'Inconnu' }}</p></div>
-                    <div><p class="text-gpj-400">Prénoms</p><p class="font-medium">{{ militaire.prenoms || 'Inconnu' }}</p></div>
-                    <div><p class="text-gpj-400">Date de naissance</p><p class="font-medium">{{ formatDate(militaire.date_naissance) }}</p></div>
-                    <div><p class="text-gpj-400">Lieu de naissance</p><p class="font-medium">{{ militaire.lieu_naissance || 'Non renseigné' }}</p></div>
-                    <div><p class="text-gpj-400">Genre</p><p class="font-medium">{{ militaire.genre || 'Non renseigné' }}</p></div>
-                    <div><p class="text-gpj-400">Statut</p><Badge :variant="statutVariant(militaire.statut)" size="sm">{{ militaire.statut || 'Non renseigné' }}</Badge></div>
-                    <div><p class="text-gpj-400">Filiation Père</p><p class="font-medium">{{ getFiliationPere() }}</p></div>
-                    <div><p class="text-gpj-400">Filiation Mère</p><p class="font-medium">{{ getFiliationMere() }}</p></div>
-                    <div><p class="text-gpj-400">Armée/Service</p><p class="font-medium">{{ militaire.armee || militaire.armee_relation?.nom || 'Non renseigné' }}</p></div>
-                    <div><p class="text-gpj-400">Unité</p><p class="font-medium">{{ militaire.unite || 'Non renseignée' }}</p></div>
+                    <div><p class="text-slate-500">Matricule</p><p class="font-medium">{{ militaire.matricule || 'Non défini' }}</p></div>
+                    <div><p class="text-slate-500">Grade</p><p class="font-medium">{{ militaire.grade?.libelle || militaire.grade || 'Non renseigné' }}</p></div>
+                    <div><p class="text-slate-500">Nom</p><p class="font-medium">{{ militaire.nom || 'Inconnu' }}</p></div>
+                    <div><p class="text-slate-500">Prénoms</p><p class="font-medium">{{ militaire.prenoms || 'Inconnu' }}</p></div>
+                    <div><p class="text-slate-500">Date de naissance</p><p class="font-medium">{{ formatDate(militaire.date_naissance) }}</p></div>
+                    <div><p class="text-slate-500">Lieu de naissance</p><p class="font-medium">{{ militaire.lieu_naissance || 'Non renseigné' }}</p></div>
+                    <div><p class="text-slate-500">Genre</p><p class="font-medium">{{ militaire.genre || 'Non renseigné' }}</p></div>
+                    <div><p class="text-slate-500">Statut</p><Badge :variant="statutVariant(militaire.statut)" size="sm">{{ militaire.statut || 'Non renseigné' }}</Badge></div>
+                    <div><p class="text-slate-500">Filiation Père</p><p class="font-medium">{{ getFiliationPere() }}</p></div>
+                    <div><p class="text-slate-500">Filiation Mère</p><p class="font-medium">{{ getFiliationMere() }}</p></div>
+                    <div><p class="text-slate-500">Armée/Service</p><p class="font-medium">{{ militaire.armee || militaire.armee_relation?.nom || 'Non renseigné' }}</p></div>
+                    <div><p class="text-slate-500">Unité</p><p class="font-medium">{{ militaire.unite || 'Non renseignée' }}</p></div>
                 </div>
             </Card>
 
             <!-- Section II - Procédures en cours -->
             <Card title="II - PROCÉDURES EN COURS">
-                <div v-if="proceduresEnCours.length > 0" class="overflow-x-auto">
+                <div v-if="proceduresEnCours.length > 0" class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-slate-700 sticky top-0 z-10">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">N° Procédure</th>
                                 <th class="px-3 py-2 text-left font-semibold">Date ouverture</th>
@@ -72,7 +72,7 @@
                         <tbody class="divide-y divide-gpj-100">
                             <tr v-for="proc in proceduresEnCours" :key="proc.id" class="hover:bg-slate-50">
                                 <td class="px-3 py-2">
-                                    <Link :href="route('procedures.show', proc.id)" class="text-gpj-500 hover:underline">
+                                    <Link :href="route('procedures.show', proc.id)" class="text-slate-600 hover:underline">
                                         {{ proc.numero_procedure }}
                                     </Link>
                                 </td>
@@ -81,7 +81,7 @@
                                 <td class="px-3 py-2">
                                     <span v-if="proc.parquet">
                                         {{ proc.parquet.nom }}
-                                        <span class="text-[10px] text-gpj-400">({{ proc.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }})</span>
+                                        <span class="text-[10px] text-slate-500">({{ proc.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }})</span>
                                     </span>
                                     <span v-else>-</span>
                                 </td>
@@ -90,13 +90,13 @@
                                         <Badge v-for="inf in getInfractionsForProcedure(proc)" :key="inf.id" variant="neutral" size="sm" class="text-[10px]">
                                             {{ inf.libelle }}
                                         </Badge>
-                                        <span v-if="getInfractionsForProcedure(proc).length === 0" class="text-gpj-400">-</span>
+                                        <span v-if="getInfractionsForProcedure(proc).length === 0" class="text-slate-500">-</span>
                                     </div>
                                 </td>
                                 <td class="px-3 py-2">
                                     <div v-if="proc.est_plurielle && proc.procedure_militaires?.length > 1">
                                         <span class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">Pluriel</span>
-                                        <div class="text-xs text-gpj-500 mt-1">
+                                        <div class="text-xs text-slate-600 mt-1">
                                             <div v-for="pm in proc.procedure_militaires" :key="pm.id">
                                                 <span v-if="pm.militaire_id !== militaire.id">
                                                     - {{ pm.militaire?.nom || pm.nom_temp || 'Inconnu' }}
@@ -112,14 +112,14 @@
                         </tbody>
                     </table>
                 </div>
-                <p v-else class="text-sm text-gpj-400 py-4 text-center">Aucune procédure en cours</p>
+                <p v-else class="text-sm text-slate-500 py-4 text-center">Aucune procédure en cours</p>
             </Card>
 
             <!-- Section III - Condamnations -->
             <Card title="III - CONDAMNATIONS">
-                <div v-if="condamnations.length > 0" class="overflow-x-auto">
+                <div v-if="condamnations.length > 0" class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-slate-700 sticky top-0 z-10">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">N° Procédure</th>
                                 <th class="px-3 py-2 text-left font-semibold">Date condamnation</th>
@@ -132,7 +132,7 @@
                         <tbody class="divide-y divide-gpj-100">
                             <tr v-for="cond in condamnations" :key="cond.id" class="hover:bg-slate-50">
                                 <td class="px-3 py-2">
-                                    <Link :href="route('procedures.show', cond.id)" class="text-gpj-500 hover:underline">
+                                    <Link :href="route('procedures.show', cond.id)" class="text-slate-600 hover:underline">
                                         {{ cond.numero_procedure }}
                                     </Link>
                                 </td>
@@ -140,7 +140,7 @@
                                 <td class="px-3 py-2">
                                     <span v-if="cond.parquet">
                                         {{ cond.parquet.nom }}
-                                        <span class="text-[10px] text-gpj-400">({{ cond.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }})</span>
+                                        <span class="text-[10px] text-slate-500">({{ cond.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }})</span>
                                     </span>
                                     <span v-else-if="cond.jugement?.juridiction">{{ cond.jugement.juridiction }}</span>
                                     <span v-else>-</span>
@@ -150,13 +150,13 @@
                                         <Badge v-for="inf in getInfractionsForProcedure(cond)" :key="inf.id" variant="neutral" size="sm" class="text-[10px]">
                                             {{ inf.libelle }}
                                         </Badge>
-                                        <span v-if="getInfractionsForProcedure(cond).length === 0" class="text-gpj-400">-</span>
+                                        <span v-if="getInfractionsForProcedure(cond).length === 0" class="text-slate-500">-</span>
                                     </div>
                                 </td>
                                 <td class="px-3 py-2">
                                     <div v-if="cond.peine_principale || cond.jugement?.peine_principale">
                                         <span class="text-red-600 font-medium">{{ cond.peine_principale || cond.jugement?.peine_principale }}</span>
-                                        <span v-if="cond.peine_description || cond.jugement?.peines_complementaires" class="text-xs text-gpj-500 block">
+                                        <span v-if="cond.peine_description || cond.jugement?.peines_complementaires" class="text-xs text-slate-600 block">
                                             {{ cond.peine_description || cond.jugement?.peines_complementaires }}
                                         </span>
                                         <span class="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded-full mt-1 inline-block">Condamné</span>
@@ -166,7 +166,7 @@
                                 <td class="px-3 py-2">
                                     <div v-if="cond.est_plurielle && cond.procedure_militaires?.length > 1">
                                         <span class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">Pluriel</span>
-                                        <div class="text-xs text-gpj-500 mt-1">
+                                        <div class="text-xs text-slate-600 mt-1">
                                             <div v-for="pm in cond.procedure_militaires" :key="pm.id">
                                                 <span v-if="pm.militaire_id !== militaire.id">
                                                     - {{ pm.militaire?.nom || pm.nom_temp || 'Inconnu' }}
@@ -182,14 +182,14 @@
                         </tbody>
                     </table>
                 </div>
-                <p v-else class="text-sm text-gpj-400 py-4 text-center">Aucune condamnation</p>
+                <p v-else class="text-sm text-slate-500 py-4 text-center">Aucune condamnation</p>
             </Card>
 
             <!-- Section IV - Acquittements -->
             <Card v-if="getAcquittements().length > 0" title="IV - ACQUITTEMENTS">
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
                     <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-slate-700 sticky top-0 z-10">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">N° Jugement</th>
                                 <th class="px-3 py-2 text-left font-semibold">Date jugement</th>
@@ -208,7 +208,7 @@
                                         <Badge v-for="inf in getInfractionsForProcedure(proc)" :key="inf.id" variant="neutral" size="sm" class="text-[10px]">
                                             {{ inf.libelle }}
                                         </Badge>
-                                        <span v-if="getInfractionsForProcedure(proc).length === 0" class="text-gpj-400">-</span>
+                                        <span v-if="getInfractionsForProcedure(proc).length === 0" class="text-slate-500">-</span>
                                     </div>
                                 </td>
                                 <td class="px-3 py-2">{{ proc.jugement?.motif_acquittement || 'Non précisé' }}</td>
@@ -222,20 +222,20 @@
             <Card title="V - RÉCAPITULATIF">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="p-3 bg-slate-50 rounded-lg text-center">
-                        <p class="text-2xl font-bold text-gpj-600">{{ procedures.length }}</p>
-                        <p class="text-xs text-gpj-400">Total procédures</p>
+                        <p class="text-2xl font-bold text-slate-700">{{ procedures.length }}</p>
+                        <p class="text-xs text-slate-500">Total procédures</p>
                     </div>
                     <div class="p-3 bg-amber-50 rounded-lg text-center">
                         <p class="text-2xl font-bold text-amber-600">{{ proceduresEnCours.length }}</p>
-                        <p class="text-xs text-gpj-400">Procédures en cours</p>
+                        <p class="text-xs text-slate-500">Procédures en cours</p>
                     </div>
                     <div class="p-3 bg-red-50 rounded-lg text-center">
                         <p class="text-2xl font-bold text-red-600">{{ condamnations.length }}</p>
-                        <p class="text-xs text-gpj-400">Condamnations</p>
+                        <p class="text-xs text-slate-500">Condamnations</p>
                     </div>
                     <div class="p-3 bg-emerald-50 rounded-lg text-center">
                         <p class="text-2xl font-bold text-emerald-600">{{ getAcquittements().length }}</p>
-                        <p class="text-xs text-gpj-400">Acquittements</p>
+                        <p class="text-xs text-slate-500">Acquittements</p>
                     </div>
                 </div>
             </Card>

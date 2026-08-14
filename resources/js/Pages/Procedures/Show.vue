@@ -36,29 +36,29 @@
         <div class="space-y-6">
             <!-- Ajouter une phase -->
             <Card v-if="peutModifier && phasesDisponibles.length > 0">
-                <template #header><div class="px-6 py-4 border-b border-slate-300"><h3 class="text-lg font-semibold text-gpj-800">Ajouter une phase</h3></div></template>
+                <template #header><div class="px-6 py-4 border-b border-slate-300"><h3 class="text-lg font-semibold text-slate-900">Ajouter une phase</h3></div></template>
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">Type de phase <span class="text-red-500">*</span></label>
-                            <select v-model="phaseForm.phase_type_id" required @change="onPhaseTypeChange" class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                            <label class="block text-sm font-medium text-slate-800 mb-1">Type de phase <span class="text-red-500">*</span></label>
+                            <select v-model="phaseForm.phase_type_id" required @change="onPhaseTypeChange" class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500">
                                 <option value="">Choisir</option>
                                 <option v-for="pt in phasesDisponibles" :key="pt.id" :value="pt.id">{{ pt.libelle }}</option>
                                 <option value="autre">Autre (personnalisé)</option>
                             </select>
                         </div>
                         <div v-if="phaseForm.phase_type_id === 'autre'">
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">Nom <span class="text-red-500">*</span></label>
-                            <input v-model="phaseForm.phase_personnalisee" type="text" required class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <label class="block text-sm font-medium text-slate-800 mb-1">Nom <span class="text-red-500">*</span></label>
+                            <input v-model="phaseForm.phase_personnalisee" type="text" required class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gpj-700 mb-1">Date <span class="text-red-500">*</span></label>
-                            <input v-model="phaseForm.date_phase" type="date" required class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                            <label class="block text-sm font-medium text-slate-800 mb-1">Date <span class="text-red-500">*</span></label>
+                            <input v-model="phaseForm.date_phase" type="date" required class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Description</label>
-                        <textarea v-model="phaseForm.description" rows="2" class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Description</label>
+                        <textarea v-model="phaseForm.description" rows="2" class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"></textarea>
                     </div>
                     <PhaseFormFields 
                         :phaseTypeId="phaseForm.phase_type_id" 
@@ -74,34 +74,34 @@
                         v-model:peineDescription="phaseForm.peine_description"
                     />
                     <div class="flex items-center gap-3">
-                        <button type="button" @click="ajouterPhase" :disabled="formProcessing" class="px-6 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
+                        <button type="button" @click="ajouterPhase" :disabled="formProcessing" class="px-6 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
                             <i v-if="formProcessing" class="pi pi-spin pi-spinner mr-2"></i>Ajouter cette phase
                         </button>
                     </div>
                 </div>
             </Card>
 
-            <div v-if="peutModifier && phasesDisponibles.length === 0" class="p-4 bg-slate-50 border border-slate-300 rounded-lg text-sm text-gpj-600"><i class="pi pi-info-circle mr-2"></i> Toutes les phases ont été effectuées.</div>
+            <div v-if="peutModifier && phasesDisponibles.length === 0" class="p-4 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700"><i class="pi pi-info-circle mr-2"></i> Toutes les phases ont été effectuées.</div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Infos générales -->
                     <Card title="Informations Générales">
                         <div class="grid grid-cols-2 gap-4 text-sm">
-                            <div><p class="text-gpj-400">N° Procédure</p><p class="font-medium">{{ procedure.numero_procedure }}</p></div>
+                            <div><p class="text-slate-500">N° Procédure</p><p class="font-medium">{{ procedure.numero_procedure }}</p></div>
                             <div>
-                                <p class="text-gpj-400">Phase actuelle</p>
+                                <p class="text-slate-500">Phase actuelle</p>
                                 <div class="flex items-center gap-2">
                                     <Badge variant="info" size="sm">{{ procedure.phase || '-' }}</Badge>
                                     <span v-if="procedure.est_plurielle" class="text-[10px] bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">Pluriel</span>
                                 </div>
                             </div>
                             <div>
-                                <p class="text-gpj-400">Lieu de commission</p>
+                                <p class="text-slate-500">Lieu de commission</p>
                                 <Badge variant="info" size="sm">{{ procedure.lieu_commission || 'Non défini' }}</Badge>
                             </div>
                             <div>
-                                <p class="text-gpj-400">Parquet</p>
+                                <p class="text-slate-500">Parquet</p>
                                 <div v-if="editParquet" class="flex items-center gap-2 flex-wrap">
                                     <div class="w-full">
                                         <ParquetSelector
@@ -121,11 +121,11 @@
                                         {{ procedure.parquet_type === 'militaire' ? 'Militaire' : 'Droit Commun' }}
                                         - {{ procedure.parquet?.nom || 'Non défini' }}
                                     </Badge>
-                                    <button v-if="peutModifier" @click="startEditParquet" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
+                                    <button v-if="peutModifier" @click="startEditParquet" class="text-slate-500"><i class="pi pi-pencil text-xs"></i></button>
                                 </div>
                             </div>
                             <div>
-                                <p class="text-gpj-400">Date ouverture</p>
+                                <p class="text-slate-500">Date ouverture</p>
                                 <div v-if="editDateOuverture" class="flex items-center gap-2">
                                     <input v-model="editForm.date_ouverture" type="date" class="rounded-lg border border-slate-300 text-sm py-1.5 px-2" />
                                     <button @click="saveDateOuverture" class="text-emerald-500"><i class="pi pi-check text-sm"></i></button>
@@ -133,18 +133,18 @@
                                 </div>
                                 <div v-else class="flex items-center gap-2">
                                     <p class="font-medium">{{ formatDate(procedure.date_ouverture) }}</p>
-                                    <button v-if="peutModifier" @click="editDateOuverture = true; editForm.date_ouverture = formatDateForInput(procedure.date_ouverture)" class="text-gpj-400"><i class="pi pi-pencil text-xs"></i></button>
+                                    <button v-if="peutModifier" @click="editDateOuverture = true; editForm.date_ouverture = formatDateForInput(procedure.date_ouverture)" class="text-slate-500"><i class="pi pi-pencil text-xs"></i></button>
                                 </div>
                             </div>
-                            <div><p class="text-gpj-400">Créé par</p><p class="font-medium">{{ procedure.createur?.name || '-' }}</p></div>
-                            <div><p class="text-gpj-400">Validé par</p><p class="font-medium">{{ procedure.validateur?.name || '-' }}</p></div>
+                            <div><p class="text-slate-500">Créé par</p><p class="font-medium">{{ procedure.createur?.name || '-' }}</p></div>
+                            <div><p class="text-slate-500">Validé par</p><p class="font-medium">{{ procedure.validateur?.name || '-' }}</p></div>
                             <!-- Condamnation procédure -->
                             <div>
-                                <p class="text-gpj-400">Condamnation</p>
+                                <p class="text-slate-500">Condamnation</p>
                                 <Badge :variant="procedure.est_condamne ? 'danger' : 'neutral'" size="sm">
                                     {{ procedure.est_condamne ? 'Condamné' : 'Non condamné' }}
                                 </Badge>
-                                <span v-if="procedure.est_condamne && procedure.peine_principale" class="text-xs text-gpj-500 ml-2">
+                                <span v-if="procedure.est_condamne && procedure.peine_principale" class="text-xs text-slate-600 ml-2">
                                     Peine: {{ procedure.peine_principale }}
                                 </span>
                             </div>
@@ -154,13 +154,13 @@
                     <!-- Militaires / Personnels concernés -->
                     <Card :title="procedure.est_plurielle ? 'Personnels concernés' : 'Personnel concerné'">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm text-gpj-400">
+                            <span class="text-sm text-slate-500">
                                 {{ procedure.procedure_militaires?.length || 0 }} personnel(s) associé(s)
                             </span>
                             <button
                                 v-if="peutModifier"
                                 @click="openAddPersonnelModal"
-                                class="px-3 py-1.5 bg-slate-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
+                                class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
                             >
                                 <i class="pi pi-plus"></i> Ajouter un personnel
                             </button>
@@ -185,7 +185,7 @@
                                 @infraction-created="onInfractionCreated"
                             />
                         </div>
-                        <p v-else class="text-sm text-gpj-400 py-4 text-center">Aucun personnel associé</p>
+                        <p v-else class="text-sm text-slate-500 py-4 text-center">Aucun personnel associé</p>
                     </Card>
 
                     <!-- Historique des phases -->
@@ -194,13 +194,13 @@
                             <div v-for="(phase, index) in procedure.procedure_phases" :key="phase.id" class="flex gap-3">
                                 <div class="flex flex-col items-center">
                                     <div :class="['w-3 h-3 rounded-full mt-1.5', phase.est_retour ? 'bg-amber-400' : 'bg-slate-500']"></div>
-                                    <div v-if="index < procedure.procedure_phases.length - 1" class="w-0.5 flex-1 bg-gpj-200"></div>
+                                    <div v-if="index < procedure.procedure_phases.length - 1" class="w-0.5 flex-1 bg-slate-200"></div>
                                 </div>
                                 <div class="flex-1 pb-4 min-w-0">
                                     <div class="flex items-center gap-2 flex-wrap">
                                         <div class="flex-1 min-w-0">
                                             <div class="flex items-center gap-2 flex-wrap">
-                                                <span class="text-sm font-bold text-gpj-800">{{ phase.libelle || phase.phase_type?.libelle || 'Phase sans nom' }}</span>
+                                                <span class="text-sm font-bold text-slate-900">{{ phase.libelle || phase.phase_type?.libelle || 'Phase sans nom' }}</span>
                                                 <Badge v-if="index === 0" variant="info" size="sm">Actuelle</Badge>
                                                 <Badge v-if="index === procedure.procedure_phases.length - 1" variant="success" size="sm">Initiale</Badge>
                                                 <!-- Badge condamnation -->
@@ -208,9 +208,9 @@
                                                     <i class="pi pi-gavel mr-1 text-xs"></i>Condamné
                                                 </Badge>
                                             </div>
-                                            <p class="text-xs text-gpj-400 mt-0.5">{{ formatDate(phase.date_phase) }} — par {{ phase.createur?.name || '-' }}</p>
+                                            <p class="text-xs text-slate-500 mt-0.5">{{ formatDate(phase.date_phase) }} — par {{ phase.createur?.name || '-' }}</p>
                                         </div>
-                                        <button v-if="peutModifier && editingPhaseId !== phase.id" @click="startEditPhase(phase)" class="text-gpj-400 hover:text-gpj-600 shrink-0" title="Modifier"><i class="pi pi-pencil text-xs"></i></button>
+                                        <button v-if="peutModifier && editingPhaseId !== phase.id" @click="startEditPhase(phase)" class="text-slate-500 hover:text-slate-700 shrink-0" title="Modifier"><i class="pi pi-pencil text-xs"></i></button>
                                         <button v-if="peutValider && index === 0 && procedure.procedure_phases.length > 1 && editingPhaseId !== phase.id" @click="confirmRetourPhase(phase)" class="text-amber-500 hover:text-amber-700 shrink-0" title="Revenir à la phase précédente"><i class="pi pi-undo text-xs"></i></button>
                                     </div>
 
@@ -218,21 +218,21 @@
                                     <div v-if="editingPhaseId === phase.id" class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-300 space-y-3">
                                         <!-- Description et Date -->
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            <div><label class="block text-xs font-medium text-gpj-500 mb-1">Description</label><textarea v-model="editPhaseForm.description" rows="2" class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2"></textarea></div>
-                                            <div><label class="block text-xs font-medium text-gpj-500 mb-1">Date</label><input v-model="editPhaseForm.date_phase" type="date" class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2" /></div>
+                                            <div><label class="block text-xs font-medium text-slate-600 mb-1">Description</label><textarea v-model="editPhaseForm.description" rows="2" class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2"></textarea></div>
+                                            <div><label class="block text-xs font-medium text-slate-600 mb-1">Date</label><input v-model="editPhaseForm.date_phase" type="date" class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2" /></div>
                                         </div>
 
                                         <!-- CONDAMNATION - Modifiable -->
-                                        <div v-if="isOrdrePoursuitePhase(phase)" class="p-3 border border-slate-300 dark:border-gpj-700 rounded-lg bg-slate-50 dark:bg-gpj-800">
+                                        <div v-if="isOrdrePoursuitePhase(phase)" class="p-3 border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800">
                                             <div class="flex items-center gap-4 flex-wrap">
                                                 <label class="flex items-center gap-2 cursor-pointer">
                                                     <input 
                                                         type="checkbox" 
                                                         v-model="editPhaseForm.est_condamne"
                                                         @change="onEditCondamnationChange"
-                                                        class="w-4 h-4 rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
+                                                        class="w-4 h-4 rounded border-slate-400 text-slate-600 focus:ring-slate-500"
                                                     />
-                                                    <span class="text-sm font-medium text-gpj-700 dark:text-gpj-300">
+                                                    <span class="text-sm font-medium text-slate-800 dark:text-slate-400">
                                                         <i class="pi pi-gavel mr-1"></i>
                                                         Condamné
                                                     </span>
@@ -241,14 +241,14 @@
                                                 <!-- Champ Peine - apparaît seulement si condamné -->
                                                 <div v-if="editPhaseForm.est_condamne" class="flex-1 min-w-50">
                                                     <div class="flex items-center gap-3">
-                                                        <label class="text-sm font-medium text-gpj-700 dark:text-gpj-300 whitespace-nowrap">
+                                                        <label class="text-sm font-medium text-slate-800 dark:text-slate-400 whitespace-nowrap">
                                                             Peine :
                                                         </label>
                                                         <input 
                                                             v-model="editPhaseForm.peine_principale"
                                                             type="text"
                                                             placeholder="Ex: 5 ans d'emprisonnement"
-                                                            class="flex-1 rounded-lg border border-slate-300 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                                            class="flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                                                         />
                                                     </div>
                                                     <div class="mt-2">
@@ -256,7 +256,7 @@
                                                             v-model="editPhaseForm.peine_description"
                                                             rows="2"
                                                             placeholder="Description détaillée de la peine..."
-                                                            class="w-full rounded-lg border border-slate-300 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                                            class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
                                                         ></textarea>
                                                     </div>
                                                 </div>
@@ -271,16 +271,16 @@
 
                                         <!-- Champs -->
                                         <div v-if="editPhaseForm.champs?.length" class="border-t border-slate-200 pt-3">
-                                            <p class="text-xs font-medium text-gpj-500 mb-2">Champs ({{ editPhaseForm.champs.length }})</p>
+                                            <p class="text-xs font-medium text-slate-600 mb-2">Champs ({{ editPhaseForm.champs.length }})</p>
                                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                                 <div v-for="(ch, i) in editPhaseForm.champs" :key="'ech-'+i">
                                                     <div class="flex items-center justify-between mb-1">
-                                                        <label class="block text-xs text-gpj-400">{{ formatLabel(ch.cle) }}</label>
+                                                        <label class="block text-xs text-slate-500">{{ formatLabel(ch.cle) }}</label>
                                                         <button type="button" @click="editPhaseForm.champs.splice(i, 1)" class="text-red-400 hover:text-red-600 text-xs"><i class="pi pi-times"></i></button>
                                                     </div>
                                                     <input v-if="ch.type === 'text'" v-model="ch.valeur" type="text" class="w-full rounded border border-slate-300 text-sm py-1 px-2" />
                                                     <input v-else-if="ch.type === 'date'" v-model="ch.valeur" type="date" class="w-full rounded border border-slate-300 text-sm py-1 px-2" />
-                                                    <div v-if="ch.type === 'date' && ch.valeur" class="text-xs text-gpj-400 mt-0.5">📅 {{ formatDate(ch.valeur) }}</div>
+                                                    <div v-if="ch.type === 'date' && ch.valeur" class="text-xs text-slate-500 mt-0.5">📅 {{ formatDate(ch.valeur) }}</div>
                                                     <textarea v-else-if="ch.type === 'textarea'" v-model="ch.valeur" rows="2" class="w-full rounded border border-slate-300 text-sm py-1 px-2"></textarea>
                                                 </div>
                                             </div>
@@ -289,8 +289,8 @@
                                         <!-- Personnes -->
                                         <div v-if="editPhaseForm.personnes?.length" class="border-t border-slate-200 pt-3">
                                             <div class="flex items-center justify-between mb-2">
-                                                <p class="text-xs font-medium text-gpj-500">Personnes ({{ editPhaseForm.personnes.length }})</p>
-                                                <button type="button" @click="editPhaseForm.personnes.push({ nom: '', prenom: '', profession: '', autre: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                                <p class="text-xs font-medium text-slate-600">Personnes ({{ editPhaseForm.personnes.length }})</p>
+                                                <button type="button" @click="editPhaseForm.personnes.push({ nom: '', prenom: '', profession: '', autre: '' })" class="text-xs text-slate-600"><i class="pi pi-plus-circle"></i></button>
                                             </div>
                                             <div v-for="(p, i) in editPhaseForm.personnes" :key="'ep-'+i" class="grid grid-cols-2 gap-1 mb-2 p-2 bg-white rounded border border-slate-200">
                                                 <input v-model="p.nom" placeholder="Nom" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5" />
@@ -303,13 +303,13 @@
                                         <!-- Événements -->
                                         <div v-if="editPhaseForm.evenements?.length" class="border-t border-slate-200 pt-3">
                                             <div class="flex items-center justify-between mb-2">
-                                                <p class="text-xs font-medium text-gpj-500">Événements ({{ editPhaseForm.evenements.length }})</p>
-                                                <button type="button" @click="editPhaseForm.evenements.push({ nom: '', date_evenement: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                                <p class="text-xs font-medium text-slate-600">Événements ({{ editPhaseForm.evenements.length }})</p>
+                                                <button type="button" @click="editPhaseForm.evenements.push({ nom: '', date_evenement: '', description: '' })" class="text-xs text-slate-600"><i class="pi pi-plus-circle"></i></button>
                                             </div>
                                             <div v-for="(e, i) in editPhaseForm.evenements" :key="'ee-'+i" class="mb-2 p-2 bg-white rounded border border-slate-200">
                                                 <input v-model="e.nom" placeholder="Nom" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5 mb-1" />
                                                 <input v-model="e.date_evenement" type="date" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5 mb-1" />
-                                                <div v-if="e.date_evenement" class="text-xs text-gpj-400 mb-1">📅 {{ formatDate(e.date_evenement) }}</div>
+                                                <div v-if="e.date_evenement" class="text-xs text-slate-500 mb-1">📅 {{ formatDate(e.date_evenement) }}</div>
                                                 <textarea v-model="e.description" placeholder="Description" rows="1" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5"></textarea>
                                             </div>
                                         </div>
@@ -317,8 +317,8 @@
                                         <!-- Références -->
                                         <div v-if="editPhaseForm.references?.length" class="border-t border-slate-200 pt-3">
                                             <div class="flex items-center justify-between mb-2">
-                                                <p class="text-xs font-medium text-gpj-500">Références ({{ editPhaseForm.references.length }})</p>
-                                                <button type="button" @click="editPhaseForm.references.push({ libelle: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                                <p class="text-xs font-medium text-slate-600">Références ({{ editPhaseForm.references.length }})</p>
+                                                <button type="button" @click="editPhaseForm.references.push({ libelle: '', description: '' })" class="text-xs text-slate-600"><i class="pi pi-plus-circle"></i></button>
                                             </div>
                                             <div v-for="(r, i) in editPhaseForm.references" :key="'er-'+i" class="mb-2 p-2 bg-white rounded border border-slate-200">
                                                 <input v-model="r.libelle" placeholder="Libellé" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5 mb-1" />
@@ -329,13 +329,13 @@
                                         <!-- Options -->
                                         <div v-if="editPhaseForm.options_cocher?.length" class="border-t border-slate-200 pt-3">
                                             <div class="flex items-center justify-between mb-2">
-                                                <p class="text-xs font-medium text-gpj-500">Options ({{ editPhaseForm.options_cocher.length }})</p>
-                                                <button type="button" @click="editPhaseForm.options_cocher.push({ libelle: 'Nouvelle option', est_coche: false, _custom: true })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                                <p class="text-xs font-medium text-slate-600">Options ({{ editPhaseForm.options_cocher.length }})</p>
+                                                <button type="button" @click="editPhaseForm.options_cocher.push({ libelle: 'Nouvelle option', est_coche: false, _custom: true })" class="text-xs text-slate-600"><i class="pi pi-plus-circle"></i></button>
                                             </div>
                                             <label v-for="(o, i) in editPhaseForm.options_cocher" :key="'eo-'+i" class="flex items-center gap-2 py-1 cursor-pointer">
-                                                <input type="checkbox" v-model="o.est_coche" class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500 shrink-0" />
+                                                <input type="checkbox" v-model="o.est_coche" class="rounded border-slate-400 text-slate-600 focus:ring-slate-500 shrink-0" />
                                                 <input v-if="o._custom" v-model="o.libelle" type="text" class="flex-1 text-xs border-b border-slate-300 py-0.5" />
-                                                <span v-else class="text-xs text-gpj-700 flex-1">{{ o.libelle }}</span>
+                                                <span v-else class="text-xs text-slate-800 flex-1">{{ o.libelle }}</span>
                                                 <button type="button" @click="editPhaseForm.options_cocher.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                                             </label>
                                         </div>
@@ -343,29 +343,29 @@
                                         <!-- Pièces jointes -->
                                         <div v-if="editPhaseForm.pieces_jointes?.length" class="border-t border-slate-200 pt-3">
                                             <div class="flex items-center justify-between mb-2">
-                                                <p class="text-xs font-medium text-gpj-500">Pièces jointes ({{ editPhaseForm.pieces_jointes.length }})</p>
-                                                <button type="button" @click="editPhaseForm.pieces_jointes.push({ nom: '', description: '' })" class="text-xs text-gpj-500"><i class="pi pi-plus-circle"></i></button>
+                                                <p class="text-xs font-medium text-slate-600">Pièces jointes ({{ editPhaseForm.pieces_jointes.length }})</p>
+                                                <button type="button" @click="editPhaseForm.pieces_jointes.push({ nom: '', description: '' })" class="text-xs text-slate-600"><i class="pi pi-plus-circle"></i></button>
                                             </div>
                                             <div v-for="(pj, i) in editPhaseForm.pieces_jointes" :key="'epj-'+i" class="mb-2 p-2 bg-white rounded border border-slate-200">
                                                 <div class="flex justify-between mb-1">
-                                                    <span class="text-xs text-gpj-500">Pièce {{ i + 1 }}</span>
+                                                    <span class="text-xs text-slate-600">Pièce {{ i + 1 }}</span>
                                                     <button type="button" @click="editPhaseForm.pieces_jointes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                                                 </div>
                                                 <input v-model="pj.nom" placeholder="Nom" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5 mb-1" />
                                                 <textarea v-model="pj.description" placeholder="Description" rows="1" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5 mb-1" />
-                                                <div v-if="pj.chemin_fichier && !pj.fichier" class="text-xs text-gpj-500 mb-1 flex items-center gap-2">
+                                                <div v-if="pj.chemin_fichier && !pj.fichier" class="text-xs text-slate-600 mb-1 flex items-center gap-2">
                                                     <i class="pi pi-file-pdf text-red-500"></i>
-                                                    <a :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-gpj-500 hover:underline">Voir le PDF</a>
+                                                    <a :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-slate-600 hover:underline">Voir le PDF</a>
                                                     <button type="button" @click="pj.chemin_fichier = null; pj._supprimerFichier = true" class="text-red-400 hover:text-red-600"><i class="pi pi-trash text-xs"></i></button>
                                                 </div>
-                                                <input type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-gpj-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-gpj-600" />
+                                                <input type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700" />
                                                 <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1"><i class="pi pi-check mr-1"></i>{{ pj.fichier.name }}</div>
                                             </div>
                                         </div>
 
                                         <!-- Ajout champ personnalisé -->
                                         <div class="border-t border-slate-200 pt-3">
-                                            <button type="button" @click="showEditCustomField = !showEditCustomField" class="text-xs text-gpj-500 hover:text-gpj-700 font-medium flex items-center gap-1 cursor-pointer"><i class="pi pi-plus-circle"></i> Ajouter un champ personnalisé</button>
+                                            <button type="button" @click="showEditCustomField = !showEditCustomField" class="text-xs text-slate-600 hover:text-slate-800 font-medium flex items-center gap-1 cursor-pointer"><i class="pi pi-plus-circle"></i> Ajouter un champ personnalisé</button>
                                             <div v-if="showEditCustomField" class="mt-2 p-3 bg-white rounded border border-slate-200 space-y-2">
                                                 <div class="grid grid-cols-2 gap-2">
                                                     <input v-model="editCustomField.cle" type="text" placeholder="Nom du champ *" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5" />
@@ -376,8 +376,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="flex items-center gap-2">
-                                                    <button type="button" @click="addCustomFieldToEdit" class="px-2 py-1 bg-slate-500 text-white text-xs rounded hover:bg-gpj-600 cursor-pointer">Ajouter</button>
-                                                    <button type="button" @click="showEditCustomField = false" class="text-xs text-gpj-400 hover:text-gpj-600 cursor-pointer">Annuler</button>
+                                                    <button type="button" @click="addCustomFieldToEdit" class="px-2 py-1 bg-gpj-500 text-white text-xs rounded hover:bg-gpj-600 cursor-pointer">Ajouter</button>
+                                                    <button type="button" @click="showEditCustomField = false" class="text-xs text-slate-500 hover:text-slate-700 cursor-pointer">Annuler</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -387,13 +387,13 @@
                                             <button @click="savePhaseEdit(phase.id)" :disabled="editPhaseProcessing" class="px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer">
                                                 <i v-if="editPhaseProcessing" class="pi pi-spin pi-spinner mr-1"></i>Enregistrer
                                             </button>
-                                            <button @click="cancelEditPhase" class="px-3 py-1.5 border border-slate-300 text-gpj-600 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">Annuler</button>
+                                            <button @click="cancelEditPhase" class="px-3 py-1.5 border border-slate-300 text-slate-700 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">Annuler</button>
                                         </div>
                                     </div>
 
                                     <!-- Affichage normal de la phase -->
                                     <div v-else>
-                                        <p v-if="phase.description" class="text-xs text-gpj-500 mt-1">{{ phase.description }}</p>
+                                        <p v-if="phase.description" class="text-xs text-slate-600 mt-1">{{ phase.description }}</p>
                                         
                                         <!-- Affichage condamnation -->
                                         <div v-if="phase.est_condamne === true" class="mt-2 p-2 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
@@ -411,31 +411,31 @@
 
                                         <!-- Champs -->
                                         <div v-if="phase.champs?.length" class="mt-2">
-                                            <p class="text-xs font-medium text-gpj-500 mb-1">Champs ({{ phase.champs.length }})</p>
+                                            <p class="text-xs font-medium text-slate-600 mb-1">Champs ({{ phase.champs.length }})</p>
                                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                                 <div v-for="ch in phase.champs" :key="ch.id" class="bg-white rounded border border-slate-200 p-2">
-                                                    <span class="text-xs text-gpj-400">{{ formatLabel(ch.cle) }}:</span>
-                                                    <span class="text-xs text-gpj-700 ml-1">{{ ch.type === 'date' ? formatDate(ch.valeur) : (ch.valeur || '-') }}</span>
+                                                    <span class="text-xs text-slate-500">{{ formatLabel(ch.cle) }}:</span>
+                                                    <span class="text-xs text-slate-800 ml-1">{{ ch.type === 'date' ? formatDate(ch.valeur) : (ch.valeur || '-') }}</span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Personnes -->
                                         <div v-if="phase.personnes?.length" class="mt-2">
-                                            <p class="text-xs font-medium text-gpj-500">Personnes :</p>
-                                            <div v-for="p in phase.personnes" :key="p.id" class="text-xs text-gpj-600 ml-2">{{ p.nom }} {{ p.prenom }}{{ p.profession ? ' - ' + p.profession : '' }}</div>
+                                            <p class="text-xs font-medium text-slate-600">Personnes :</p>
+                                            <div v-for="p in phase.personnes" :key="p.id" class="text-xs text-slate-700 ml-2">{{ p.nom }} {{ p.prenom }}{{ p.profession ? ' - ' + p.profession : '' }}</div>
                                         </div>
 
                                         <!-- Événements -->
                                         <div v-if="phase.evenements?.length" class="mt-2">
-                                            <p class="text-xs font-medium text-gpj-500">Événements :</p>
-                                            <div v-for="e in phase.evenements" :key="e.id" class="text-xs text-gpj-600 ml-2">{{ e.nom }}{{ e.date_evenement ? ' (' + formatDate(e.date_evenement) + ')' : '' }}</div>
+                                            <p class="text-xs font-medium text-slate-600">Événements :</p>
+                                            <div v-for="e in phase.evenements" :key="e.id" class="text-xs text-slate-700 ml-2">{{ e.nom }}{{ e.date_evenement ? ' (' + formatDate(e.date_evenement) + ')' : '' }}</div>
                                         </div>
 
                                         <!-- Références -->
                                         <div v-if="phase.references?.length" class="mt-2">
-                                            <p class="text-xs font-medium text-gpj-500">Références :</p>
-                                            <div v-for="r in phase.references" :key="r.id" class="text-xs text-gpj-600 ml-2">{{ r.libelle }}</div>
+                                            <p class="text-xs font-medium text-slate-600">Références :</p>
+                                            <div v-for="r in phase.references" :key="r.id" class="text-xs text-slate-700 ml-2">{{ r.libelle }}</div>
                                         </div>
 
                                         <!-- Options cochées -->
@@ -445,35 +445,35 @@
 
                                         <!-- Pièces jointes -->
                                         <div v-if="phase.pieces_jointes?.length" class="mt-2">
-                                            <p class="text-xs font-medium text-gpj-500">Pièces jointes :</p>
-                                            <div v-for="pj in phase.pieces_jointes" :key="pj.id" class="text-xs text-gpj-600 ml-2 flex items-center gap-2">
+                                            <p class="text-xs font-medium text-slate-600">Pièces jointes :</p>
+                                            <div v-for="pj in phase.pieces_jointes" :key="pj.id" class="text-xs text-slate-700 ml-2 flex items-center gap-2">
                                                 <i class="pi pi-file-pdf text-red-500"></i>
                                                 <span>{{ pj.nom }}</span>
-                                                <a v-if="pj.chemin_fichier" :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-gpj-500 hover:underline"><i class="pi pi-external-link text-xs"></i> Voir</a>
+                                                <a v-if="pj.chemin_fichier" :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-slate-600 hover:underline"><i class="pi pi-external-link text-xs"></i> Voir</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <p v-else class="text-gpj-400 text-sm py-4">Aucune phase enregistrée</p>
+                        <p v-else class="text-slate-500 text-sm py-4">Aucune phase enregistrée</p>
                     </Card>
                 </div>
 
                 <!-- Sidebar -->
                 <div class="space-y-6">
                     <!-- Bouton Export PDF -->
-                    <a :href="route('procedures.export-pdf', procedure.id)" target="_blank" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors">
+                    <a :href="route('procedures.export-pdf', procedure.id)" target="_blank" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors">
                         <i class="pi pi-download"></i> Exporter en PDF
                     </a>
 
                     <Card v-if="procedure.jugement" title="Jugement">
                         <div class="space-y-2 text-sm">
-                            <div><p class="text-gpj-400">Date</p><p class="font-medium">{{ formatDate(procedure.jugement.date_jugement) }}</p></div>
-                            <div><p class="text-gpj-400">N° Jugement</p><p class="font-medium">{{ procedure.jugement.numero_jugement }}</p></div>
-                            <div><p class="text-gpj-400">Juridiction</p><p class="font-medium">{{ procedure.jugement.juridiction }}</p></div>
-                            <div><p class="text-gpj-400">Verdict</p><Badge :variant="procedure.jugement.verdict === 'Condamnation' ? 'danger' : 'success'">{{ procedure.jugement.verdict }}</Badge></div>
-                            <div v-if="procedure.jugement.peine_principale"><p class="text-gpj-400">Peine</p><p class="font-medium">{{ procedure.jugement.peine_principale }}</p></div>
+                            <div><p class="text-slate-500">Date</p><p class="font-medium">{{ formatDate(procedure.jugement.date_jugement) }}</p></div>
+                            <div><p class="text-slate-500">N° Jugement</p><p class="font-medium">{{ procedure.jugement.numero_jugement }}</p></div>
+                            <div><p class="text-slate-500">Juridiction</p><p class="font-medium">{{ procedure.jugement.juridiction }}</p></div>
+                            <div><p class="text-slate-500">Verdict</p><Badge :variant="procedure.jugement.verdict === 'Condamnation' ? 'danger' : 'success'">{{ procedure.jugement.verdict }}</Badge></div>
+                            <div v-if="procedure.jugement.peine_principale"><p class="text-slate-500">Peine</p><p class="font-medium">{{ procedure.jugement.peine_principale }}</p></div>
                         </div>
                     </Card>
                 </div>
@@ -482,20 +482,20 @@
 
         <!-- Modale Ajouter un personnel -->
         <div v-if="showAddPersonnelModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <h3 class="text-lg font-bold text-gpj-800 dark:text-white mb-4">Ajouter un personnel à la procédure</h3>
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Ajouter un personnel à la procédure</h3>
                 
                 <div class="space-y-4">
                     <!-- Type de personnel -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Type de personnel</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Type de personnel</label>
                         <div class="flex gap-4">
                             <label v-for="option in typePersonnelOptions" :key="option.value" class="flex items-center gap-2 cursor-pointer">
                                 <input 
                                     type="radio" 
                                     :value="option.value"
                                     v-model="newPersonnel.type_personnel"
-                                    class="rounded-full border-slate-400 text-gpj-500 focus:ring-gpj-500"
+                                    class="rounded-full border-slate-400 text-slate-600 focus:ring-slate-500"
                                 />
                                 <span class="text-sm">{{ option.label }}</span>
                             </label>
@@ -504,7 +504,7 @@
 
                     <!-- Recherche/sélection du personnel -->
                     <div>
-                        <label class="block text-sm font-medium text-gpj-700 mb-1">Rechercher un personnel existant</label>
+                        <label class="block text-sm font-medium text-slate-800 mb-1">Rechercher un personnel existant</label>
                         <SearchSelect
                             :options="optionsPersonnels"
                             v-model="newPersonnel.militaire_id"
@@ -515,19 +515,19 @@
                     </div>
 
                     <div class="border-t border-slate-300 pt-4">
-                        <p class="text-sm font-medium text-gpj-700 mb-2">OU créer un nouveau personnel</p>
+                        <p class="text-sm font-medium text-slate-800 mb-2">OU créer un nouveau personnel</p>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-medium text-gpj-600 mb-1">Nom *</label>
-                                <input v-model="newPersonnel.nom" type="text" placeholder="Nom" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Nom *</label>
+                                <input v-model="newPersonnel.nom" type="text" placeholder="Nom" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-gpj-600 mb-1">Prénom *</label>
-                                <input v-model="newPersonnel.prenom" type="text" placeholder="Prénom" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Prénom *</label>
+                                <input v-model="newPersonnel.prenom" type="text" placeholder="Prénom" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             </div>
                             <div v-if="newPersonnel.type_personnel === 'militaire'">
-                                <label class="block text-xs font-medium text-gpj-600 mb-1">Grade</label>
-                                <select v-model="newPersonnel.grade_id" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Grade</label>
+                                <select v-model="newPersonnel.grade_id" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500">
                                     <option value="">Sélectionner</option>
                                     <option v-for="grade in grades" :key="grade.id" :value="grade.id">
                                         {{ grade.libelle }}
@@ -535,12 +535,12 @@
                                 </select>
                             </div>
                             <div v-if="newPersonnel.type_personnel === 'civil'">
-                                <label class="block text-xs font-medium text-gpj-600 mb-1">Profession</label>
-                                <input v-model="newPersonnel.profession" type="text" placeholder="Profession" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Profession</label>
+                                <input v-model="newPersonnel.profession" type="text" placeholder="Profession" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-gpj-600 mb-1">Matricule</label>
-                                <input v-model="newPersonnel.matricule" type="text" placeholder="Matricule" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Matricule</label>
+                                <input v-model="newPersonnel.matricule" type="text" placeholder="Matricule" class="w-full rounded border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                             </div>
                         </div>
                     </div>
@@ -551,7 +551,7 @@
                         <i v-if="ajoutEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                         Ajouter
                     </button>
-                    <button @click="closeAddPersonnelModal" class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <button @click="closeAddPersonnelModal" class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                         Annuler
                     </button>
                 </div>
@@ -560,17 +560,17 @@
 
         <!-- Modale retour phase -->
         <div v-if="showRetourModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white dark:bg-gpj-900 rounded-xl p-5 sm:p-6 max-w-md w-full shadow-xl">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-5 sm:p-6 max-w-md w-full shadow-xl">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
                         <i class="pi pi-undo text-amber-600"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gpj-800">Retour à la phase précédente</h3>
+                    <h3 class="text-lg font-bold text-slate-900">Retour à la phase précédente</h3>
                 </div>
-                <p class="text-sm text-gpj-600 mb-2">Vous allez supprimer la phase <strong>{{ phaseToRetour?.libelle || phaseToRetour?.phase_type?.libelle }}</strong> et revenir à la phase précédente.</p>
+                <p class="text-sm text-slate-700 mb-2">Vous allez supprimer la phase <strong>{{ phaseToRetour?.libelle || phaseToRetour?.phase_type?.libelle }}</strong> et revenir à la phase précédente.</p>
                 <p class="text-sm text-red-500 mb-6">⚠️ Toutes les données de cette phase seront supprimées.</p>
                 <div class="flex gap-3 justify-end">
-                    <button @click="showRetourModal = false" class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">Annuler</button>
+                    <button @click="showRetourModal = false" class="px-4 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">Annuler</button>
                     <button @click="retournerPhase" :disabled="retourProcessing" class="px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 disabled:opacity-50 cursor-pointer">
                         <i v-if="retourProcessing" class="pi pi-spin pi-spinner mr-1"></i>Confirmer le retour
                     </button>
