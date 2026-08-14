@@ -3,14 +3,14 @@
         <!-- ========================================================== -->
         <!-- CONDAMNATION - ORDRE DE POURSUITE                          -->
         <!-- ========================================================== -->
-        <div v-if="isOrdrePoursuite" class="p-4 border border-gpj-200 dark:border-gpj-700 rounded-lg bg-gpj-50 dark:bg-gpj-800">
+        <div v-if="isOrdrePoursuite" class="p-4 border border-slate-300 dark:border-gpj-700 rounded-lg bg-slate-50 dark:bg-gpj-800">
             <div class="flex items-center gap-4 flex-wrap">
                 <label class="flex items-center gap-2 cursor-pointer">
                     <input 
                         type="checkbox" 
                         :checked="localCondamnation.est_condamne === true"
                         @change="onCondamnationChange($event)"
-                        class="w-4 h-4 rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                        class="w-4 h-4 rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
                     />
                     <span class="text-sm font-medium text-gpj-700 dark:text-gpj-300">
                         <i class="pi pi-gavel mr-1"></i>
@@ -29,7 +29,7 @@
                             @input="updatePeine($event)"
                             type="text"
                             placeholder="Ex: 5 ans d'emprisonnement"
-                            class="flex-1 rounded-lg border border-gpj-200 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="flex-1 rounded-lg border border-slate-300 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         />
                     </div>
                     <div class="mt-2">
@@ -38,7 +38,7 @@
                             @input="updatePeineDescription($event)"
                             rows="2"
                             placeholder="Description détaillée de la peine..."
-                            class="w-full rounded-lg border border-gpj-200 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 dark:border-gpj-600 bg-white dark:bg-gpj-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
         <!-- ========================================================== -->
         <!-- CHAMPS EXISTANTS                                           -->
         <!-- ========================================================== -->
-        <div v-if="champs && champs.length" class="border-t border-gpj-200 pt-4">
+        <div v-if="champs && champs.length" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-gpj-500 uppercase">Champs ({{ champs.length }})</h4>
                 <button type="button" @click="ajouterChamp" class="text-xs text-gpj-500 hover:text-gpj-700 flex items-center gap-1">
@@ -67,9 +67,9 @@
                         <label class="block text-xs font-medium text-gpj-600">{{ formatLabel(champ.cle) }}</label>
                         <button type="button" @click="supprimerChamp(i)" class="text-red-400 hover:text-red-600 text-xs"><i class="pi pi-times"></i></button>
                     </div>
-                    <input v-if="champ.type === 'text'" v-model="champ.valeur" type="text" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                    <input v-else-if="champ.type === 'date'" v-model="champ.valeur" type="date" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                    <textarea v-else-if="champ.type === 'textarea'" v-model="champ.valeur" rows="2" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
+                    <input v-if="champ.type === 'text'" v-model="champ.valeur" type="text" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-else-if="champ.type === 'date'" v-model="champ.valeur" type="date" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <textarea v-else-if="champ.type === 'textarea'" v-model="champ.valeur" rows="2" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
                 </div>
             </div>
         </div>
@@ -77,23 +77,23 @@
         <!-- ========================================================== -->
         <!-- PERSONNES                                                  -->
         <!-- ========================================================== -->
-        <div v-if="personnes && personnes.length" class="border-t border-gpj-200 pt-4">
+        <div v-if="personnes && personnes.length" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-gpj-500 uppercase">Personnes</h4>
                 <button type="button" @click="ajouterPersonne" class="text-xs text-gpj-500 hover:text-gpj-700 flex items-center gap-1">
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(p, i) in personnes" :key="'pers-'+i" class="p-3 bg-gpj-50 rounded-lg border border-gpj-100 mb-2">
+            <div v-for="(p, i) in personnes" :key="'pers-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-gpj-500">Personne {{ i + 1 }}</span>
                     <button type="button" @click="personnes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <input v-model="p.nom" placeholder="Nom *" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                    <input v-model="p.prenom" placeholder="Prénom *" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                    <input v-model="p.profession" placeholder="Profession" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                    <input v-model="p.autre" placeholder="Autre" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="p.nom" placeholder="Nom *" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="p.prenom" placeholder="Prénom *" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="p.profession" placeholder="Profession" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="p.autre" placeholder="Autre" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                 </div>
             </div>
         </div>
@@ -101,48 +101,48 @@
         <!-- ========================================================== -->
         <!-- ÉVÉNEMENTS                                                 -->
         <!-- ========================================================== -->
-        <div v-if="evenements && evenements.length" class="border-t border-gpj-200 pt-4">
+        <div v-if="evenements && evenements.length" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-gpj-500 uppercase">Événements</h4>
                 <button type="button" @click="ajouterEvenement" class="text-xs text-gpj-500 hover:text-gpj-700 flex items-center gap-1">
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(e, i) in evenements" :key="'ev-'+i" class="p-3 bg-gpj-50 rounded-lg border border-gpj-100 mb-2">
+            <div v-for="(e, i) in evenements" :key="'ev-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-gpj-500">Événement {{ i + 1 }}</span>
                     <button type="button" @click="evenements.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                 </div>
-                <input v-model="e.nom" placeholder="Nom *" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                <input v-model="e.date_evenement" type="date" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                <textarea v-model="e.description" placeholder="Description" rows="2" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
+                <input v-model="e.nom" placeholder="Nom *" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <input v-model="e.date_evenement" type="date" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <textarea v-model="e.description" placeholder="Description" rows="2" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
             </div>
         </div>
 
         <!-- ========================================================== -->
         <!-- RÉFÉRENCES                                                 -->
         <!-- ========================================================== -->
-        <div v-if="references && references.length" class="border-t border-gpj-200 pt-4">
+        <div v-if="references && references.length" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-gpj-500 uppercase">Références</h4>
                 <button type="button" @click="ajouterReference" class="text-xs text-gpj-500 hover:text-gpj-700 flex items-center gap-1">
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(r, i) in references" :key="'ref-'+i" class="p-3 bg-gpj-50 rounded-lg border border-gpj-100 mb-2">
+            <div v-for="(r, i) in references" :key="'ref-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-gpj-500">Référence {{ i + 1 }}</span>
                     <button type="button" @click="references.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                 </div>
-                <input v-model="r.libelle" placeholder="Libellé *" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                <textarea v-model="r.description" placeholder="Description" rows="2" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
+                <input v-model="r.libelle" placeholder="Libellé *" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <textarea v-model="r.description" placeholder="Description" rows="2" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"></textarea>
             </div>
         </div>
 
         <!-- ========================================================== -->
         <!-- OPTIONS À COCHER                                           -->
         <!-- ========================================================== -->
-        <div v-if="optionsCocher && optionsCocher.length" class="border-t border-gpj-200 pt-4">
+        <div v-if="optionsCocher && optionsCocher.length" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-gpj-500 uppercase">Options</h4>
                 <button type="button" @click="ajouterOptionCocher" class="text-xs text-gpj-500 hover:text-gpj-700 flex items-center gap-1">
@@ -150,8 +150,8 @@
                 </button>
             </div>
             <div class="space-y-2">
-                <label v-for="(o, i) in optionsCocher" :key="'opt-'+i" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gpj-50 cursor-pointer">
-                    <input type="checkbox" v-model="o.est_coche" class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500" />
+                <label v-for="(o, i) in optionsCocher" :key="'opt-'+i" class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer">
+                    <input type="checkbox" v-model="o.est_coche" class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500" />
                     <span class="text-sm text-gpj-700 flex-1">{{ o.libelle }}</span>
                     <button type="button" @click="optionsCocher.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                 </label>
@@ -161,23 +161,23 @@
         <!-- ========================================================== -->
         <!-- PIÈCES JOINTES                                             -->
         <!-- ========================================================== -->
-        <div v-if="piecesJointes && piecesJointes.length" class="border-t border-gpj-200 pt-4">
+        <div v-if="piecesJointes && piecesJointes.length" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-gpj-500 uppercase">Pièces jointes</h4>
                 <button type="button" @click="ajouterPieceJointe" class="text-xs text-gpj-500 hover:text-gpj-700 flex items-center gap-1">
                     <i class="pi pi-plus-circle"></i> Ajouter
                 </button>
             </div>
-            <div v-for="(pj, i) in piecesJointes" :key="'pj-'+i" class="p-3 bg-gpj-50 rounded-lg border border-gpj-100 mb-2">
+            <div v-for="(pj, i) in piecesJointes" :key="'pj-'+i" class="p-3 bg-slate-50 rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-gpj-500">Pièce {{ i + 1 }}</span>
                     <button type="button" @click="piecesJointes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
                 </div>
-                <input v-model="pj.nom" placeholder="Nom *" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
-                <textarea v-model="pj.description" placeholder="Description" rows="2" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <input v-model="pj.nom" placeholder="Nom *" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <textarea v-model="pj.description" placeholder="Description" rows="2" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                 <div class="mt-2">
                     <label class="block text-xs text-gpj-500 mb-1">Fichier PDF</label>
-                    <input type="file" accept=".pdf" @change="(e) => onFileChange(e, i)" class="w-full text-xs text-gpj-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-gpj-100 file:text-gpj-600" />
+                    <input type="file" accept=".pdf" @change="(e) => onFileChange(e, i)" class="w-full text-xs text-gpj-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-gpj-600" />
                     <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1"><i class="pi pi-check mr-1"></i>{{ pj.fichier.name }}</div>
                 </div>
             </div>
@@ -186,19 +186,19 @@
         <!-- ========================================================== -->
         <!-- AJOUT DE CHAMPS PERSONNALISÉS                              -->
         <!-- ========================================================== -->
-        <div class="border-t border-gpj-200 pt-4 space-y-2">
+        <div class="border-t border-slate-300 pt-4 space-y-2">
             <button type="button" @click="showCustomForm = !showCustomForm" class="text-xs text-gpj-500 hover:text-gpj-700 font-medium flex items-center gap-1 cursor-pointer">
                 <i class="pi pi-plus-circle"></i> Ajouter un champ personnalisé
             </button>
-            <div v-if="showCustomForm" class="p-4 bg-gpj-50 rounded-lg border border-gpj-100 space-y-3">
+            <div v-if="showCustomForm" class="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-gpj-500 mb-1">Nom <span class="text-red-500">*</span></label>
-                        <input v-model="newField.cle" type="text" placeholder="Nom du champ" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <input v-model="newField.cle" type="text" placeholder="Nom du champ" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                     </div>
                     <div>
                         <label class="block text-xs text-gpj-500 mb-1">Type</label>
-                        <select v-model="newField.type" class="w-full rounded border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                        <select v-model="newField.type" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
                             <option value="text">Texte</option>
                             <option value="date">Date</option>
                             <option value="textarea">Texte long</option>
@@ -206,8 +206,8 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="button" @click="ajouterNouveauChamp" class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 cursor-pointer">Ajouter</button>
-                    <button type="button" @click="showCustomForm = false; resetNewField()" class="px-3 py-1.5 border border-gpj-200 text-gpj-600 text-xs rounded-lg hover:bg-gpj-50 cursor-pointer">Annuler</button>
+                    <button type="button" @click="ajouterNouveauChamp" class="px-3 py-1.5 bg-slate-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 cursor-pointer">Ajouter</button>
+                    <button type="button" @click="showCustomForm = false; resetNewField()" class="px-3 py-1.5 border border-slate-300 text-gpj-600 text-xs rounded-lg hover:bg-slate-50 cursor-pointer">Annuler</button>
                 </div>
             </div>
         </div>

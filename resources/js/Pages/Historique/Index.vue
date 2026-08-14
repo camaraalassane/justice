@@ -89,7 +89,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-7 h-7 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-xs font-bold">
+                                        <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold">
                                             {{ log.user?.name?.charAt(0) || '?' }}
                                         </div>
                                         <div>
@@ -124,7 +124,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
+                                link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label"

@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div v-for="(pc, index) in modelValue" :key="index" class="p-4 bg-gpj-50 rounded-lg border border-gpj-100 mb-3">
+        <div v-for="(pc, index) in modelValue" :key="index" class="p-4 bg-slate-50 rounded-lg border border-slate-200 mb-3">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
                     <i :class="pc.type === 'Structure' ? 'pi pi-building' : 'pi pi-user'" class="text-gpj-500 text-sm"></i>
@@ -30,26 +30,26 @@
             <!-- Structure : seul le nom -->
             <div v-if="pc.type === 'Structure'">
                 <label class="block text-xs font-medium text-gpj-600 mb-1">Nom de la structure <span class="text-red-500">*</span></label>
-                <input v-model="pc.nom" type="text" required placeholder="Ex: État Malien, Armée de Terre, Société X..." class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <input v-model="pc.nom" type="text" required placeholder="Ex: État Malien, Armée de Terre, Société X..." class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
             </div>
 
             <!-- Personne -->
             <div v-if="pc.type === 'Personne'" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-medium text-gpj-600 mb-1">Nom <span class="text-red-500">*</span></label>
-                    <input v-model="pc.nom" type="text" required placeholder="Nom" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="pc.nom" type="text" required placeholder="Nom" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gpj-600 mb-1">Prénom <span class="text-red-500">*</span></label>
-                    <input v-model="pc.prenom" type="text" required placeholder="Prénom" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="pc.prenom" type="text" required placeholder="Prénom" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gpj-600 mb-1">Profession</label>
-                    <input v-model="pc.profession" type="text" placeholder="Profession" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="pc.profession" type="text" placeholder="Profession" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gpj-600 mb-1">Adresse</label>
-                    <input v-model="pc.adresse" type="text" placeholder="Adresse" class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="pc.adresse" type="text" placeholder="Adresse" class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                 </div>
             </div>
         </div>

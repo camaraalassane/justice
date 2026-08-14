@@ -27,7 +27,7 @@
                 </div>
                 <Link 
                     :href="route('users.create')" 
-                    class="flex items-center gap-2 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors shrink-0"
+                    class="flex items-center gap-2 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors shrink-0"
                 >
                     <i class="pi pi-plus"></i> 
                     Nouvel utilisateur
@@ -126,7 +126,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
+                                link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label"
@@ -243,7 +243,7 @@ const avatarColor = (role) => {
         CDB: 'bg-purple-500',
         ADS: 'bg-gray-500',
     };
-    return map[role] || 'bg-gpj-500';
+    return map[role] || 'bg-slate-500';
 };
 </script>
 <script>export default { layout: null };</script>

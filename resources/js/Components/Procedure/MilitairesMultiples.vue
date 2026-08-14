@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-4">
         <!-- En-tête avec le toggle plurialité -->
-        <div class="flex items-center justify-between bg-gpj-50 dark:bg-gpj-800 rounded-lg p-4">
+        <div class="flex items-center justify-between bg-slate-50 dark:bg-gpj-800 rounded-lg p-4">
             <div class="flex items-center gap-3">
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input
@@ -10,7 +10,7 @@
                         class="sr-only peer"
                         @change="onTogglePlurialite"
                     />
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gpj-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gpj-500"></div>
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gpj-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-slate-500"></div>
                     <span class="ms-3 text-sm font-medium text-gpj-700 dark:text-gpj-300">
                         {{ estPlurielleLocal ? 'Pluriel' : 'Individuel' }}
                     </span>
@@ -19,23 +19,23 @@
                     {{ estPlurielleLocal ? 'Plusieurs personnels concernés' : 'Un seul personnel concerné' }}
                 </span>
             </div>
-            <span class="text-xs text-gpj-500 bg-gpj-100 dark:bg-gpj-700 px-2 py-1 rounded-full">
+            <span class="text-xs text-gpj-500 bg-slate-100 dark:bg-gpj-700 px-2 py-1 rounded-full">
                 {{ militairesLocal.length }} personnel{{ militairesLocal.length > 1 ? 's' : '' }}
             </span>
         </div>
 
         <!-- Liste des personnels -->
-        <div v-if="militairesLocal.length === 0" class="text-center py-8 text-gpj-400 border-2 border-dashed border-gpj-200 rounded-lg">
+        <div v-if="militairesLocal.length === 0" class="text-center py-8 text-gpj-400 border-2 border-dashed border-slate-300 rounded-lg">
             <i class="pi pi-user-plus text-3xl block mb-2"></i>
             <p class="text-sm">Aucun personnel ajouté</p>
             <p class="text-xs">Ajoutez un personnel pour commencer</p>
         </div>
 
         <!-- Cartes des personnels -->
-        <div v-for="(militaire, index) in militairesLocal" :key="index" class="border border-gpj-200 dark:border-gpj-700 rounded-lg p-4 hover:shadow-md transition-all">
+        <div v-for="(militaire, index) in militairesLocal" :key="index" class="border border-slate-300 dark:border-gpj-700 rounded-lg p-4 hover:shadow-md transition-all">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-3">
-                    <span class="text-sm font-medium text-gpj-500 bg-gpj-100 dark:bg-gpj-700 px-2 py-1 rounded-full">
+                    <span class="text-sm font-medium text-gpj-500 bg-slate-100 dark:bg-gpj-700 px-2 py-1 rounded-full">
                         #{{ index + 1 }}
                     </span>
                     <span class="text-xs px-2 py-0.5 rounded-full" :class="militaire.type_personnel === 'militaire' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'">
@@ -65,7 +65,7 @@
                 <select 
                     v-model="militaire.type_personnel" 
                     @change="onTypePersonnelChange(index)"
-                    class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                    class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                     :disabled="!!militaire.militaire_id"
                 >
                     <option value="militaire">Militaire</option>
@@ -86,7 +86,7 @@
                     />
                 </div>
 
-                <div class="border-t md:border-t-0 md:border-l border-gpj-200 dark:border-gpj-700 md:pl-3 pt-3 md:pt-0">
+                <div class="border-t md:border-t-0 md:border-l border-slate-300 dark:border-gpj-700 md:pl-3 pt-3 md:pt-0">
                     <p class="text-xs font-medium text-gpj-500 mb-2">OU créer un nouveau personnel</p>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
@@ -94,7 +94,7 @@
                                 v-model="militaire.nom"
                                 type="text"
                                 placeholder="Nom *"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                                 :disabled="!!militaire.militaire_id"
                             />
                         </div>
@@ -103,13 +103,13 @@
                                 v-model="militaire.prenom"
                                 type="text"
                                 placeholder="Prénom *"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                                 :disabled="!!militaire.militaire_id"
                             />
                         </div>
                         <div v-if="militaire.type_personnel === 'militaire'">
                             <select v-model="militaire.grade_id" :disabled="!!militaire.militaire_id"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500 disabled:opacity-50">
+                                class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500 disabled:opacity-50">
                                 <option value="">Grade</option>
                                 <option v-for="grade in grades" :key="grade.id" :value="grade.id">
                                     {{ grade.libelle }}
@@ -121,7 +121,7 @@
                                 v-model="militaire.profession"
                                 type="text"
                                 placeholder="Profession"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                                 :disabled="!!militaire.militaire_id"
                             />
                         </div>
@@ -130,7 +130,7 @@
                                 v-model="militaire.matricule"
                                 type="text"
                                 placeholder="Matricule"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                                 :disabled="!!militaire.militaire_id"
                             />
                         </div>
@@ -139,7 +139,7 @@
             </div>
 
             <!-- Infractions -->
-            <div class="mt-4 border-t border-gpj-100 pt-3">
+            <div class="mt-4 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-3">
                         <label class="text-xs font-medium text-gpj-600">
@@ -150,7 +150,7 @@
                     <button
                         type="button"
                         @click="ouvrirModalCreationInfraction(index)"
-                        class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
+                        class="px-3 py-1.5 bg-slate-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1"
                     >
                         <i class="pi pi-plus text-xs"></i> Créer
                     </button>
@@ -159,16 +159,16 @@
                     <label
                         v-for="inf in infractions"
                         :key="inf.id"
-                        class="flex items-center gap-1.5 text-xs cursor-pointer px-2 py-1 rounded border border-gpj-200 hover:bg-gpj-50 transition-colors"
+                        class="flex items-center gap-1.5 text-xs cursor-pointer px-2 py-1 rounded border border-slate-300 hover:bg-slate-50 transition-colors"
                         :class="{
-                            'bg-gpj-50 border-gpj-400': (militaire.infractions || []).includes(inf.id)
+                            'bg-slate-50 border-slate-500': (militaire.infractions || []).includes(inf.id)
                         }"
                     >
                         <input
                             type="checkbox"
                             :value="inf.id"
                             v-model="militaire.infractions"
-                            class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                            class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
                         />
                         <span>{{ inf.libelle }}</span>
                         <span class="text-gpj-400 text-[10px]">{{ inf.code_infraction }}</span>
@@ -177,7 +177,7 @@
             </div>
 
             <!-- Fautes militaires -->
-            <div v-if="militaire.type_personnel === 'militaire'" class="mt-3 border-t border-gpj-100 pt-3">
+            <div v-if="militaire.type_personnel === 'militaire'" class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-medium text-gpj-600">
                         <i class="pi pi-exclamation-triangle mr-1"></i> Fautes militaires
@@ -193,7 +193,7 @@
                 <div v-if="(militaire.fautes_militaires || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucune faute
                 </div>
-                <div v-for="(fauteId, fi) in militaire.fautes_militaires" :key="fi" class="flex items-center gap-2 mb-1 p-1 bg-gpj-50 rounded">
+                <div v-for="(fauteId, fi) in militaire.fautes_militaires" :key="fi" class="flex items-center gap-2 mb-1 p-1 bg-slate-50 rounded">
                     <span class="text-xs text-gpj-700 flex-1">
                         {{ getFauteLibelle(fauteId) }}
                     </span>
@@ -208,7 +208,7 @@
             </div>
 
             <!-- Parties civiles -->
-            <div class="mt-3 border-t border-gpj-100 pt-3">
+            <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-medium text-gpj-600">
                         <i class="pi pi-users mr-1"></i> Parties civiles
@@ -224,14 +224,14 @@
                 <div v-if="(militaire.parties_civiles || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucune partie civile
                 </div>
-                <div v-for="(pc, pi) in militaire.parties_civiles" :key="pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
-                    <select v-model="pc.type" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
+                <div v-for="(pc, pi) in militaire.parties_civiles" :key="pi" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 p-2 bg-slate-50 dark:bg-gpj-800 rounded">
+                    <select v-model="pc.type" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500">
                         <option value="Personne">Personne</option>
                         <option value="Structure">Structure</option>
                     </select>
-                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                     <div class="flex items-center gap-2">
-                        <input v-if="pc.type === 'Personne'" v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <input v-if="pc.type === 'Personne'" v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                         <button
                             type="button"
                             @click="supprimerPartieCivile(index, pi)"
@@ -244,7 +244,7 @@
             </div>
 
             <!-- Témoins -->
-            <div class="mt-3 border-t border-gpj-100 pt-3">
+            <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-medium text-gpj-600">
                         <i class="pi pi-users mr-1"></i> Témoins
@@ -256,17 +256,17 @@
                 <div v-if="(militaire.temoins || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucun témoin
                 </div>
-                <div v-for="(pc, pi) in militaire.temoins" :key="'temoin-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
-                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <div v-for="(pc, pi) in militaire.temoins" :key="'temoin-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                     <div class="flex items-center gap-2">
-                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                         <button type="button" @click="supprimerPersonne(index, pi, 'temoins')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Civile Responsable -->
-            <div class="mt-3 border-t border-gpj-100 pt-3">
+            <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-medium text-gpj-600">
                         <i class="pi pi-user mr-1"></i> Civile responsable
@@ -278,17 +278,17 @@
                 <div v-if="(militaire.civile_responsables || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucune civile responsable
                 </div>
-                <div v-for="(pc, pi) in militaire.civile_responsables" :key="'cr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
-                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <div v-for="(pc, pi) in militaire.civile_responsables" :key="'cr-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                     <div class="flex items-center gap-2">
-                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                         <button type="button" @click="supprimerPersonne(index, pi, 'civile_responsables')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Garants -->
-            <div class="mt-3 border-t border-gpj-100 pt-3">
+            <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-medium text-gpj-600">
                         <i class="pi pi-shield mr-1"></i> Garants
@@ -300,17 +300,17 @@
                 <div v-if="(militaire.garants || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucun garant
                 </div>
-                <div v-for="(pc, pi) in militaire.garants" :key="'garant-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
-                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <div v-for="(pc, pi) in militaire.garants" :key="'garant-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                     <div class="flex items-center gap-2">
-                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                         <button type="button" @click="supprimerPersonne(index, pi, 'garants')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                     </div>
                 </div>
             </div>
 
             <!-- Avocat -->
-            <div class="mt-3 border-t border-gpj-100 pt-3">
+            <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-medium text-gpj-600">
                         <i class="pi pi-briefcase mr-1"></i> Avocat
@@ -322,10 +322,10 @@
                 <div v-if="(militaire.avocats || []).length === 0" class="text-xs text-gpj-400 py-1">
                     Aucun avocat
                 </div>
-                <div v-for="(pc, pi) in militaire.avocats" :key="'avocat-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-gpj-50 dark:bg-gpj-800 rounded">
-                    <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                <div v-for="(pc, pi) in militaire.avocats" :key="'avocat-'+pi" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 p-2 bg-slate-50 dark:bg-gpj-800 rounded">
+                    <input v-model="pc.nom" placeholder="Nom / Cabinet *" class="rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                     <div class="flex items-center gap-2">
-                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-gpj-200 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
+                        <input v-model="pc.prenom" placeholder="Prénom" class="flex-1 rounded border border-slate-300 text-xs py-1 px-2 focus:outline-none focus:ring-2 focus:ring-gpj-500" />
                         <button type="button" @click="supprimerPersonne(index, pi, 'avocats')" class="text-red-400 hover:text-red-600 text-xs shrink-0"><i class="pi pi-times"></i></button>
                     </div>
                 </div>
@@ -337,7 +337,7 @@
             v-if="estPlurielleLocal"
             type="button"
             @click="ajouterMilitaire"
-            class="w-full py-3 border-2 border-dashed border-gpj-300 rounded-lg text-sm text-gpj-500 hover:border-gpj-500 hover:text-gpj-600 hover:bg-gpj-50 transition-colors"
+            class="w-full py-3 border-2 border-dashed border-slate-400 rounded-lg text-sm text-gpj-500 hover:border-gpj-500 hover:text-gpj-600 hover:bg-slate-50 transition-colors"
         >
             <i class="pi pi-plus mr-2"></i>
             Ajouter un autre personnel
@@ -364,7 +364,7 @@
                                 type="text"
                                 required
                                 placeholder="Ex: Insoumission"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                         </div>
                         <div>
@@ -376,7 +376,7 @@
                                 type="text"
                                 required
                                 placeholder="Ex: INF-001"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                         </div>
                     </div>
@@ -389,7 +389,7 @@
                             <select
                                 v-model="newInfraction.classification"
                                 required
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             >
                                 <option value="">Sélectionner</option>
                                 <option value="Criminelle">Criminelle</option>
@@ -405,7 +405,7 @@
                                 v-model="newInfraction.nature"
                                 type="text"
                                 placeholder="Ex: Infraction militaire"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                         </div>
                     </div>
@@ -418,22 +418,22 @@
                             v-model="newInfraction.description"
                             rows="3"
                             placeholder="Description détaillée de l'infraction..."
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                     </div>
 
-                    <div class="flex items-center gap-3 pt-3 border-t border-gpj-100">
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <button
                             type="button"
                             @click="fermerModalCreationInfraction"
-                            class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 transition-colors"
+                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Annuler
                         </button>
                         <button
                             type="submit"
                             :disabled="creerInfractionEnCours"
-                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
+                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
                         >
                             <i v-if="creerInfractionEnCours" class="pi pi-spin pi-spinner mr-2"></i>
                             Créer l'infraction
@@ -460,7 +460,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Colonne gauche : Catégories -->
-                    <div class="border-r border-gpj-200 pr-4">
+                    <div class="border-r border-slate-300 pr-4">
                         <div class="flex items-center justify-between mb-3">
                             <h4 class="text-sm font-semibold text-gpj-700">Catégories</h4>
                             <button
@@ -477,8 +477,8 @@
                                 :key="cat.id"
                                 class="flex items-center justify-between p-2 rounded-lg cursor-pointer transition-colors"
                                 :class="{
-                                    'bg-gpj-100 border-gpj-400': categorieSelectionnee === cat.id,
-                                    'hover:bg-gpj-50 border-transparent': categorieSelectionnee !== cat.id
+                                    'bg-slate-100 border-slate-500': categorieSelectionnee === cat.id,
+                                    'hover:bg-slate-50 border-transparent': categorieSelectionnee !== cat.id
                                 }"
                                 @click="categorieSelectionnee = cat.id"
                             >
@@ -536,15 +536,15 @@
                                 :key="faute.id"
                                 class="flex items-center gap-2 p-2 rounded-lg border"
                                 :class="{
-                                    'bg-gpj-50 border-gpj-400': (fautesSelectionnees || []).includes(faute.id),
-                                    'border-gpj-200': !(fautesSelectionnees || []).includes(faute.id)
+                                    'bg-slate-50 border-slate-500': (fautesSelectionnees || []).includes(faute.id),
+                                    'border-slate-300': !(fautesSelectionnees || []).includes(faute.id)
                                 }"
                             >
                                 <input
                                     type="checkbox"
                                     :value="faute.id"
                                     v-model="fautesSelectionnees"
-                                    class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                                    class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
                                 />
                                 <span class="text-sm flex-1">{{ faute.libelle }}</span>
                                 <span v-if="faute.code" class="text-xs text-gpj-400">{{ faute.code }}</span>
@@ -575,14 +575,14 @@
                 </div>
 
                 <!-- Boutons d'action -->
-                <div class="flex items-center gap-3 pt-4 mt-4 border-t border-gpj-100">
+                <div class="flex items-center gap-3 pt-4 mt-4 border-t border-slate-200">
                     <button @click="sauvegarderFautes" :disabled="sauvegardeFautesEnCours"
                         class="px-4 py-2 bg-emerald-500 text-white text-sm font-medium rounded-lg hover:bg-emerald-600 disabled:opacity-50 cursor-pointer">
                         <i v-if="sauvegardeFautesEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                         Enregistrer les sélections
                     </button>
                     <button @click="fermerGestionFautes"
-                        class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer">
+                        class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                         Fermer
                     </button>
                 </div>
@@ -603,7 +603,7 @@
                             type="text"
                             required
                             placeholder="Ex: Manquement à la discipline"
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         />
                     </div>
                     <div>
@@ -612,16 +612,16 @@
                             v-model="categorieForm.description"
                             rows="2"
                             placeholder="Description de la catégorie..."
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                     </div>
-                    <div class="flex items-center gap-3 pt-3 border-t border-gpj-100">
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <button type="button" @click="fermerModalCategorie"
-                            class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer">
+                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                             Annuler
                         </button>
                         <button type="submit" :disabled="categorieEnCours"
-                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
+                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
                             <i v-if="categorieEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                             {{ categorieEditId ? 'Modifier' : 'Créer' }}
                         </button>
@@ -642,7 +642,7 @@
                         <select
                             v-model="fauteForm.categorie_faute_id"
                             required
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         >
                             <option value="">Sélectionner une catégorie</option>
                             <option v-for="cat in categoriesFautes" :key="cat.id" :value="cat.id">
@@ -657,7 +657,7 @@
                             type="text"
                             required
                             placeholder="Ex: Insoumission"
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         />
                     </div>
                     <div>
@@ -666,7 +666,7 @@
                             v-model="fauteForm.code"
                             type="text"
                             placeholder="Ex: F-001"
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         />
                     </div>
                     <div>
@@ -675,16 +675,16 @@
                             v-model="fauteForm.description"
                             rows="2"
                             placeholder="Description de la faute..."
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                     </div>
-                    <div class="flex items-center gap-3 pt-3 border-t border-gpj-100">
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <button type="button" @click="fermerModalFaute"
-                            class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer">
+                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer">
                             Annuler
                         </button>
                         <button type="submit" :disabled="fauteEnCours"
-                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
+                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 cursor-pointer">
                             <i v-if="fauteEnCours" class="pi pi-spin pi-spinner mr-1"></i>
                             {{ fauteEditId ? 'Modifier' : 'Créer' }}
                         </button>

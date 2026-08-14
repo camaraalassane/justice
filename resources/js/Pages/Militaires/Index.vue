@@ -37,7 +37,7 @@
                     <div class="flex-1"></div>
                     <Link
                         :href="route('militaires.create')"
-                        class="px-4 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2 whitespace-nowrap"
+                        class="px-4 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2 whitespace-nowrap"
                     >
                         <i class="pi pi-plus"></i> Nouveau Personnel
                     </Link>
@@ -75,7 +75,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
+                                        <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
                                             {{ personnel.nom ? personnel.nom.charAt(0) : '?' }}{{ personnel.prenoms ? personnel.prenoms.charAt(0) : '' }}
                                         </div>
                                         <div>
@@ -139,7 +139,7 @@
                             :href="link.url || '#'"
                             :class="[
                                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
-                                link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100',
+                                link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100',
                                 !link.url ? 'opacity-50 cursor-not-allowed' : ''
                             ]"
                             v-html="link.label || '...'"

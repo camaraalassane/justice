@@ -27,7 +27,7 @@
                     v-if="index < steps.length - 1"
                     :class="[
                         'flex-1 h-1 mx-2 rounded transition-all duration-300',
-                        index < currentStep ? 'bg-gpj-500' : 'bg-gpj-200'
+                        index < currentStep ? 'bg-slate-500' : 'bg-gpj-200'
                     ]"
                 ></div>
             </div>
@@ -44,8 +44,8 @@ const props = defineProps({
 });
 
 const stepClasses = (index) => {
-    if (index < props.currentStep) return 'bg-gpj-500 text-white';
-    if (index === props.currentStep) return 'bg-gpj-500 text-white ring-4 ring-gpj-200';
-    return 'bg-white border-2 border-gpj-200 text-gpj-400';
+    if (index < props.currentStep) return 'bg-slate-500 text-white';
+    if (index === props.currentStep) return 'bg-slate-500 text-white ring-4 ring-gpj-200';
+    return 'bg-white border-2 border-slate-300 text-gpj-400';
 };
 </script>

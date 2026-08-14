@@ -62,7 +62,7 @@
                         <button @click="exporterListe" class="px-4 py-2 bg-emerald-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-emerald-600 transition-colors flex items-center gap-1">
                             <i class="pi pi-file-excel text-xs"></i> Exporter
                         </button>
-                        <Link :href="route('procedures.create')" class="px-4 py-2 bg-gpj-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap">
+                        <Link :href="route('procedures.create')" class="px-4 py-2 bg-slate-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap">
                             <i class="pi pi-plus text-xs"></i> <span class="hidden sm:inline">Nouvelle</span> Procédure
                         </Link>
                     </div>
@@ -106,7 +106,7 @@
                                     <div class="flex flex-wrap items-center gap-1">
                                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="pm.id">
                                             <div class="flex items-center gap-1 bg-slate-50 rounded-full px-2 py-0.5 border border-slate-200">
-                                                <div class="w-6 h-6 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-[10px] font-bold shrink-0">
+                                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-[10px] font-bold shrink-0">
                                                     {{ pm.militaire?.nom?.charAt(0) }}{{ pm.militaire?.prenoms?.charAt(0) }}
                                                 </div>
                                                 <span class="text-xs text-slate-700 truncate max-w-20 font-medium">{{ pm.militaire?.nom }} {{ pm.militaire?.prenoms }}</span>
@@ -119,12 +119,12 @@
                                 <td class="px-3 py-2.5 text-slate-600 text-xs">
                                     <div class="flex flex-wrap gap-1">
                                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="'grade-'+pm.id">
-                                            <span v-if="pm.militaire?.grade?.nom" class="text-xs bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium">
-                                                {{ pm.militaire?.grade?.nom }}
+                                            <span v-if="pm.militaire?.grade?.libelle" class="text-xs bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium">
+                                                {{ pm.militaire?.grade?.libelle }}
                                             </span>
                                             <span v-else-if="pm.type_personnel === 'civil'" class="text-xs text-slate-400">Civil</span>
                                         </template>
-                                        <span v-if="!procedure.procedure_militaires?.some(p => p.militaire?.grade?.nom || p.type_personnel === 'civil')" class="text-slate-400">-</span>
+                                        <span v-if="!procedure.procedure_militaires?.some(p => p.militaire?.grade?.libelle || p.type_personnel === 'civil')" class="text-slate-400">-</span>
                                     </div>
                                 </td>
                                 <!-- Armée -->
@@ -191,7 +191,7 @@
                 <div v-if="procedures.links?.length > 3" class="flex flex-col sm:flex-row items-center justify-between mt-4 pt-4 border-t border-slate-100 gap-3">
                     <p class="text-xs sm:text-sm text-slate-500">{{ procedures.from }}-{{ procedures.to }} sur {{ procedures.total }}</p>
                     <div class="flex flex-wrap gap-1">
-                        <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg transition-colors', link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
+                        <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg transition-colors', link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
                     </div>
                 </div>
             </Card>
@@ -210,7 +210,7 @@
                     <div class="flex flex-wrap items-center gap-2 mb-2">
                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="pm.id">
                             <div class="flex items-center gap-1 bg-slate-50 rounded-full px-2 py-0.5 border border-slate-200">
-                                <div class="w-6 h-6 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-[10px] font-bold shrink-0">
+                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-[10px] font-bold shrink-0">
                                     {{ pm.militaire?.nom?.charAt(0) }}{{ pm.militaire?.prenoms?.charAt(0) }}
                                 </div>
                                 <span class="text-xs text-slate-700 truncate max-w-20 font-medium">{{ pm.militaire?.nom }} {{ pm.militaire?.prenoms }}</span>
@@ -245,7 +245,7 @@
             <!-- Pagination mobile -->
             <div v-if="procedures.links?.length > 3" class="md:hidden flex justify-center">
                 <div class="flex flex-wrap gap-1">
-                    <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg', link.active ? 'bg-gpj-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
+                    <Link v-for="link in procedures.links" :key="link.label" :href="link.url" :class="['px-2.5 py-1.5 text-xs rounded-lg', link.active ? 'bg-slate-500 text-white' : 'text-slate-600 hover:bg-slate-100', !link.url ? 'opacity-50 cursor-not-allowed' : '']" v-html="link.label" />
                 </div>
             </div>
 

@@ -32,7 +32,7 @@
         </div>
 
         <div v-if="selectedItem" class="mt-2 flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200">
-            <div class="w-8 h-8 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
                 {{ selectedItemLabel.charAt(0) }}
             </div>
             <div class="flex-1 min-w-0">
@@ -55,10 +55,10 @@
                 @mouseenter="highlightedIndex = index"
                 :class="[
                     'px-4 py-2.5 cursor-pointer transition-colors text-sm flex items-center gap-3',
-                    highlightedIndex === index ? 'bg-gpj-50 text-slate-900' : 'text-slate-700 hover:bg-slate-50'
+                    highlightedIndex === index ? 'bg-slate-50 text-slate-900' : 'text-slate-700 hover:bg-slate-50'
                 ]"
             >
-                <div class="w-8 h-8 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
+                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gpj-700 text-xs font-bold shrink-0">
                     {{ option.label.charAt(0) }}
                 </div>
                 <div class="flex-1 min-w-0">

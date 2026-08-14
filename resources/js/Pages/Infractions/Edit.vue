@@ -12,7 +12,7 @@
                             v-model="form.code_infraction"
                             type="text"
                             required
-                            class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         />
                         <p class="mt-1 text-xs text-gpj-400">
                             Format : INF-CRxx (Criminelle), INF-DExx (Délictuelle), INF-COxx (Contravention)
@@ -26,7 +26,7 @@
                         <select
                             v-model="form.gravite"
                             required
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         >
                             <option v-for="i in 5" :key="i" :value="i">{{ i }} - {{ graviteLabel(i) }}</option>
                         </select>
@@ -43,7 +43,7 @@
                         v-model="form.libelle"
                         type="text"
                         required
-                        class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
                     />
                     <p v-if="form.errors.libelle" class="mt-1 text-sm text-red-500">{{ form.errors.libelle }}</p>
                 </div>
@@ -55,7 +55,7 @@
                         v-model="form.description"
                         rows="3"
                         placeholder="Description détaillée et référence aux textes..."
-                        class="w-full px-3 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500"
                     ></textarea>
                 </div>
 
@@ -68,7 +68,7 @@
                         <select
                             v-model="form.classification"
                             required
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         >
                             <option value="">Sélectionner</option>
                             <option v-for="c in classifications" :key="c" :value="c">{{ c }}</option>
@@ -87,7 +87,7 @@
                         <select
                             v-model="form.nature"
                             required
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         >
                             <option value="">Sélectionner</option>
                             <option v-for="n in natures" :key="n" :value="n">{{ n }}</option>
@@ -97,7 +97,7 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="flex items-center justify-between pt-4 border-t border-gpj-100">
+                <div class="flex items-center justify-between pt-4 border-t border-slate-200">
                     <button
                         type="button"
                         @click="confirmDelete"
@@ -108,14 +108,14 @@
                     <div class="flex gap-3">
                         <Link
                             :href="route('infractions.index')"
-                            class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 transition-colors"
+                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Annuler
                         </Link>
                         <button
                             type="submit"
                             :disabled="form.processing"
-                            class="px-6 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
+                            class="px-6 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
                         >
                             <i v-if="form.processing" class="pi pi-spin pi-spinner mr-2"></i>
                             Enregistrer
@@ -139,7 +139,7 @@
                     <button
                         type="button"
                         @click="showDeleteModal = false"
-                        class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 cursor-pointer"
+                        class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 cursor-pointer"
                     >
                         Annuler
                     </button>

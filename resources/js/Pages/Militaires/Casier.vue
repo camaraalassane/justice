@@ -4,7 +4,7 @@
             <!-- En-tête avec boutons d'action -->
             <div class="flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-gpj-100 dark:bg-gpj-800 flex items-center justify-center text-gpj-600 dark:text-gpj-300 text-xl font-bold">
+                    <div class="w-14 h-14 rounded-full bg-slate-100 dark:bg-gpj-800 flex items-center justify-center text-gpj-600 dark:text-gpj-300 text-xl font-bold">
                         {{ getInitiales() }}
                     </div>
                     <div>
@@ -17,10 +17,10 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <Link :href="route('militaires.show', militaire.id)" class="px-3 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 transition-colors flex items-center gap-1">
+                    <Link :href="route('militaires.show', militaire.id)" class="px-3 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1">
                         <i class="pi pi-arrow-left text-xs"></i> Retour
                     </Link>
-                    <a :href="route('militaires.casier.pdf', militaire.id)" target="_blank" class="px-3 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2">
+                    <a :href="route('militaires.casier.pdf', militaire.id)" target="_blank" class="px-3 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2">
                         <i class="pi pi-download"></i> Exporter PDF
                     </a>
                     <button v-if="peutModifier" @click="printCasier" class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
@@ -31,7 +31,7 @@
 
             <!-- Statistiques rapides -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <StatCard label="Total Procédures" :value="procedures.length" icon="pi pi-folder" icon-bg="bg-gpj-100" icon-color="#2d5a3d" />
+                <StatCard label="Total Procédures" :value="procedures.length" icon="pi pi-folder" icon-bg="bg-slate-100" icon-color="#2d5a3d" />
                 <StatCard label="En cours" :value="proceduresEnCours.length" icon="pi pi-clock" icon-bg="bg-amber-100" icon-color="#b45309" />
                 <StatCard label="Condamnations" :value="condamnations.length" icon="pi pi-gavel" icon-bg="bg-red-100" icon-color="#dc2626" />
                 <StatCard label="Acquittements" :value="getAcquittements().length" icon="pi pi-check-circle" icon-bg="bg-emerald-100" icon-color="#059669" />
@@ -59,7 +59,7 @@
             <Card title="II - PROCÉDURES EN COURS">
                 <div v-if="proceduresEnCours.length > 0" class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-gpj-600">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">N° Procédure</th>
                                 <th class="px-3 py-2 text-left font-semibold">Date ouverture</th>
@@ -70,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gpj-100">
-                            <tr v-for="proc in proceduresEnCours" :key="proc.id" class="hover:bg-gpj-50">
+                            <tr v-for="proc in proceduresEnCours" :key="proc.id" class="hover:bg-slate-50">
                                 <td class="px-3 py-2">
                                     <Link :href="route('procedures.show', proc.id)" class="text-gpj-500 hover:underline">
                                         {{ proc.numero_procedure }}
@@ -119,7 +119,7 @@
             <Card title="III - CONDAMNATIONS">
                 <div v-if="condamnations.length > 0" class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-gpj-600">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">N° Procédure</th>
                                 <th class="px-3 py-2 text-left font-semibold">Date condamnation</th>
@@ -130,7 +130,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gpj-100">
-                            <tr v-for="cond in condamnations" :key="cond.id" class="hover:bg-gpj-50">
+                            <tr v-for="cond in condamnations" :key="cond.id" class="hover:bg-slate-50">
                                 <td class="px-3 py-2">
                                     <Link :href="route('procedures.show', cond.id)" class="text-gpj-500 hover:underline">
                                         {{ cond.numero_procedure }}
@@ -189,7 +189,7 @@
             <Card v-if="getAcquittements().length > 0" title="IV - ACQUITTEMENTS">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-gpj-600">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">N° Jugement</th>
                                 <th class="px-3 py-2 text-left font-semibold">Date jugement</th>
@@ -199,7 +199,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gpj-100">
-                            <tr v-for="proc in getAcquittements()" :key="proc.id" class="hover:bg-gpj-50">
+                            <tr v-for="proc in getAcquittements()" :key="proc.id" class="hover:bg-slate-50">
                                 <td class="px-3 py-2">{{ proc.jugement?.numero_jugement || 'Non défini' }}</td>
                                 <td class="px-3 py-2">{{ formatDate(proc.jugement?.date_jugement) }}</td>
                                 <td class="px-3 py-2">{{ proc.jugement?.juridiction || 'Non définie' }}</td>
@@ -221,7 +221,7 @@
             <!-- Section V - Récapitulatif -->
             <Card title="V - RÉCAPITULATIF">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="p-3 bg-gpj-50 rounded-lg text-center">
+                    <div class="p-3 bg-slate-50 rounded-lg text-center">
                         <p class="text-2xl font-bold text-gpj-600">{{ procedures.length }}</p>
                         <p class="text-xs text-gpj-400">Total procédures</p>
                     </div>

@@ -30,7 +30,7 @@
         <Card class="max-w-5xl mx-auto">
             <form @submit.prevent="submit" class="space-y-6">
                 <!-- Militaires / Personnels -->
-                <div class="border-b border-gpj-100 pb-6">
+                <div class="border-b border-slate-200 pb-6">
                     <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-4">
                         <i class="pi pi-users mr-2"></i> Personnels concernés
                     </h3>
@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Phase initiale -->
-                <div class="border-b border-gpj-100 pb-6">
+                <div class="border-b border-slate-200 pb-6">
                     <h3 class="text-sm font-semibold text-gpj-500 uppercase tracking-wide mb-4">
                         <i class="pi pi-file mr-2"></i> Phase initiale
                     </h3>
@@ -61,7 +61,7 @@
                                 v-model="form.phase_type_id"
                                 required
                                 @change="onPhaseTypeChange"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             >
                                 <option value="">Choisir la phase</option>
                                 <option v-for="pt in phaseTypes" :key="pt.id" :value="pt.id">
@@ -80,7 +80,7 @@
                                 type="text"
                                 required
                                 placeholder="Nom personnalisé"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                             <p v-if="form.errors.phase_personnalisee" class="mt-1 text-sm text-red-500">{{ form.errors.phase_personnalisee }}</p>
                         </div>
@@ -92,7 +92,7 @@
                                 v-model="form.date_phase"
                                 type="date"
                                 required
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                             <p v-if="form.errors.date_phase" class="mt-1 text-sm text-red-500">{{ form.errors.date_phase }}</p>
                         </div>
@@ -103,7 +103,7 @@
                             </label>
                             <select
                                 v-model="form.lieu_commission"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             >
                                 <option value="">Non défini</option>
                                 <option value="Organique">Organique</option>
@@ -122,7 +122,7 @@
                                         type="checkbox"
                                         v-model="aucunParquet"
                                         @change="onToggleAucunParquet"
-                                        class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                                        class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500"
                                     />
                                     Aucun parquet
                                 </label>
@@ -146,7 +146,7 @@
                             v-model="form.description"
                             rows="2"
                             placeholder="Description..."
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                         <p v-if="form.errors.description" class="mt-1 text-sm text-red-500">{{ form.errors.description }}</p>
                     </div>
@@ -164,13 +164,13 @@
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end gap-3">
-                    <Link :href="route('procedures.index')" class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 transition-colors">
+                    <Link :href="route('procedures.index')" class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors">
                         Annuler
                     </Link>
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="px-6 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
+                        class="px-6 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors disabled:opacity-50 cursor-pointer"
                     >
                         <i v-if="form.processing" class="pi pi-spin pi-spinner mr-2"></i>
                         Créer la procédure

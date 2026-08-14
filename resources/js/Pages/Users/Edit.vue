@@ -104,7 +104,7 @@
                         <button 
                             type="submit" 
                             :disabled="processing" 
-                            class="flex-1 px-4 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
+                            class="flex-1 px-4 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
                         >
                             <i v-if="processing" class="pi pi-spin pi-spinner mr-2"></i>
                             Mettre à jour

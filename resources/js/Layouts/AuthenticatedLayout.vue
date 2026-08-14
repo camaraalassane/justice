@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gpj-50 flex transition-colors duration-300">
+    <div class="min-h-screen bg-slate-50 flex transition-colors duration-300">
         <!-- Overlay mobile -->
         <div
             v-if="sidebarOpen"
@@ -17,7 +17,7 @@
             <!-- Logo -->
             <div class="px-5 py-4 border-b border-gpj-700 shrink-0">
                 <Link :href="route('dashboard')" class="flex items-center gap-3" @click="closeSidebar">
-                    <div class="w-9 h-9 bg-gpj-500 rounded-lg flex items-center justify-center shrink-0">
+                    <div class="w-9 h-9 bg-slate-500 rounded-lg flex items-center justify-center shrink-0">
                         <i class="pi pi-shield text-white text-lg"></i>
                     </div>
                     <div class="min-w-0">
@@ -86,7 +86,7 @@
                     >
                         <span class="flex items-center gap-2">
                             Utilisateurs
-                            <span class="text-[10px] bg-gpj-500 text-white px-2 py-0.5 rounded-full font-normal">ADMIN</span>
+                            <span class="text-[10px] bg-slate-500 text-white px-2 py-0.5 rounded-full font-normal">ADMIN</span>
                         </span>
                     </NavLink>
                 </div>

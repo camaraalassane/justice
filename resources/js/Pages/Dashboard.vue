@@ -5,14 +5,14 @@
             <!-- CARTES STATS PRINCIPALES                               -->
             <!-- ====================================================== -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <StatCard label="Total Procédures" :value="stats.total_procedures" icon="pi pi-folder" icon-bg="bg-gpj-100" icon-color="#2d5a3d" />
+                <StatCard label="Total Procédures" :value="stats.total_procedures" icon="pi pi-folder" icon-bg="bg-slate-100" icon-color="#2d5a3d" />
                 <StatCard label="En Ordre de Poursuite" :value="stats.en_ordre_poursuite" icon="pi pi-hammer" icon-bg="bg-amber-100" icon-color="#b45309" />
                 <StatCard label="En Mise à Disposition" :value="stats.en_mise_disposition" icon="pi pi-lock" icon-bg="bg-red-100" icon-color="#dc2626" />
                 <StatCard label="En Communiqué" :value="stats.en_communique" icon="pi pi-bell" icon-bg="bg-sky-100" icon-color="#0284c7" />
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <StatCard label="Militaires" :value="totalMilitaires" icon="pi pi-users" icon-bg="bg-gpj-100" icon-color="#2d5a3d" />
+                <StatCard label="Militaires" :value="totalMilitaires" icon="pi pi-users" icon-bg="bg-slate-100" icon-color="#2d5a3d" />
                 <StatCard label="Infractions" :value="totalInfractions" icon="pi pi-list" icon-bg="bg-purple-100" icon-color="#7c3aed" />
                 <StatCard label="En cours" :value="totalProceduresEnCours" icon="pi pi-clock" icon-bg="bg-amber-100" icon-color="#b45309" />
                 <StatCard label="Ce mois" :value="stats.total_mois" icon="pi pi-calendar" icon-bg="bg-emerald-100" icon-color="#059669" />
@@ -57,7 +57,7 @@
                         label="Procédures avec Militaires" 
                         :value="totalProceduresAvecMilitaire" 
                         icon="pi pi-users" 
-                        icon-bg="bg-gpj-100" 
+                        icon-bg="bg-slate-100" 
                         icon-color="#2d5a3d"
                         :subtext="totalMilitairesImpliques + ' militaires impliqués'"
                     />
@@ -97,7 +97,7 @@
                     <div class="space-y-2">
                         <div v-for="item in statsInfractionsParType" :key="item.type_personnel" 
                              class="flex items-center justify-between p-3 rounded-lg"
-                             :class="item.type_personnel === 'militaire' ? 'bg-gpj-50' : 'bg-purple-50'">
+                             :class="item.type_personnel === 'militaire' ? 'bg-slate-50' : 'bg-purple-50'">
                             <span class="text-sm font-medium" :class="item.type_personnel === 'militaire' ? 'text-gpj-700' : 'text-purple-700'">
                                 {{ item.label }}
                             </span>
@@ -130,14 +130,14 @@
             <!-- ====================================================== -->
             <Card title="📊 Détail par lieu de commission et phase">
                 <div v-if="statsLieuCommissionDetail && statsLieuCommissionDetail.length" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="lieu in statsLieuCommissionDetail" :key="lieu.lieu" class="border border-gpj-200 rounded-lg p-4">
+                    <div v-for="lieu in statsLieuCommissionDetail" :key="lieu.lieu" class="border border-slate-300 rounded-lg p-4">
                         <h4 class="text-sm font-semibold text-gpj-700 mb-3">
                             {{ lieu.lieu }}
                             <span class="text-xs text-gpj-400 ml-2">(Total: {{ lieu.total }})</span>
                         </h4>
                         <div class="space-y-2">
                             <div v-for="phase in lieu.phases" :key="phase.phase" 
-                                 class="flex items-center justify-between p-2 bg-gpj-50 rounded">
+                                 class="flex items-center justify-between p-2 bg-slate-50 rounded">
                                 <span class="text-sm text-gpj-600">{{ phase.phase }}</span>
                                 <span class="text-sm font-bold text-gpj-700">{{ phase.nombre }}</span>
                             </div>
@@ -161,7 +161,7 @@
             <!-- ====================================================== -->
             <Card title="📊 Procédures par jour (7 derniers jours)">
                 <div class="grid grid-cols-7 gap-2">
-                    <div v-for="item in statsParJour" :key="item.jour" class="text-center p-3 rounded-lg bg-gpj-50">
+                    <div v-for="item in statsParJour" :key="item.jour" class="text-center p-3 rounded-lg bg-slate-50">
                         <p class="text-xs text-gpj-400">{{ item.jour_label }}</p>
                         <p class="text-xl font-bold text-gpj-600">{{ item.total }}</p>
                     </div>
@@ -175,7 +175,7 @@
                 <Card>
                     <h3 class="text-sm font-semibold text-gpj-700 mb-3">📋 Parquets</h3>
                     <div class="space-y-2">
-                        <div class="flex justify-between items-center p-2 bg-gpj-50 rounded">
+                        <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
                             <span class="text-sm">Total parquets</span>
                             <span class="font-bold text-gpj-600">{{ totalParquets }}</span>
                         </div>
@@ -216,7 +216,7 @@
                 </div>
                 <div v-if="statsParquetDetail.length" class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-gpj-50 text-gpj-600">
+                        <thead class="bg-slate-50 text-gpj-600">
                             <tr>
                                 <th class="px-3 py-2 text-left font-semibold">#</th>
                                 <th class="px-3 py-2 text-left font-semibold">Nom du parquet</th>
@@ -227,7 +227,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gpj-100">
-                            <tr v-for="(item, index) in statsParquetDetail" :key="item.id" class="hover:bg-gpj-50 transition-colors">
+                            <tr v-for="(item, index) in statsParquetDetail" :key="item.id" class="hover:bg-slate-50 transition-colors">
                                 <td class="px-3 py-2 text-center text-gpj-400">{{ index + 1 }}</td>
                                 <td class="px-3 py-2 font-medium text-gpj-800">
                                     {{ item.nom }}
@@ -269,9 +269,9 @@
                     </div>
                     <div v-if="topInfractions.length" class="space-y-2">
                         <div v-for="(inf, i) in topInfractions" :key="i" class="flex items-center gap-2 text-sm">
-                            <span class="w-6 h-6 rounded bg-gpj-100 text-gpj-600 flex items-center justify-center text-xs font-bold shrink-0">{{ i + 1 }}</span>
+                            <span class="w-6 h-6 rounded bg-slate-100 text-gpj-600 flex items-center justify-center text-xs font-bold shrink-0">{{ i + 1 }}</span>
                             <span class="flex-1 truncate">{{ inf.libelle }}</span>
-                            <div class="w-20 bg-gray-100 rounded-full h-2"><div class="bg-gpj-500 h-2 rounded-full" :style="{ width: (inf.nombre / maxInfractions * 100) + '%' }"></div></div>
+                            <div class="w-20 bg-gray-100 rounded-full h-2"><div class="bg-slate-500 h-2 rounded-full" :style="{ width: (inf.nombre / maxInfractions * 100) + '%' }"></div></div>
                             <span class="font-bold text-gpj-600 w-8 text-right">{{ inf.nombre }}</span>
                         </div>
                     </div>
@@ -304,10 +304,10 @@
             <Card title="📂 Fautes par catégorie">
                 <div v-if="statsFautesParCategorie && statsFautesParCategorie.length" class="space-y-4">
                     <div v-for="categorie in statsFautesParCategorie" :key="categorie.categorie_id" 
-                         class="border border-gpj-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
+                         class="border border-slate-300 rounded-lg p-3 hover:shadow-sm transition-shadow">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-sm font-semibold text-gpj-700 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full" :class="categorie.categorie_id ? 'bg-gpj-500' : 'bg-gray-400'"></span>
+                                <span class="w-2 h-2 rounded-full" :class="categorie.categorie_id ? 'bg-slate-500' : 'bg-gray-400'"></span>
                                 {{ categorie.categorie_libelle }}
                             </h4>
                             <Badge variant="info" size="sm">
@@ -316,7 +316,7 @@
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <span v-for="faute in categorie.fautes" :key="faute.faute_id" 
-                                  class="inline-flex items-center gap-1 px-2.5 py-1 bg-gpj-50 rounded-full text-xs border border-gpj-100">
+                                  class="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-50 rounded-full text-xs border border-slate-200">
                                 {{ faute.libelle }}
                                 <span class="text-gpj-400 font-bold ml-1">({{ faute.nombre }})</span>
                             </span>
@@ -331,10 +331,10 @@
             <!-- ====================================================== -->
             <Card title="Procédures récentes">
                 <div v-if="proceduresRecentes.length" class="space-y-2">
-                    <Link v-for="p in proceduresRecentes" :key="p.id" :href="route('procedures.show', p.id)" class="flex items-center gap-2 p-2 rounded hover:bg-gpj-50 text-sm">
+                    <Link v-for="p in proceduresRecentes" :key="p.id" :href="route('procedures.show', p.id)" class="flex items-center gap-2 p-2 rounded hover:bg-slate-50 text-sm">
                         <span class="font-medium text-gpj-500">{{ p.numero_procedure }}</span>
                         <span class="text-gpj-400 text-xs truncate">{{ p.militaire?.nom }} {{ p.militaire?.prenoms }}</span>
-                        <span v-if="p.parquet" class="text-[10px] text-gpj-400 bg-gpj-100 px-1.5 py-0.5 rounded">
+                        <span v-if="p.parquet" class="text-[10px] text-gpj-400 bg-slate-100 px-1.5 py-0.5 rounded">
                             {{ p.parquet.nom }}
                         </span>
                         <Badge :variant="phaseVariant(p.phase)" size="sm">{{ (p.phase || '').replace(/_/g, ' ') }}</Badge>
@@ -349,10 +349,10 @@
             <!-- ====================================================== -->
             <!-- STATS INFRACTIONS                                     -->
             <!-- ====================================================== -->
-            <div class="border-t border-gpj-200 pt-4">
+            <div class="border-t border-slate-300 pt-4">
                 <h2 class="text-lg font-bold text-gpj-800 mb-4">📊 Infractions</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <StatBarCard title="Par Armée" :data="statsParArmee" color="bg-gpj-500" :export-url="route('exports.infractions.armee')" />
+                    <StatBarCard title="Par Armée" :data="statsParArmee" color="bg-slate-500" :export-url="route('exports.infractions.armee')" />
                     <StatBarCard title="Par Catégorie de Grade" :data="statsParCategorieGrade" color="bg-amber-500" :export-url="route('exports.infractions.categorie-grade')" />
                     <StatBarCard title="Par Grade (Top 15)" :data="statsParGrade" color="bg-red-500" label-key="libelle" :export-url="route('exports.infractions.grade')" />
                     <StatPieCard title="Par Genre" :data="statsParGenre" :export-url="route('exports.infractions.genre')" />
@@ -362,10 +362,10 @@
             <!-- ====================================================== -->
             <!-- STATS FAUTES MILITAIRES                               -->
             <!-- ====================================================== -->
-            <div class="border-t border-gpj-200 pt-4">
+            <div class="border-t border-slate-300 pt-4">
                 <h2 class="text-lg font-bold text-gpj-800 mb-4">📊 Fautes Militaires</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <StatBarCard title="Par Armée" :data="statsFautesParArmee" color="bg-gpj-500" :export-url="route('exports.fautes.armee')" />
+                    <StatBarCard title="Par Armée" :data="statsFautesParArmee" color="bg-slate-500" :export-url="route('exports.fautes.armee')" />
                     <StatBarCard title="Par Catégorie de Grade" :data="statsFautesParCategorieGrade" color="bg-amber-500" :export-url="route('exports.fautes.categorie-grade')" />
                     <StatBarCard title="Par Grade (Top 15)" :data="statsFautesParGrade" color="bg-red-500" label-key="libelle" :export-url="route('exports.fautes.grade')" />
                     <StatPieCard title="Par Genre" :data="statsFautesParGenre" :export-url="route('exports.fautes.genre')" />

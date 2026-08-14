@@ -13,7 +13,7 @@
                         required
                         autofocus
                         placeholder="exemple@gpj.mil"
-                        class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                        class="w-full pl-10 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
                     />
                 </div>
                 <p v-if="form.errors.email" class="mt-1 text-sm text-red-500">{{ form.errors.email }}</p>
@@ -30,7 +30,7 @@
                         :type="showPassword ? 'text' : 'password'"
                         required
                         placeholder="Votre mot de passe"
-                        class="w-full pl-10 pr-10 py-2.5 rounded-lg border border-gpj-200 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
+                        class="w-full pl-10 pr-10 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-gpj-500 focus:border-gpj-500"
                     />
                     <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gpj-400 hover:text-gpj-600" @click="showPassword = !showPassword">
                         <i :class="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
@@ -42,7 +42,7 @@
             <!-- Remember + Forgot -->
             <div class="flex items-center justify-between">
                 <label class="flex items-center gap-2 text-sm text-gpj-600 cursor-pointer">
-                    <input type="checkbox" v-model="form.remember" class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500" />
+                    <input type="checkbox" v-model="form.remember" class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500" />
                     Se souvenir de moi
                 </label>
                 <Link :href="route('password.request')" class="text-sm text-gpj-500 hover:text-gpj-700 font-medium">
@@ -54,7 +54,7 @@
             <button
                 type="submit"
                 :disabled="form.processing"
-                class="w-full py-2.5 bg-gpj-500 text-white font-semibold rounded-lg hover:bg-gpj-600 focus:ring-2 focus:ring-gpj-500 focus:ring-offset-2 transition-colors disabled:opacity-50 cursor-pointer"
+                class="w-full py-2.5 bg-slate-500 text-white font-semibold rounded-lg hover:bg-gpj-600 focus:ring-2 focus:ring-gpj-500 focus:ring-offset-2 transition-colors disabled:opacity-50 cursor-pointer"
             >
                 <i v-if="form.processing" class="pi pi-spin pi-spinner mr-2"></i>
                 Se connecter

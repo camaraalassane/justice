@@ -8,7 +8,7 @@
         </div>
         <div v-if="data.length" class="space-y-2">
             <div v-for="(item, i) in data" :key="i" class="flex items-center gap-2 text-xs">
-                <span class="w-5 h-5 rounded bg-gpj-100 text-gpj-600 flex items-center justify-center text-xs font-bold shrink-0">{{ i + 1 }}</span>
+                <span class="w-5 h-5 rounded bg-slate-100 text-gpj-600 flex items-center justify-center text-xs font-bold shrink-0">{{ i + 1 }}</span>
                 <span class="flex-1 truncate">{{ item[labelKey] || item.armee || item.libelle }}</span>
                 <div class="w-24 bg-gray-100 rounded-full h-2">
                     <div :class="color" class="h-2 rounded-full" :style="{ width: (item.nombre / maxVal * 100) + '%' }"></div>
@@ -27,7 +27,7 @@ import Card from '@/Components/GPJ/Card.vue';
 const props = defineProps({
     title: String,
     data: Array,
-    color: { type: String, default: 'bg-gpj-500' },
+    color: { type: String, default: 'bg-slate-500' },
     labelKey: { type: String, default: 'armee' },
     exportUrl: { type: String, default: null }, 
 });

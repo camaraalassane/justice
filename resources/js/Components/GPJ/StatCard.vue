@@ -27,7 +27,7 @@ const props = defineProps({
     label: String,
     value: [String, Number],
     icon: String,
-    iconBg: { type: String, default: 'bg-gpj-100' },
+    iconBg: { type: String, default: 'bg-slate-100' },
     iconColor: { type: String, default: '#2d5a3d' },
     trend: Number,
 });

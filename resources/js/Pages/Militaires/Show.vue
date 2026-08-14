@@ -4,7 +4,7 @@
             <!-- Infos personnelles -->
             <Card>
                 <div class="text-center mb-4">
-                    <div class="w-20 h-20 rounded-full bg-gpj-100 flex items-center justify-center text-gpj-600 font-bold text-2xl mx-auto mb-3">
+                    <div class="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-gpj-600 font-bold text-2xl mx-auto mb-3">
                         {{ personnel.nom ? personnel.nom.charAt(0) : '?' }}{{ personnel.prenoms ? personnel.prenoms.charAt(0) : '' }}
                     </div>
                     <h3 class="text-lg font-bold text-gpj-800">{{ personnel.nom || 'Nom inconnu' }} {{ personnel.prenoms || '' }}</h3>
@@ -16,41 +16,41 @@
                     </div>
                 </div>
                 <div class="space-y-3 text-sm">
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Type</span>
                         <span class="font-medium text-gpj-800">{{ personnel.type_personnel === 'militaire' ? 'Militaire' : 'Civil' }}</span>
                     </div>
-                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-gpj-100">
+                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Matricule</span>
                         <span class="font-medium text-gpj-800">{{ personnel.matricule || 'Non défini' }}</span>
                     </div>
-                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-gpj-100">
+                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Grade</span>
                         <span class="font-medium text-gpj-800">{{ personnel.grade?.libelle || personnel.grade || '-' }}</span>
                     </div>
-                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-gpj-100">
+                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Catégorie</span>
                         <span class="font-medium text-gpj-800">{{ personnel.grade?.categorie?.libelle || '-' }}</span>
                     </div>
-                    <div v-if="personnel.type_personnel === 'civil'" class="flex justify-between py-2 border-b border-gpj-100">
+                    <div v-if="personnel.type_personnel === 'civil'" class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Profession</span>
                         <span class="font-medium text-gpj-800">{{ personnel.profession || '-' }}</span>
                     </div>
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Genre</span>
                         <span class="font-medium text-gpj-800">{{ personnel.genre || '-' }}</span>
                     </div>
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Date de naissance</span>
                         <span class="font-medium text-gpj-800">{{ formatDate(personnel.date_naissance) || '-' }}</span>
                     </div>
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Lieu de naissance</span>
                         <span class="font-medium text-gpj-800">{{ personnel.lieu_naissance || '-' }}</span>
                     </div>
                     
                     <!-- Filiation - Père -->
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Père</span>
                         <span class="font-medium text-gpj-800 text-right">
                             {{ filiationPere || '-' }}
@@ -58,30 +58,30 @@
                     </div>
                     
                     <!-- Filiation - Mère -->
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Mère</span>
                         <span class="font-medium text-gpj-800 text-right">
                             {{ filiationMere || '-' }}
                         </span>
                     </div>
                     
-                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-gpj-100">
+                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Armée/Service</span>
                         <span class="font-medium text-gpj-800">{{ armeeNom || '-' }}</span>
                     </div>
-                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-gpj-100">
+                    <div v-if="personnel.type_personnel === 'militaire'" class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Unité</span>
                         <span class="font-medium text-gpj-800">{{ personnel.unite || '-' }}</span>
                     </div>
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Adresse</span>
                         <span class="font-medium text-gpj-800">{{ personnel.adresse || '-' }}</span>
                     </div>
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Téléphone</span>
                         <span class="font-medium text-gpj-800">{{ personnel.telephone || '-' }}</span>
                     </div>
-                    <div class="flex justify-between py-2 border-b border-gpj-100">
+                    <div class="flex justify-between py-2 border-b border-slate-200">
                         <span class="text-gpj-400">Statut</span>
                         <Badge :variant="statutVariant(personnel.statut)" size="sm">{{ personnel.statut || 'Non défini' }}</Badge>
                     </div>
@@ -93,13 +93,13 @@
                         v-if="personnel.type_personnel === 'militaire'"
                         :href="route('militaires.casier', personnel.id)"
                         target="_blank"
-                        class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors"
+                        class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors"
                     >
                         <i class="pi pi-print"></i> Imprimer Casier Judiciaire
                     </a>
                     <Link
                         :href="route('militaires.edit', personnel.id)"
-                        class="w-full flex items-center justify-center gap-2 px-3 py-2.5 border border-gpj-200 text-gpj-600 text-sm font-medium rounded-lg hover:bg-gpj-50 transition-colors"
+                        class="w-full flex items-center justify-center gap-2 px-3 py-2.5 border border-slate-300 text-gpj-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors"
                     >
                         <i class="pi pi-pencil"></i> Modifier
                     </Link>
@@ -114,9 +114,9 @@
                             v-for="procedure in personnel.procedures"
                             :key="procedure.id"
                             :href="route('procedures.show', procedure.id)"
-                            class="flex items-center gap-4 p-4 rounded-lg border border-gpj-200 hover:border-gpj-400 hover:shadow-sm transition-all"
+                            class="flex items-center gap-4 p-4 rounded-lg border border-slate-300 hover:border-slate-500 hover:shadow-sm transition-all"
                         >
-                            <div class="w-10 h-10 rounded-lg bg-gpj-100 flex items-center justify-center shrink-0">
+                            <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                                 <i class="pi pi-folder text-gpj-500"></i>
                             </div>
                             <div class="flex-1 min-w-0">

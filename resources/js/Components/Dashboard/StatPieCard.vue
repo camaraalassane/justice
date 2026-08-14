@@ -27,5 +27,5 @@ defineProps({
     exportUrl: { type: String, default: null },
 });
 
-const colors = ['bg-gpj-500', 'bg-amber-500', 'bg-red-500', 'bg-sky-500', 'bg-purple-500', 'bg-emerald-500'];
+const colors = ['bg-slate-500', 'bg-amber-500', 'bg-red-500', 'bg-sky-500', 'bg-purple-500', 'bg-emerald-500'];
 </script> 

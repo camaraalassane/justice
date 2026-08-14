@@ -12,7 +12,7 @@
                         :checked="parquetType === 'militaire'"
                         @change="setType('militaire')"
                         :disabled="disabled"
-                        class="rounded-full border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                        class="rounded-full border-slate-400 text-gpj-500 focus:ring-gpj-500"
                     />
                     <span class="text-sm">Militaire</span>
                 </label>
@@ -22,7 +22,7 @@
                         :checked="parquetType === 'droit_commun'"
                         @change="setType('droit_commun')"
                         :disabled="disabled"
-                        class="rounded-full border-gpj-300 text-gpj-500 focus:ring-gpj-500"
+                        class="rounded-full border-slate-400 text-gpj-500 focus:ring-gpj-500"
                     />
                     <span class="text-sm">Droit Commun</span>
                 </label>
@@ -38,7 +38,7 @@
                 v-model="selectedParquetId"
                 @change="onMilitaireSelect"
                 :disabled="disabled"
-                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <option value="">Sélectionner un parquet</option>
                 <option 
@@ -62,7 +62,7 @@
                 v-model="selectedDroitCommunId"
                 @change="onDroitCommunSelect"
                 :disabled="disabled"
-                class="w-full rounded-lg border border-gpj-200 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <option value="">Sélectionner un parquet</option>
                 <option 
@@ -75,7 +75,7 @@
                 <option v-if="!disabled" value="__nouveau__" class="text-gpj-500 font-medium">--- Créer un nouveau ---</option>
             </select>
 
-            <div v-if="showNouveauParquet && !disabled" class="mt-3 p-3 bg-gpj-50 rounded-lg border border-gpj-200">
+            <div v-if="showNouveauParquet && !disabled" class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-300">
                 <p class="text-xs font-medium text-gpj-600 mb-2">📝 Nouveau parquet de droit commun</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
@@ -86,7 +86,7 @@
                             v-model="nouveauParquetNom"
                             type="text"
                             placeholder="Ex: Tribunal de Bamako"
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             @input="onNouveauParquetChange"
                         />
                     </div>
@@ -98,7 +98,7 @@
                             v-model="nouveauParquetLocalisation"
                             type="text"
                             placeholder="Ex: Bamako"
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             @input="onNouveauParquetChange"
                         />
                     </div>
@@ -111,7 +111,7 @@
                         v-model="nouveauParquetCode"
                         type="text"
                         placeholder="Ex: TRIB-BKO"
-                        class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         @input="onNouveauParquetChange"
                     />
                 </div>
@@ -128,7 +128,7 @@
                     <button 
                         type="button"
                         @click="annulerNouveauParquet"
-                        class="px-3 py-1.5 border border-gpj-200 text-gpj-600 text-xs rounded-lg hover:bg-gpj-50 cursor-pointer"
+                        class="px-3 py-1.5 border border-slate-300 text-gpj-600 text-xs rounded-lg hover:bg-slate-50 cursor-pointer"
                     >
                         Annuler
                     </button>

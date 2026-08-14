@@ -6,7 +6,7 @@
                 <h4 class="text-sm font-medium text-gpj-700">Infractions</h4>
                 <p class="text-xs text-gpj-400">Sélectionnez les infractions pour ce militaire</p>
             </div>
-            <span class="text-xs text-gpj-500 bg-gpj-100 px-2 py-0.5 rounded-full">
+            <span class="text-xs text-gpj-500 bg-slate-100 px-2 py-0.5 rounded-full">
                 {{ selectedInfractions.length }} sélectionnée(s)
             </span>
         </div>
@@ -21,13 +21,13 @@
                         v-model="searchQuery"
                         type="text"
                         placeholder="Rechercher une infraction..."
-                        class="w-full pl-8 pr-3 py-1.5 rounded-lg border border-gpj-200 text-xs focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                        class="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-gpj-500"
                     />
                 </div>
                 <button
                     v-if="peutCreer"
                     @click="ouvrirModalCreation"
-                    class="px-3 py-1.5 bg-gpj-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1 whitespace-nowrap"
+                    class="px-3 py-1.5 bg-slate-500 text-white text-xs font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-1 whitespace-nowrap"
                 >
                     <i class="pi pi-plus text-xs"></i> Créer
                 </button>
@@ -38,7 +38,7 @@
                 <div
                     v-for="inf in infractionsFiltrees"
                     :key="inf.id"
-                    class="flex items-center gap-2 p-2 hover:bg-gpj-50 rounded-lg cursor-pointer transition-colors"
+                    class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors"
                     @click="toggleInfraction(inf.id)"
                 >
                     <input
@@ -46,7 +46,7 @@
                         :checked="selectedInfractions.includes(inf.id)"
                         @click.stop
                         @change="toggleInfraction(inf.id)"
-                        class="rounded border-gpj-300 text-gpj-500 focus:ring-gpj-500 shrink-0"
+                        class="rounded border-slate-400 text-gpj-500 focus:ring-gpj-500 shrink-0"
                     />
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-medium text-gpj-700 truncate">{{ inf.libelle }}</p>
@@ -94,7 +94,7 @@
                                 type="text"
                                 required
                                 placeholder="Ex: Insoumission"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                         </div>
                         <div>
@@ -106,7 +106,7 @@
                                 type="text"
                                 required
                                 placeholder="Ex: INF-001"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                             <select
                                 v-model="newInfraction.classification"
                                 required
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             >
                                 <option value="">Sélectionner</option>
                                 <option value="Criminelle">Criminelle</option>
@@ -135,7 +135,7 @@
                                 v-model="newInfraction.nature"
                                 type="text"
                                 placeholder="Ex: Infraction militaire"
-                                class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                                class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                             />
                         </div>
                     </div>
@@ -148,22 +148,22 @@
                             v-model="newInfraction.description"
                             rows="3"
                             placeholder="Description détaillée de l'infraction..."
-                            class="w-full rounded-lg border border-gpj-200 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
+                            class="w-full rounded-lg border border-slate-300 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                     </div>
 
-                    <div class="flex items-center gap-3 pt-3 border-t border-gpj-100">
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-200">
                         <button
                             type="button"
                             @click="fermerModalCreation"
-                            class="px-4 py-2 border border-gpj-200 text-gpj-600 text-sm rounded-lg hover:bg-gpj-50 transition-colors"
+                            class="px-4 py-2 border border-slate-300 text-gpj-600 text-sm rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Annuler
                         </button>
                         <button
                             type="submit"
                             :disabled="creerEnCours"
-                            class="flex-1 px-4 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
+                            class="flex-1 px-4 py-2 bg-slate-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 disabled:opacity-50 transition-colors"
                         >
                             <i v-if="creerEnCours" class="pi pi-spin pi-spinner mr-2"></i>
                             Créer l'infraction
