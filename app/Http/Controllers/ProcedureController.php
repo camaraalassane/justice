@@ -297,8 +297,8 @@ class ProcedureController extends Controller
                         'prenoms' => $militaireData['prenom'],
                         'profession' => $militaireData['profession'] ?? null,
                         'grade' => $militaireData['grade'] ?? null,
-                        'grade_id' => $militaireData['grade_id'] ?? null,
-                        'matricule' => $militaireData['matricule'] ?? null,
+                        'grade_id' => !empty($militaireData['grade_id']) ? $militaireData['grade_id'] : null,
+                        'matricule' => !empty($militaireData['matricule']) ? $militaireData['matricule'] : null,
                         'statut' => 'En activité',
                     ]);
                     $militaireId = $newMilitaire->id;
@@ -948,8 +948,8 @@ class ProcedureController extends Controller
                 'nom' => $request->nom,
                 'prenoms' => $request->prenom,
                 'profession' => $request->profession ?? null,
-                'grade_id' => $request->grade_id,
-                'matricule' => $request->matricule ?? null,
+                'grade_id' => !empty($request->grade_id) ? $request->grade_id : null,
+                'matricule' => !empty($request->matricule) ? $request->matricule : null,
                 'statut' => 'En activité',
             ]);
             $militaireId = $newMilitaire->id;
