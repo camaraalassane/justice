@@ -9,7 +9,7 @@
         <div class="space-y-3 sm:space-y-4">
             <!-- Filtres -->
             <Card padding>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Phase</label>
                         <select v-model="filtres.phase" @change="appliquerFiltres" class="w-full rounded-lg border border-slate-300 text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm">
@@ -73,36 +73,36 @@
             <div class="sm:hidden text-xs text-slate-500 px-1">{{ procedures.total }} procédure(s)</div>
 
             <!-- Tableau Desktop -->
-            <Card padding class="hidden md:block">
-                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
-                    <table class="w-full text-sm">
-                        <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
+            <Card padding class="hidden md:block shadow-sm overflow-hidden w-full">
+                <div class="overflow-x-auto overflow-y-auto max-h-[calc(100vh-260px)] w-full">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-white border-b border-slate-200 sticky top-0 z-10">
                             <tr>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">N° Procédure</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Type</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Personnel(s)</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Grade</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Armée</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Lieu de commission</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Phase</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Infractions</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Date</th>
-                                <th class="px-3 py-3 text-left font-semibold whitespace-nowrap text-xs uppercase tracking-wide">Parquet</th>
-                                <th class="px-3 py-3 text-center font-semibold w-20 text-xs uppercase tracking-wide">Actions</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600 sticky left-0 bg-white z-20 shadow-[inset_-1px_0_0_#e2e8f0]">N° Procédure</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Type</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Personnel(s)</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Grade</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Armée</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Lieu de commission</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Phase</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Infractions</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Date</th>
+                                <th class="px-2 py-1.5 text-left font-medium text-sm text-slate-600">Parquet</th>
+                                <th class="px-2 py-1.5 text-center font-medium whitespace-nowrap text-sm text-slate-600 w-20 sticky right-0 bg-white z-20 shadow-[inset_1px_0_0_#e2e8f0]">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
+                        <tbody class="divide-y divide-slate-100 bg-white">
                             <tr v-for="procedure in procedures.data" :key="procedure.id" class="hover:bg-slate-50 transition-colors">
-                                <td class="px-3 py-2.5">
+                                <td class="px-2 py-1.5 sticky left-0 bg-white z-10 shadow-[inset_-1px_0_0_#e2e8f0]">
                                     <Link :href="route('procedures.show', procedure.id)" class="text-slate-600 font-semibold hover:underline text-xs sm:text-sm">{{ procedure.numero_procedure }}</Link>
                                     <span v-if="procedure.est_plurielle" class="ml-1 text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full font-medium">Pluriel</span>
                                 </td>
-                                <td class="px-3 py-2.5">
+                                <td class="px-2 py-1.5">
                                     <Badge :variant="getTypeVariant(procedure)" size="sm" class="text-xs">
                                         {{ getTypeLabel(procedure) }}
                                     </Badge>
                                 </td>
-                                <td class="px-3 py-2.5">
+                                <td class="px-2 py-1.5">
                                     <div class="flex flex-wrap items-center gap-1">
                                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="pm.id">
                                             <div class="flex items-center gap-1 bg-slate-50 rounded-full px-2 py-0.5 border border-slate-200">
@@ -116,7 +116,7 @@
                                     </div>
                                 </td>
                                 <!-- Grade -->
-                                <td class="px-3 py-2.5 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     <div class="flex flex-wrap gap-1">
                                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="'grade-'+pm.id">
                                             <span v-if="pm.militaire?.grade?.libelle" class="text-xs bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium">
@@ -128,7 +128,7 @@
                                     </div>
                                 </td>
                                 <!-- Armée -->
-                                <td class="px-3 py-2.5 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     <div class="flex flex-wrap gap-1">
                                         <template v-for="(pm, idx) in procedure.procedure_militaires" :key="'armee-'+pm.id">
                                             <span v-if="pm.militaire?.armee_relation?.nom" class="text-xs bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium">
@@ -139,13 +139,13 @@
                                     </div>
                                 </td>
                                 <!-- Lieu de commission -->
-                                <td class="px-3 py-2.5 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     {{ procedure.lieu_commission || '-' }}
                                 </td>
-                                <td class="px-3 py-2.5">
+                                <td class="px-2 py-1.5">
                                     <Badge :variant="phaseVariant(procedure.phase)" size="sm" class="text-xs">{{ procedure.phase || '-' }}</Badge>
                                 </td>
-                                <td class="px-3 py-2.5">
+                                <td class="px-2 py-1.5">
                                     <div class="flex flex-wrap gap-1">
                                         <!-- Infractions de la procédure -->
                                         <template v-for="inf in procedure.infractions?.slice(0, 3)" :key="'inf-'+inf.id">
@@ -166,8 +166,8 @@
                                         <span v-if="getTotalInfractions(procedure) === 0" class="text-slate-400 text-xs">-</span>
                                     </div>
                                 </td>
-                                <td class="px-3 py-2.5 text-slate-600 text-xs whitespace-nowrap">{{ formatDate(procedure.date_ouverture) || formatDate(procedure.created_at) || '-' }}</td>
-                                <td class="px-3 py-2.5 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs whitespace-nowrap">{{ formatDate(procedure.date_ouverture) || formatDate(procedure.created_at) || '-' }}</td>
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     <span v-if="procedure.parquet">
                                         {{ procedure.parquet.nom }}
                                         <span class="text-[10px] text-slate-400">
@@ -176,11 +176,11 @@
                                     </span>
                                     <span v-else class="text-slate-400">-</span>
                                 </td>
-                                <td class="px-3 py-2.5 text-center">
+                                <td class="px-2 py-1.5 text-center sticky right-0 bg-white z-10 shadow-[inset_1px_0_0_#e2e8f0]">
                                     <div class="flex items-center justify-center gap-0.5">
-                                        <Link :href="route('procedures.show', procedure.id)" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Voir"><i class="pi pi-eye text-xs"></i></Link>
-                                        <a v-if="procedure.militaire_id && procedure.militaire?.type_personnel === 'militaire'" :href="route('militaires.casier', procedure.militaire_id)" target="_blank" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Casier"><i class="pi pi-print text-xs"></i></a>
-                                        <button v-if="isSD" @click="confirmDeleteProcedure(procedure)" class="w-7 h-7 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600" title="Supprimer"><i class="pi pi-trash text-xs"></i></button>
+                                        <Link :href="route('procedures.show', procedure.id)" class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Voir"><i class="pi pi-eye text-xs"></i></Link>
+                                        <a v-if="procedure.militaire_id && procedure.militaire?.type_personnel === 'militaire'" :href="route('militaires.casier', procedure.militaire_id)" class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Casier"><i class="pi pi-print text-xs"></i></a>
+                                        <button v-if="isSD" @click="confirmDeleteProcedure(procedure)" class="w-6 h-6 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600" title="Supprimer"><i class="pi pi-trash text-xs"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -236,7 +236,7 @@
                     </div>
                     <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
                         <Link :href="route('procedures.show', procedure.id)" class="flex-1 text-center text-xs py-1.5 bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 font-medium"><i class="pi pi-eye mr-1"></i>Voir</Link>
-                        <a v-if="procedure.militaire_id && procedure.militaire?.type_personnel === 'militaire'" :href="route('militaires.casier', procedure.militaire_id)" target="_blank" class="flex-1 text-center text-xs py-1.5 bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 font-medium"><i class="pi pi-print mr-1"></i>Casier</a>
+                        <a v-if="procedure.militaire_id && procedure.militaire?.type_personnel === 'militaire'" :href="route('militaires.casier', procedure.militaire_id)" class="flex-1 text-center text-xs py-1.5 bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 font-medium"><i class="pi pi-print mr-1"></i>Casier</a>
                         <button v-if="isSD" @click="confirmDeleteProcedure(procedure)" class="px-3 py-1.5 text-xs text-red-500 bg-red-50 rounded-lg hover:bg-red-100"><i class="pi pi-trash"></i></button>
                     </div>
                 </div>

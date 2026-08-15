@@ -45,23 +45,23 @@
 
             <!-- Tableau -->
             <Card padding>
-                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
+                <div class="overflow-x-auto overflow-y-auto max-h-[calc(100vh-260px)]">
                     <table class="w-full text-sm">
                         <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Email</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Rôle</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Créé le</th>
-                                <th class="px-4 py-3 text-right font-semibold text-xs uppercase tracking-wide">Actions</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Email</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Rôle</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Créé le</th>
+                                <th class="px-2 py-1.5 text-right font-semibold text-xs uppercase tracking-wide">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             <tr v-for="user in users.data" :key="user.id" class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-2">
                                     <div class="flex items-center gap-3">
                                         <div 
-                                            class="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                                            class="w-7 h-7 rounded-full flex items-center justify-center text-white font-bold text-xs"
                                             :class="avatarColor(user.role)"
                                         >
                                             {{ user.name.charAt(0).toUpperCase() }}

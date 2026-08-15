@@ -92,7 +92,6 @@
                     <a
                         v-if="personnel.type_personnel === 'militaire'"
                         :href="route('militaires.casier', personnel.id)"
-                        target="_blank"
                         class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors"
                     >
                         <i class="pi pi-print"></i> Imprimer Casier Judiciaire

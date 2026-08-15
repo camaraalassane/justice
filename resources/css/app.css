@@ -2,17 +2,17 @@
 @import 'primeicons/primeicons.css';
 
 @theme {
-    --color-gpj-50: #f0f5f1;
-    --color-gpj-100: #d4e5d8;
-    --color-gpj-200: #a9ccb1;
-    --color-gpj-300: #7eb38a;
-    --color-gpj-400: #5c9a6c;
-    --color-gpj-500: #2d5a3d;
-    --color-gpj-600: #244a32;
-    --color-gpj-700: #1c3a27;
-    --color-gpj-800: #142b1d;
-    --color-gpj-900: #0d1c13;
-    --color-gpj-950: #060e09;
+    --color-gpj-50: #f0fdfa;
+    --color-gpj-100: #ccfbf1;
+    --color-gpj-200: #99f6e4;
+    --color-gpj-300: #5eead4;
+    --color-gpj-400: #2dd4bf;
+    --color-gpj-500: #14b8a6;
+    --color-gpj-600: #0d9488;
+    --color-gpj-700: #0f766e;
+    --color-gpj-800: #115e59;
+    --color-gpj-900: #134e4a;
+    --color-gpj-950: #042f2e;
 }
 
 /* ==================== BASE ==================== */
@@ -57,7 +57,7 @@ input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus,
 textarea:focus {
     border-color: var(--color-gpj-500);
-    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* ==================== TEXTE SUR FOND VERT — HAUTE VISIBILITÉ ==================== */
@@ -106,18 +106,18 @@ textarea:focus {
 
 /* ==================== DARK MODE ==================== */
 .gpj-dark {
-    --color-gpj-50: #060e09;
-    --color-gpj-100: #0d1c13;
-    --color-gpj-200: #1c3a27;
-    --color-gpj-300: #4a7a5a;
-    --color-gpj-400: #6ba07a;
-    --color-gpj-500: #4ade80;
-    --color-gpj-600: #6aee9a;
-    --color-gpj-700: #b8e6c8;
-    --color-gpj-800: #d4f0de;
-    --color-gpj-900: #e8f7ee;
-    --color-gpj-950: #f0faf4;
-    background-color: #060e09;
+    --color-gpj-50: #042f2e;
+    --color-gpj-100: #134e4a;
+    --color-gpj-200: #115e59;
+    --color-gpj-300: #0f766e;
+    --color-gpj-400: #0d9488;
+    --color-gpj-500: #14b8a6;
+    --color-gpj-600: #2dd4bf;
+    --color-gpj-700: #5eead4;
+    --color-gpj-800: #99f6e4;
+    --color-gpj-900: #ccfbf1;
+    --color-gpj-950: #f0fdfa;
+    background-color: #020617; /* slate-950 */
     color: #e2e8f0; /* slate-200 */
 }
 

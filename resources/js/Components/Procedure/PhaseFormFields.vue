@@ -3,51 +3,58 @@
         <!-- ========================================================== -->
         <!-- CONDAMNATION - ORDRE DE POURSUITE                          -->
         <!-- ========================================================== -->
-        <div v-if="isOrdrePoursuite" class="p-4 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800">
-            <div class="flex items-center gap-4 flex-wrap">
-                <label class="flex items-center gap-2 cursor-pointer">
+        <div v-if="isOrdrePoursuite" class="p-4 border-2 border-gpj-200 dark:border-gpj-800/50 bg-gpj-50/50 dark:bg-gpj-900/20 rounded-xl mb-4">
+            <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center mb-4">
+                <i class="pi pi-gavel mr-2"></i> Condamnation
+            </label>
+
+            <div class="flex items-start gap-4 flex-col sm:flex-row">
+                <label class="flex items-center gap-3 cursor-pointer bg-white dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-gpj-400 transition-colors">
                     <input 
                         type="checkbox" 
                         :checked="localCondamnation.est_condamne === true"
                         @change="onCondamnationChange($event)"
-                        class="w-4 h-4 rounded border-slate-400 text-slate-600 focus:ring-slate-500"
+                        class="w-5 h-5 rounded border-slate-300 text-gpj-500 focus:ring-gpj-500"
                     />
-                    <span class="text-sm font-medium text-slate-800 dark:text-slate-400">
-                        <i class="pi pi-gavel mr-1"></i>
-                        Condamné
+                    <span class="text-sm font-bold text-slate-700 dark:text-slate-300">
+                        Déclaré coupable (Condamné)
                     </span>
                 </label>
 
                 <!-- Champ Peine - apparaît seulement si condamné -->
-                <div v-if="localCondamnation.est_condamne === true" class="flex-1 min-w-50">
-                    <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium text-slate-800 dark:text-slate-400 whitespace-nowrap">
-                            Peine :
+                <div v-if="localCondamnation.est_condamne === true" class="flex-1 w-full bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                        <label class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide whitespace-nowrap">
+                            Peine Principale :
                         </label>
                         <input 
                             :value="localCondamnation.peine_principale"
                             @input="updatePeine($event)"
                             type="text"
-                            placeholder="Ex: 5 ans d'emprisonnement"
-                            class="flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                            placeholder="Ex: 5 ans d'emprisonnement..."
+                            class="flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500 font-medium"
                         />
                     </div>
-                    <div class="mt-2">
+                    <div>
                         <textarea 
                             :value="localCondamnation.peine_description"
                             @input="updatePeineDescription($event)"
                             rows="2"
-                            placeholder="Description détaillée de la peine..."
-                            class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                            placeholder="Détails supplémentaires ou peines complémentaires..."
+                            class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-gpj-500"
                         ></textarea>
                     </div>
                 </div>
             </div>
 
             <!-- Affichage de la peine enregistrée -->
-            <div v-if="localCondamnation.est_condamne === true && localCondamnation.peine_principale" class="mt-2 text-xs text-emerald-600 dark:text-emerald-400">
-                <i class="pi pi-check-circle mr-1"></i>
-                Peine : <strong>{{ localCondamnation.peine_principale }}</strong>
+            <div v-if="localCondamnation.est_condamne === true && localCondamnation.peine_principale" class="mt-4 p-4 bg-gpj-500 rounded-xl shadow-md flex items-start gap-3 text-black">
+                <i class="pi pi-check-circle mt-0.5 text-lg"></i>
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-wide mb-0.5 text-black">Peine prononcée</p>
+                    <p class="text-base font-bold text-black">{{ localCondamnation.peine_principale }}</p>
+                    <p v-if="localCondamnation.peine_description" class="text-sm mt-1 font-medium text-black/80">{{ localCondamnation.peine_description }}</p>
+                </div>
             </div>
         </div>
 

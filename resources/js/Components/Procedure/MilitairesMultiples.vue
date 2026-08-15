@@ -1,8 +1,8 @@
 <template>
     <div class="space-y-4">
         <!-- En-tête avec le toggle plurialité -->
-        <div class="flex items-center justify-between bg-white dark:bg-slate-800 rounded-lg p-4">
-            <div class="flex items-center gap-3">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-4">
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input
                         type="checkbox"
@@ -10,16 +10,16 @@
                         class="sr-only peer"
                         @change="onTogglePlurialite"
                     />
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-slate-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-white0"></div>
-                    <span class="ms-3 text-sm font-medium text-slate-800 dark:text-slate-400">
+                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gpj-500 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gpj-500"></div>
+                    <span class="ms-3 text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide">
                         {{ estPlurielleLocal ? 'Pluriel' : 'Individuel' }}
                     </span>
                 </label>
-                <span class="text-xs text-slate-500">
-                    {{ estPlurielleLocal ? 'Plusieurs personnels concernés' : 'Un seul personnel concerné' }}
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    ({{ estPlurielleLocal ? 'Plusieurs personnels concernés' : 'Un seul personnel concerné' }})
                 </span>
             </div>
-            <span class="text-xs text-slate-600 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
+            <span class="text-xs text-gpj-700 dark:text-gpj-300 bg-gpj-50 dark:bg-gpj-900/50 px-3 py-1 rounded-full font-medium border border-gpj-200 dark:border-gpj-800 shadow-sm">
                 {{ militairesLocal.length }} personnel{{ militairesLocal.length > 1 ? 's' : '' }}
             </span>
         </div>
@@ -142,7 +142,7 @@
             <div class="mt-4 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-3">
-                        <label class="text-xs font-medium text-slate-700">
+                        <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                             <i class="pi pi-list mr-1"></i> Infractions
                         </label>
                         <span class="text-xs text-slate-500">{{ (militaire.infractions || []).length }} sélectionnée(s)</span>
@@ -179,7 +179,7 @@
             <!-- Fautes militaires -->
             <div v-if="militaire.type_personnel === 'militaire'" class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-exclamation-triangle mr-1"></i> Fautes militaires
                     </label>
                     <button
@@ -210,7 +210,7 @@
             <!-- Parties civiles -->
             <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-users mr-1"></i> Parties civiles
                     </label>
                     <button
@@ -246,7 +246,7 @@
             <!-- Témoins -->
             <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-users mr-1"></i> Témoins
                     </label>
                     <button type="button" @click="ajouterPersonne(index, 'temoins')" class="text-xs text-slate-600 hover:text-slate-800">
@@ -268,7 +268,7 @@
             <!-- Civile Responsable -->
             <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-user mr-1"></i> Civile responsable
                     </label>
                     <button type="button" @click="ajouterPersonne(index, 'civile_responsables')" class="text-xs text-slate-600 hover:text-slate-800">
@@ -290,7 +290,7 @@
             <!-- Garants -->
             <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-shield mr-1"></i> Garants
                     </label>
                     <button type="button" @click="ajouterPersonne(index, 'garants')" class="text-xs text-slate-600 hover:text-slate-800">
@@ -312,7 +312,7 @@
             <!-- Avocat -->
             <div class="mt-3 border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-briefcase mr-1"></i> Avocat
                     </label>
                     <button type="button" @click="ajouterPersonne(index, 'avocats')" class="text-xs text-slate-600 hover:text-slate-800">

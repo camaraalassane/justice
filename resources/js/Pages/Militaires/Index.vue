@@ -10,7 +10,7 @@
                             v-model="filtres.search"
                             type="text"
                             placeholder="Rechercher par nom, prénom, matricule..."
-                            class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm transition-colors"
+                            class="w-full pl-9 px-2 py-1.5 rounded-lg border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 shadow-sm transition-colors"
                             @input="appliquerFiltres"
                         />
                     </div>
@@ -46,34 +46,34 @@
 
             <!-- Tableau -->
             <Card padding>
-                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
+                <div class="overflow-x-auto overflow-y-auto max-h-[calc(100vh-260px)]">
                     <table class="w-full text-sm">
                         <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Type</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Matricule</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Identité</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Grade / Profession</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Armée/Service</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Unité</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Genre</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Statut</th>
-                                <th class="px-4 py-3 text-center font-semibold text-xs uppercase tracking-wide">Actions</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide sticky left-0 bg-slate-50 z-20 shadow-[inset_-1px_0_0_#e2e8f0]">Type</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Matricule</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Identité</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Grade / Profession</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Armée/Service</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Unité</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Genre</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Statut</th>
+                                <th class="px-2 py-1.5 text-center font-semibold text-xs uppercase tracking-wide sticky right-0 bg-slate-50 z-20 shadow-[inset_1px_0_0_#e2e8f0]">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             <tr v-for="personnel in militaires.data" :key="personnel.id" class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5 sticky left-0 bg-white z-10 shadow-[inset_-1px_0_0_#e2e8f0]">
                                     <Badge :variant="personnel.type_personnel === 'militaire' ? 'info' : 'primary'" size="sm">
                                         {{ personnel.type_personnel === 'militaire' ? 'Militaire' : 'Civil' }}
                                     </Badge>
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5">
                                     <Link :href="route('militaires.show', personnel.id)" class="text-slate-600 font-medium hover:underline">
                                         {{ personnel.matricule || 'N/A' }}
                                     </Link>
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5">
                                     <div class="flex items-center gap-2">
                                         <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-xs font-bold shrink-0">
                                             {{ personnel.nom ? personnel.nom.charAt(0) : '?' }}{{ personnel.prenoms ? personnel.prenoms.charAt(0) : '' }}
@@ -84,35 +84,35 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     {{ personnel.type_personnel === 'militaire' ? (personnel.grade?.libelle || personnel.grade || '-') : (personnel.profession || '-') }}
                                 </td>
-                                <td class="px-4 py-3 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     {{ personnel.armee_relation?.nom || personnel.armee || '-' }}
                                 </td>
-                                <td class="px-4 py-3 text-slate-600 text-xs">{{ personnel.unite || '-' }}</td>
-                                <td class="px-4 py-3 text-slate-600 text-xs">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">{{ personnel.unite || '-' }}</td>
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">
                                     <span v-if="personnel.genre">{{ personnel.genre }}</span>
                                     <span v-else class="text-slate-400">-</span>
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5">
                                     <Badge :variant="statutVariant(personnel.statut)" size="sm">
                                         {{ personnel.statut || 'Non défini' }}
                                     </Badge>
                                 </td>
-                                <td class="px-4 py-3 text-center">
-                                    <div class="flex items-center justify-center gap-1">
-                                        <Link :href="route('militaires.show', personnel.id)" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Voir la fiche">
-                                            <i class="pi pi-eye text-sm"></i>
+                                <td class="px-2 py-1.5 text-center sticky right-0 bg-white z-10 shadow-[inset_1px_0_0_#e2e8f0]">
+                                    <div class="flex items-center justify-center gap-0.5">
+                                        <Link :href="route('militaires.show', personnel.id)" class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Voir la fiche">
+                                            <i class="pi pi-eye text-xs"></i>
                                         </Link>
-                                        <Link :href="route('militaires.edit', personnel.id)" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Modifier">
-                                            <i class="pi pi-pencil text-sm"></i>
+                                        <Link :href="route('militaires.edit', personnel.id)" class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Modifier">
+                                            <i class="pi pi-pencil text-xs"></i>
                                         </Link>
-                                        <a v-if="personnel.type_personnel === 'militaire'" :href="route('militaires.casier', personnel.id)" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Casier judiciaire">
-                                            <i class="pi pi-print text-sm"></i>
+                                        <a v-if="personnel.type_personnel === 'militaire'" :href="route('militaires.casier', personnel.id)" class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Casier judiciaire">
+                                            <i class="pi pi-print text-xs"></i>
                                         </a>
-                                        <button v-if="isSD" @click="confirmDeletePersonnel(personnel)" class="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600" title="Supprimer">
-                                            <i class="pi pi-trash text-sm"></i>
+                                        <button v-if="isSD" @click="confirmDeletePersonnel(personnel)" class="w-6 h-6 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600" title="Supprimer">
+                                            <i class="pi pi-trash text-xs"></i>
                                         </button>
                                     </div>
                                 </td>

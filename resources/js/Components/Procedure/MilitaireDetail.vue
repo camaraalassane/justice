@@ -1,26 +1,26 @@
 <template>
-    <div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-700">
+    <div class="p-4 bg-transparent border-b border-slate-200 dark:border-slate-700 mb-2">
         <!-- En-tête du militaire -->
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-400 font-bold text-sm">
+                <div class="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 font-bold text-lg border border-slate-200 dark:border-slate-700">
                     {{ getInitiales() }}
                 </div>
                 <div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="font-medium text-slate-900 dark:text-white">{{ getNomComplet() }}</span>
-                        <span v-if="estPrincipal" class="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full">Principal</span>
-                        <span v-if="procedureMilitaire?.est_nouveau" class="text-[10px] bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">Nouveau</span>
+                    <div class="flex items-center gap-2 flex-wrap mb-1">
+                        <span class="font-bold text-lg text-slate-800 dark:text-white uppercase tracking-wide">{{ getNomComplet() }}</span>
+                        <span v-if="estPrincipal" class="text-[10px] bg-gpj-500 text-white px-2 py-0.5 rounded-full font-bold">Principal</span>
+                        <span v-if="procedureMilitaire?.est_nouveau" class="text-[10px] bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full font-bold">Nouveau</span>
                         <Badge v-if="typePersonnel === 'civil'" variant="primary" size="sm">Civil</Badge>
                     </div>
-                    <p class="text-xs text-slate-500">{{ getMatricule() }}</p>
+                    <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ getMatricule() }}</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
                 <Link 
                     v-if="peutModifier && procedureMilitaire?.militaire_id"
                     :href="getEditUrl()"
-                    class="text-slate-500 hover:text-slate-700 text-xs transition-colors"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors"
                     title="Modifier les informations du militaire"
                 >
                     <i class="pi pi-pencil"></i>
@@ -28,7 +28,7 @@
                 <button 
                     v-if="peutSupprimer"
                     @click="confirmDeleteMilitaire"
-                    class="text-red-400 hover:text-red-600 text-xs transition-colors"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 transition-colors"
                     title="Supprimer ce militaire de la procédure"
                 >
                     <i class="pi pi-trash"></i>
@@ -36,8 +36,7 @@
                 <a 
                     v-if="procedureMilitaire?.militaire_id"
                     :href="route('militaires.casier', procedureMilitaire.militaire_id)" 
-                    target="_blank" 
-                    class="text-slate-500 hover:text-slate-700 text-xs"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors"
                     title="Imprimer le casier"
                 >
                     <i class="pi pi-print"></i>
@@ -46,21 +45,21 @@
         </div>
 
         <!-- Mode affichage -->
-        <div class="space-y-3">
+        <div class="space-y-4">
             <!-- Informations du militaire -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm bg-white dark:bg-slate-900 p-3 rounded-lg">
-                <div><span class="text-slate-500">Grade / Profession:</span> <span class="font-medium">{{ getGradeOuProfession() }}</span></div>
-                <div><span class="text-slate-500">Unité:</span> <span class="font-medium">{{ getUnite() }}</span></div>
-                <div><span class="text-slate-500">Genre:</span> <span class="font-medium">{{ getGenre() }}</span></div>
-                <div><span class="text-slate-500">Armée:</span> <span class="font-medium">{{ getArmee() }}</span></div>
-                <div><span class="text-slate-500">Statut:</span> <Badge :variant="statutVariant(getStatut())" size="sm">{{ getStatut() }}</Badge></div>
-                <div><span class="text-slate-500">Date naissance:</span> <span class="font-medium">{{ formatDate(getDateNaissance()) }}</span></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                <div><span class="text-slate-500 dark:text-slate-400 uppercase text-xs font-bold block mb-0.5">Grade / Profession</span> <span class="font-bold text-slate-800 dark:text-slate-200 text-base">{{ getGradeOuProfession() }}</span></div>
+                <div><span class="text-slate-500 dark:text-slate-400 uppercase text-xs font-bold block mb-0.5">Unité</span> <span class="font-bold text-slate-800 dark:text-slate-200 text-base">{{ getUnite() }}</span></div>
+                <div><span class="text-slate-500 dark:text-slate-400 uppercase text-xs font-bold block mb-0.5">Genre</span> <span class="font-bold text-slate-800 dark:text-slate-200 text-base">{{ getGenre() }}</span></div>
+                <div><span class="text-slate-500 dark:text-slate-400 uppercase text-xs font-bold block mb-0.5">Armée</span> <span class="font-bold text-slate-800 dark:text-slate-200 text-base">{{ getArmee() }}</span></div>
+                <div><span class="text-slate-500 dark:text-slate-400 uppercase text-xs font-bold block mb-0.5">Statut</span> <span class="font-bold text-slate-800 dark:text-slate-200 text-base">{{ getStatut() }}</span></div>
+                <div><span class="text-slate-500 dark:text-slate-400 uppercase text-xs font-bold block mb-0.5">Date naissance</span> <span class="font-bold text-slate-800 dark:text-slate-200 text-base">{{ formatDate(getDateNaissance()) }}</span></div>
             </div>
 
             <!-- Infractions -->
             <div class="border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-list mr-1"></i> Infractions
                     </label>
                     <button 
@@ -82,7 +81,7 @@
             <!-- Fautes militaires par catégorie -->
             <div v-if="typePersonnel === 'militaire'" class="border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-exclamation-triangle mr-1"></i> Fautes militaires
                     </label>
                     <button 
@@ -113,7 +112,7 @@
             <!-- Parties civiles -->
             <div class="border-t border-slate-200 pt-3">
                 <div class="flex items-center justify-between mb-2">
-                    <label class="text-xs font-medium text-slate-700">
+                    <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center">
                         <i class="pi pi-users mr-1"></i> Parties civiles
                     </label>
                     <button 
@@ -132,7 +131,7 @@
 
             <!-- Témoins -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-slate-700 mb-2 block">
+                <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center mb-2">
                     <i class="pi pi-users mr-1"></i> Témoins
                 </label>
                 <div v-if="getPersonnes('temoins').length === 0" class="text-xs text-slate-500 py-1">Aucun témoin</div>
@@ -143,7 +142,7 @@
 
             <!-- Civile Responsable -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-slate-700 mb-2 block">
+                <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center mb-2">
                     <i class="pi pi-user mr-1"></i> Civile responsable
                 </label>
                 <div v-if="getPersonnes('civile_responsables').length === 0" class="text-xs text-slate-500 py-1">Aucune civile responsable</div>
@@ -154,7 +153,7 @@
 
             <!-- Garants -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-slate-700 mb-2 block">
+                <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center mb-2">
                     <i class="pi pi-shield mr-1"></i> Garants
                 </label>
                 <div v-if="getPersonnes('garants').length === 0" class="text-xs text-slate-500 py-1">Aucun garant</div>
@@ -165,7 +164,7 @@
 
             <!-- Avocat -->
             <div class="border-t border-slate-200 pt-3">
-                <label class="text-xs font-medium text-slate-700 mb-2 block">
+                <label class="text-sm font-bold text-gpj-600 dark:text-gpj-400 uppercase tracking-wide flex items-center mb-2">
                     <i class="pi pi-briefcase mr-1"></i> Avocat
                 </label>
                 <div v-if="getPersonnes('avocats').length === 0" class="text-xs text-slate-500 py-1">Aucun avocat</div>

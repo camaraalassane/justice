@@ -355,7 +355,7 @@
                                                 <textarea v-model="pj.description" placeholder="Description" rows="1" class="w-full rounded border border-slate-300 text-xs py-1 px-1.5 mb-1" />
                                                 <div v-if="pj.chemin_fichier && !pj.fichier" class="text-xs text-slate-600 mb-1 flex items-center gap-2">
                                                     <i class="pi pi-file-pdf text-red-500"></i>
-                                                    <a :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-slate-600 hover:underline">Voir le PDF</a>
+                                                    <a :href="'/storage/' + pj.chemin_fichier" class="text-slate-600 hover:underline">Voir le PDF</a>
                                                     <button type="button" @click="pj.chemin_fichier = null; pj._supprimerFichier = true" class="text-red-400 hover:text-red-600"><i class="pi pi-trash text-xs"></i></button>
                                                 </div>
                                                 <input type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700" />
@@ -396,14 +396,14 @@
                                         <p v-if="phase.description" class="text-xs text-slate-600 mt-1">{{ phase.description }}</p>
                                         
                                         <!-- Affichage condamnation -->
-                                        <div v-if="phase.est_condamne === true" class="mt-2 p-2 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
-                                            <div class="flex items-center gap-2 text-red-700 dark:text-red-300">
-                                                <i class="pi pi-gavel text-sm"></i>
-                                                <span class="font-bold text-sm">Condamnation</span>
+                                        <div v-if="phase.est_condamne === true" class="mt-3 p-3 bg-gpj-500 rounded-lg shadow-md">
+                                            <div class="flex items-center gap-2 text-black mb-1">
+                                                <i class="pi pi-gavel text-lg"></i>
+                                                <span class="font-bold text-sm uppercase tracking-wide">Condamnation</span>
                                             </div>
-                                            <div class="mt-1 text-sm text-red-600 dark:text-red-300">
-                                                <p><span class="font-medium">Peine :</span> {{ phase.peine_principale || 'Non spécifiée' }}</p>
-                                                <p v-if="phase.peine_description" class="mt-1 text-xs text-red-500 dark:text-red-400">
+                                            <div class="text-black">
+                                                <p><span class="font-bold">Peine :</span> {{ phase.peine_principale || 'Non spécifiée' }}</p>
+                                                <p v-if="phase.peine_description" class="mt-1 text-sm font-medium text-black/80">
                                                     {{ phase.peine_description }}
                                                 </p>
                                             </div>
@@ -449,7 +449,7 @@
                                             <div v-for="pj in phase.pieces_jointes" :key="pj.id" class="text-xs text-slate-700 ml-2 flex items-center gap-2">
                                                 <i class="pi pi-file-pdf text-red-500"></i>
                                                 <span>{{ pj.nom }}</span>
-                                                <a v-if="pj.chemin_fichier" :href="'/storage/' + pj.chemin_fichier" target="_blank" class="text-slate-600 hover:underline"><i class="pi pi-external-link text-xs"></i> Voir</a>
+                                                <a v-if="pj.chemin_fichier" :href="'/storage/' + pj.chemin_fichier" class="text-slate-600 hover:underline"><i class="pi pi-external-link text-xs"></i> Voir</a>
                                             </div>
                                         </div>
                                     </div>
@@ -463,7 +463,7 @@
                 <!-- Sidebar -->
                 <div class="space-y-6">
                     <!-- Bouton Export PDF -->
-                    <a :href="route('procedures.export-pdf', procedure.id)" target="_blank" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors">
+                    <a :href="route('procedures.export-pdf', procedure.id)" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors">
                         <i class="pi pi-download"></i> Exporter en PDF
                     </a>
 

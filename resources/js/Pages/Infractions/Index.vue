@@ -11,39 +11,39 @@
             </div>
 
             <Card padding>
-                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
+                <div class="overflow-x-auto overflow-y-auto max-h-[calc(100vh-260px)]">
                     <table class="w-full text-sm">
                         <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Code</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Libellé</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Classification</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Nature</th>
-                                <th class="px-4 py-3 text-center font-semibold text-xs uppercase tracking-wide">Gravité</th>
-                                <th class="px-4 py-3 text-center font-semibold text-xs uppercase tracking-wide">Actions</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Code</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Libellé</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Classification</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Nature</th>
+                                <th class="px-2 py-1.5 text-center font-semibold text-xs uppercase tracking-wide">Gravité</th>
+                                <th class="px-2 py-1.5 text-center font-semibold text-xs uppercase tracking-wide">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             <tr v-for="infraction in infractions.data" :key="infraction.id" class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5">
                                     <span class="font-mono text-xs px-2 py-0.5 rounded" :class="codeBadgeClass(infraction.code_infraction)">
                                         {{ infraction.code_infraction }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-3 font-medium text-slate-800">{{ infraction.libelle }}</td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5 font-medium text-slate-800">{{ infraction.libelle }}</td>
+                                <td class="px-2 py-1.5">
                                     <Badge :variant="classificationVariant(infraction.classification)" size="sm">
                                         {{ infraction.classification }}
                                     </Badge>
                                 </td>
-                                <td class="px-4 py-3 text-slate-600 text-xs">{{ infraction.nature }}</td>
-                                <td class="px-4 py-3 text-center">
+                                <td class="px-2 py-1.5 text-slate-600 text-xs">{{ infraction.nature }}</td>
+                                <td class="px-2 py-1.5 text-center">
                                     <div class="flex items-center justify-center gap-0.5">
                                         <i v-for="i in 5" :key="i" class="pi text-xs"
                                             :class="i <= infraction.gravite ? 'pi-star-fill text-amber-500' : 'pi-star text-slate-200'"></i>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-center">
+                                <td class="px-2 py-1.5 text-center">
                                     <div class="flex items-center justify-center gap-1">
                                         <Link :href="route('infractions.edit', infraction.id)"
                                             class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Modifier">

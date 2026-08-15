@@ -71,23 +71,23 @@
 
             <!-- Liste des logs -->
             <Card padding>
-                <div class="overflow-x-auto overflow-y-auto max-h-[70vh]">
+                <div class="overflow-x-auto overflow-y-auto max-h-[calc(100vh-260px)]">
                     <table class="w-full text-sm">
                         <thead class="bg-slate-50 text-slate-700 border-b-2 border-slate-200 sticky top-0 z-10">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Date</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Action</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">Description</th>
-                                <th class="px-4 py-3 text-left font-semibold text-xs uppercase tracking-wide">IP</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Date</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Utilisateur</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Action</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">Description</th>
+                                <th class="px-2 py-1.5 text-left font-semibold text-xs uppercase tracking-wide">IP</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             <tr v-for="log in logs.data" :key="log.id" class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
+                                <td class="px-2 py-1.5 text-xs text-slate-500 whitespace-nowrap">
                                     {{ new Date(log.created_at).toLocaleString('fr-FR') }}
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5">
                                     <div class="flex items-center gap-2">
                                         <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-xs font-bold">
                                             {{ log.user?.name?.charAt(0) || '?' }}
@@ -98,14 +98,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-2 py-1.5">
                                     <Badge :variant="actionVariant(log.action)" size="sm">{{ actionLabel(log.action) }}</Badge>
                                 </td>
-                                <td class="px-4 py-3 text-xs text-slate-600 max-w-xs truncate">{{ log.description }}</td>
-                                <td class="px-4 py-3 text-xs text-slate-400 font-mono">{{ log.ip_address }}</td>
+                                <td class="px-2 py-1.5 text-xs text-slate-600 max-w-xs truncate">{{ log.description }}</td>
+                                <td class="px-2 py-1.5 text-xs text-slate-400 font-mono">{{ log.ip_address }}</td>
                             </tr>
                             <tr v-if="!logs.data?.length">
-                                <td colspan="5" class="px-4 py-12 text-center text-slate-400">
+                                <td colspan="5" class="px-4 py-8 text-center text-slate-400">
                                     <i class="pi pi-inbox text-3xl mb-2 block"></i>
                                     Aucun log trouvé
                                 </td>

@@ -20,7 +20,7 @@
                     <Link :href="route('militaires.show', militaire.id)" class="px-3 py-2 border border-slate-300 text-slate-700 text-sm rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1">
                         <i class="pi pi-arrow-left text-xs"></i> Retour
                     </Link>
-                    <a :href="route('militaires.casier.pdf', militaire.id)" target="_blank" class="px-3 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2">
+                    <a :href="route('militaires.casier.pdf', militaire.id)" class="px-3 py-2 bg-gpj-500 text-white text-sm font-medium rounded-lg hover:bg-gpj-600 transition-colors flex items-center gap-2">
                         <i class="pi pi-download"></i> Exporter PDF
                     </a>
                     <button v-if="peutModifier" @click="printCasier" class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
