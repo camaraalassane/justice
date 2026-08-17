@@ -140,27 +140,29 @@ class InfractionController extends Controller
 
         return response()->json($infractions);
     }
+
     /**
- * Création rapide d'une infraction depuis le formulaire de procédure
- */
-public function quickCreate(Request $request)
-{
-    $validated = $request->validate([
-        'libelle' => 'required|string|max:255',
-        'classification' => 'required|in:Criminelle,Délictuelle,Contravention',
-        'nature' => 'nullable|string|max:255',
-    ]);
+     * Création rapide d'une infraction depuis le formulaire de procédure
+     */
+    public function quickCreate(Request $request)
+    {
+        $validated = $request->validate([
+            'code_infraction' => 'required|string|max:20|unique:infractions_base,code_infraction',
+            'libelle' => 'required|string|max:255',
+            'classification' => 'required|in:Criminelle,Délictuelle,Contravention',
+            'nature' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+        ]);
 
-    $code = InfractionBase::generateCode($validated['classification']); 
+        $infraction = InfractionBase::create([
+            'code_infraction' => $validated['code_infraction'],
+            'libelle' => $validated['libelle'],
+            'classification' => $validated['classification'],
+            'nature' => $validated['nature'] ?? 'Manquement à la discipline',
+            'description' => $validated['description'] ?? null,
+            'gravite' => 1,
+        ]);
 
-    $infraction = InfractionBase::create([
-        'code_infraction' => $code,
-        'libelle' => $validated['libelle'],
-        'classification' => $validated['classification'],
-        'nature' => $validated['nature'] ?? 'Manquement à la discipline',
-        'gravite' => 1,
-    ]);
-
-    return response()->json($infraction);
-}
+        return response()->json($infraction);
+    }
 }

@@ -283,7 +283,12 @@ const creerInfraction = async () => {
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Erreur lors de la création');
+            let errorMessage = errorData.message || 'Erreur lors de la création';
+            if (errorData.errors && Object.keys(errorData.errors).length > 0) {
+                const firstKey = Object.keys(errorData.errors)[0];
+                errorMessage = errorData.errors[firstKey][0];
+            }
+            throw new Error(errorMessage);
         }
 
         const data = await response.json();
