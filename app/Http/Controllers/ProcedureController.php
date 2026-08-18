@@ -221,14 +221,7 @@ class ProcedureController extends Controller
                 if ($existing) {
                     $phaseTypeId = $existing->id;
                 } else {
-                    $newPhaseType = PhaseType::create([
-                        'libelle' => $request->phase_personnalisee,
-                        'slug' => str()->slug($request->phase_personnalisee),
-                        'is_system' => false,
-                        'is_custom' => true,
-                        'ordre' => PhaseType::max('ordre') + 1,
-                    ]);
-                    $phaseTypeId = $newPhaseType->id;
+                    $phaseTypeId = null;
                 }
             }
 
@@ -497,14 +490,7 @@ class ProcedureController extends Controller
                 }
                 $phaseTypeId = $existing->id;
             } else {
-                $newPhaseType = PhaseType::create([
-                    'libelle' => $request->phase_personnalisee,
-                    'slug' => str()->slug($request->phase_personnalisee),
-                    'is_system' => false,
-                    'is_custom' => true,
-                    'ordre' => PhaseType::max('ordre') + 1,
-                ]);
-                $phaseTypeId = $newPhaseType->id;
+                $phaseTypeId = null;
             }
         }
 
