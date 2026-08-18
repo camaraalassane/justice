@@ -433,9 +433,17 @@ const submit = () => {
     
     console.log('📤 Données envoyées:', data);
     
-    form.post(route('procedures.store'), {
+    form.transform((formData) => ({
+        ...formData,
+        parquet_type: finalParquetType,
+        parquet_id: finalParquetId,
+        parquet_nom: finalParquetNom,
+        parquet_localisation: form.parquet.localisation || '',
+        parquet_code: form.parquet.code || '',
+        aucun_parquet: aucunParquet.value,
+    })).post(route('procedures.store'), {
         preserveScroll: true,
-        data: data,
+        forceFormData: true,
         onSuccess: () => {
             flashSuccess.value = 'Procédure créée avec succès!';
             fetch('/api/phase-types')

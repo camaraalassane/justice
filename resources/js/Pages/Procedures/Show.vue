@@ -988,6 +988,7 @@ const ajouterPhase = () => {
     router.post(route('procedures.ajouter-phase', props.procedure.id), { 
         ...phaseForm.value 
     }, { 
+        forceFormData: true,
         onSuccess: () => { 
             formProcessing.value = false; 
             flashSuccess.value = 'Phase ajoutée avec succès';
