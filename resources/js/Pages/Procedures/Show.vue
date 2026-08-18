@@ -39,17 +39,24 @@
                 <template #header><div class="px-6 py-4 border-b border-slate-300"><h3 class="text-lg font-semibold text-slate-900">Ajouter une phase</h3></div></template>
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
+                        <div v-if="phaseForm.phase_type_id !== 'autre'">
                             <label class="block text-sm font-medium text-slate-800 mb-1">Type de phase <span class="text-red-500">*</span></label>
                             <select v-model="phaseForm.phase_type_id" required @change="onPhaseTypeChange" class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500">
                                 <option value="">Choisir</option>
                                 <option v-for="pt in phasesDisponibles" :key="pt.id" :value="pt.id">{{ pt.libelle }}</option>
-                                <option value="autre">Autre (personnalisé)</option>
                             </select>
+                            <button type="button" @click="phaseForm.phase_type_id = 'autre'; onPhaseTypeChange()" class="mt-2 text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium">
+                                <i class="pi pi-plus-circle"></i> Créer une phase personnalisée
+                            </button>
                         </div>
                         <div v-if="phaseForm.phase_type_id === 'autre'">
-                            <label class="block text-sm font-medium text-slate-800 mb-1">Nom <span class="text-red-500">*</span></label>
-                            <input v-model="phaseForm.phase_personnalisee" type="text" required class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
+                            <label class="block text-sm font-medium text-slate-800 mb-1">Nom de la phase personnalisée <span class="text-red-500">*</span></label>
+                            <div class="flex items-center gap-2">
+                                <input v-model="phaseForm.phase_personnalisee" type="text" required placeholder="Ex: Rapport d'expertise" class="flex-1 w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500" />
+                                <button type="button" @click="phaseForm.phase_type_id = ''; phaseForm.phase_personnalisee = ''; onPhaseTypeChange()" class="text-slate-500 hover:text-red-600 p-2 bg-slate-100 rounded-lg hover:bg-red-50" title="Annuler et choisir dans la liste">
+                                    <i class="pi pi-times"></i>
+                                </button>
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-800 mb-1">Date <span class="text-red-500">*</span></label>

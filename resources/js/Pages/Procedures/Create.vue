@@ -53,7 +53,7 @@
                         <i class="pi pi-file mr-2"></i> Phase initiale
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
+                        <div v-if="form.phase_type_id !== 'autre'">
                             <label class="block text-sm font-medium text-slate-800 mb-1">
                                 Type de phase <span class="text-red-500">*</span>
                             </label>
@@ -67,21 +67,28 @@
                                 <option v-for="pt in phaseTypes" :key="pt.id" :value="pt.id">
                                     {{ pt.libelle }}
                                 </option>
-                                <option value="autre">--- Ajouter une autre ---</option>
                             </select>
+                            <button type="button" @click="form.phase_type_id = 'autre'; onPhaseTypeChange()" class="mt-2 text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium">
+                                <i class="pi pi-plus-circle"></i> Créer une phase personnalisée
+                            </button>
                             <p v-if="form.errors.phase_type_id" class="mt-1 text-sm text-red-500">{{ form.errors.phase_type_id }}</p>
                         </div>
                         <div v-if="form.phase_type_id === 'autre'">
                             <label class="block text-sm font-medium text-slate-800 mb-1">
-                                Nom de la phase <span class="text-red-500">*</span>
+                                Nom de la phase personnalisée <span class="text-red-500">*</span>
                             </label>
-                            <input
-                                v-model="form.phase_personnalisee"
-                                type="text"
-                                required
-                                placeholder="Nom personnalisé"
-                                class="w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
-                            />
+                            <div class="flex items-center gap-2">
+                                <input
+                                    v-model="form.phase_personnalisee"
+                                    type="text"
+                                    required
+                                    placeholder="Ex: Rapport d'expertise"
+                                    class="flex-1 w-full rounded-lg border border-slate-300 text-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                                />
+                                <button type="button" @click="form.phase_type_id = ''; form.phase_personnalisee = ''; onPhaseTypeChange()" class="text-slate-500 hover:text-red-600 p-2 bg-slate-100 rounded-lg hover:bg-red-50" title="Annuler et choisir dans la liste">
+                                    <i class="pi pi-times"></i>
+                                </button>
+                            </div>
                             <p v-if="form.errors.phase_personnalisee" class="mt-1 text-sm text-red-500">{{ form.errors.phase_personnalisee }}</p>
                         </div>
                         <div>
