@@ -358,8 +358,11 @@
                                                     <a :href="'/storage/' + pj.chemin_fichier" class="text-slate-600 hover:underline">Voir le PDF</a>
                                                     <button type="button" @click="pj.chemin_fichier = null; pj._supprimerFichier = true" class="text-red-400 hover:text-red-600"><i class="pi pi-trash text-xs"></i></button>
                                                 </div>
-                                                <input type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700" />
-                                                <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1"><i class="pi pi-check mr-1"></i>{{ pj.fichier.name }}</div>
+                                                <input v-if="!pj.fichier" type="file" accept=".pdf" @change="(e) => onEditFileChange(e, i)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700" />
+                                                <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1 flex items-center justify-between bg-emerald-50 p-2 rounded">
+                                                    <span class="flex items-center"><i class="pi pi-check-circle mr-2"></i>{{ pj.fichier.name }}</span>
+                                                    <button type="button" @click="pj.fichier = null" class="text-red-500 hover:text-red-700 p-1"><i class="pi pi-times"></i></button>
+                                                </div>
                                             </div>
                                         </div>
 

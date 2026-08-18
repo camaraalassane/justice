@@ -168,7 +168,7 @@
         <!-- ========================================================== -->
         <!-- PIÈCES JOINTES                                             -->
         <!-- ========================================================== -->
-        <div v-if="piecesJointes && piecesJointes.length" class="border-t border-slate-300 pt-4">
+        <div v-if="piecesJointes" class="border-t border-slate-300 pt-4">
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-xs font-semibold text-slate-600 uppercase">Pièces jointes</h4>
                 <button type="button" @click="ajouterPieceJointe" class="text-xs text-slate-600 hover:text-slate-800 flex items-center gap-1">
@@ -178,14 +178,17 @@
             <div v-for="(pj, i) in piecesJointes" :key="'pj-'+i" class="p-3 bg-white rounded-lg border border-slate-200 mb-2">
                 <div class="flex justify-between mb-2">
                     <span class="text-xs text-slate-600">Pièce {{ i + 1 }}</span>
-                    <button type="button" @click="piecesJointes.splice(i, 1)" class="text-red-400 text-xs"><i class="pi pi-times"></i></button>
+                    <button type="button" @click="supprimerPieceJointe(i)" class="text-red-400 hover:text-red-600 text-xs flex items-center gap-1"><i class="pi pi-trash"></i> Supprimer</button>
                 </div>
                 <input v-model="pj.nom" placeholder="Nom *" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                 <textarea v-model="pj.description" placeholder="Description" rows="2" class="w-full rounded border border-slate-300 text-sm py-1.5 px-2 mb-2 focus:outline-none focus:ring-2 focus:ring-slate-500" />
                 <div class="mt-2">
                     <label class="block text-xs text-slate-600 mb-1">Fichier PDF</label>
-                    <input type="file" accept=".pdf" @change="(e) => onFileChange(e, i)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700" />
-                    <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1"><i class="pi pi-check mr-1"></i>{{ pj.fichier.name }}</div>
+                    <input v-if="!pj.fichier" type="file" accept=".pdf" @change="(e) => onFileChange(e, i)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-100 file:text-slate-700" />
+                    <div v-if="pj.fichier" class="text-xs text-emerald-600 mt-1 flex items-center justify-between bg-emerald-50 p-2 rounded">
+                        <span class="flex items-center"><i class="pi pi-check-circle mr-2"></i>{{ pj.fichier.name }}</span>
+                        <button type="button" @click="supprimerFichierSelectionne(i)" class="text-red-500 hover:text-red-700 p-1"><i class="pi pi-times"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -457,6 +460,18 @@ const ajouterReference = () => {
 const ajouterPieceJointe = () => {
     props.piecesJointes.push({ nom: '', description: '', contexte: '' });
     emit('update:piecesJointes', props.piecesJointes);
+};
+
+const supprimerPieceJointe = (i) => {
+    props.piecesJointes.splice(i, 1);
+    emit('update:piecesJointes', props.piecesJointes);
+};
+
+const supprimerFichierSelectionne = (i) => {
+    if (props.piecesJointes[i]) {
+        props.piecesJointes[i].fichier = null;
+        emit('update:piecesJointes', props.piecesJointes);
+    }
 };
 
 const onFileChange = (e, i) => {
